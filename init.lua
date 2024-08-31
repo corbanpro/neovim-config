@@ -199,6 +199,7 @@ vim.keymap.set({ 'i', 'n', 'v' }, '<A-j>', '<cmd>:m +1<CR>', { desc = 'Move line
 vim.keymap.set('n', '<leader>rl', '<cmd>:yank<cr>:lua <C-R>"<cr>', { desc = '[R]un in [L]ua' })
 vim.keymap.set('n', '<leader>ot', '<cmd>:tabnew<cr>', { desc = '[O]pen New [T]ab' })
 vim.keymap.set('n', '<leader>tn', '<cmd>:NvimTreeToggle<cr>', { desc = '[T]oggle [N]eovim Tree' })
+vim.keymap.set('n', '<C-q>', '<C-v>', { desc = 'enter visual block mode' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -648,8 +649,8 @@ require('lazy').setup({
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
         rust_analyzer = {},
-        emmet_ls = {},
         tsserver = {},
+        emmet_ls = {},
         --
 
         lua_ls = {
@@ -784,6 +785,16 @@ require('lazy').setup({
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
       luasnip.config.setup {}
+      local types = require 'cmp.types'
+
+      local function deprioritize_snippet(entry1, entry2)
+        if entry1:get_kind() == types.lsp.CompletionItemKind.Snippet then
+          return false
+        end
+        if entry2:get_kind() == types.lsp.CompletionItemKind.Snippet then
+          return true
+        end
+      end
 
       cmp.setup {
         snippet = {
@@ -793,6 +804,14 @@ require('lazy').setup({
         },
         completion = { completeopt = 'menu,menuone,noinsert' },
 
+        sorting = {
+          priority_weight = 1,
+          comparators = {
+            deprioritize_snippet,
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+          },
+        },
         -- For an understanding of why these mappings were
         -- chosen, you will need to read `:help ins-completion`
         --
