@@ -102,7 +102,7 @@ vim.g.have_nerd_font = false
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -190,6 +190,16 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+vim.keymap.set('i', '<C-z>', '<cmd>:undo<cr>', { desc = 'undo' })
+vim.keymap.set('i', '<A-z>', '<cmd>:redo<cr>', { desc = 'redo' })
+vim.keymap.set('i', '<C-R>', '<C-G>u<C-R>', { desc = 'augmented paste' })
+vim.keymap.set({ 'i', 'n', 'v' }, '<A-k>', '<cmd>:m -2<CR>', { desc = 'Move line up' })
+vim.keymap.set({ 'i', 'n', 'v' }, '<A-j>', '<cmd>:m +1<CR>', { desc = 'Move line down' })
+
+vim.keymap.set('n', '<leader>rl', '<cmd>:yank<cr>:lua <C-R>"<cr>', { desc = '[R]un in [L]ua' })
+vim.keymap.set('n', '<leader>ot', '<cmd>:tabnew<cr>', { desc = '[O]pen New [T]ab' })
+vim.keymap.set('n', '<leader>tn', '<cmd>:NvimTreeToggle<cr>', { desc = '[T]oggle [N]eovim Tree' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -230,7 +240,29 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
-
+  'rust-lang/rust.vim',
+  'ThePrimeagen/vim-be-good',
+  'neovim/nvim-lspconfig',
+  { 'nvim-tree/nvim-tree.lua', opts = { view = { width = 30 }, filters = { dotfiles = true } } },
+  {
+    'jose-elias-alvarez/null-ls.nvim',
+    event = 'VeryLazy',
+    config = function()
+      local null_ls = require 'null-ls'
+      local formatting = null_ls.builtins.formatting
+      null_ls.setup { sources = { formatting.prettier.with { format_on_save = true } } }
+    end,
+  },
+  {
+    'kylechui/nvim-surround',
+    version = '*', -- Use for stability; omit to use `main` branch for the latest features
+    event = 'VeryLazy',
+    config = function()
+      require('nvim-surround').setup {
+        -- Configuration here, or leave empty to use defaults
+      }
+    end,
+  },
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
@@ -382,11 +414,12 @@ require('lazy').setup({
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
+        defaults = {
+          file_ignore_patterns = { 'node_modules' },
+          mappings = {
+            i = { ['<c-enter>'] = 'to_fuzzy_refine' },
+          },
+        },
         -- pickers = {}
         extensions = {
           ['ui-select'] = {
@@ -608,14 +641,15 @@ require('lazy').setup({
         -- clangd = {},
         -- gopls = {},
         -- pyright = {},
-        -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
-        -- tsserver = {},
+        rust_analyzer = {},
+        emmet_ls = {},
+        tsserver = {},
         --
 
         lua_ls = {
@@ -647,6 +681,7 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'prettier',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
