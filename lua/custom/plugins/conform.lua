@@ -15,6 +15,29 @@ return {
       },
     },
     opts = {
+      formatters = {
+        prettier = {
+          arrow_parens = 'always',
+          bracket_spacing = true,
+          bracket_same_line = false,
+          embedded_language_formatting = 'auto',
+          end_of_line = 'lf',
+          html_whitespace_sensitivity = 'css',
+          -- jsx_bracket_same_line = false,
+          jsx_single_quote = false,
+          print_width = 40,
+          prose_wrap = 'preserve',
+          quote_props = 'as-needed',
+          semi = false,
+          single_attribute_per_line = false,
+          single_quote = false,
+          tab_width = 2,
+          trailing_comma = 'es5',
+          use_tabs = false,
+          vue_indent_script_and_style = false,
+        },
+      },
+
       notify_on_error = false,
       format_on_save = function(bufnr)
         -- Disable "format_on_save lsp_fallback" for languages that don't
@@ -39,7 +62,7 @@ return {
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         markdown = { 'prettier' },
-        javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        javascript = { 'prettier' },
       },
     },
   },
