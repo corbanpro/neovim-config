@@ -1,0 +1,25 @@
+vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+
+vim.keymap.set('i', '<C-R>', '<C-G>u<C-R>', { desc = 'augmented paste' })
+vim.keymap.set('i', '<A-j>', '<Esc><cmd>:m .+1<CR>==gi', { desc = 'Move line down' })
+vim.keymap.set('i', '<A-k>', '<Esc><cmd>:m .-2<CR>==gi', { desc = 'Move line up' })
+
+vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move lines up' })
+vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move lines down' })
+
+vim.keymap.set('n', '<CR>', 'o<ESC>', { desc = 'Insert newline below' })
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '<A-j>', '<cmd>:m .+1<CR>==', { desc = 'Move line down' })
+vim.keymap.set('n', '<A-k>', '<cmd>:m .-2<CR>==', { desc = 'Move line up' })
+vim.keymap.set('n', '<C-q>', '<C-v>', { desc = 'enter visual block mode' })
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'scroll down' })
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'scroll up' })
+vim.keymap.set('n', '<C-Space>', '$', { desc = 'Move to end of line' })
+
+vim.keymap.set('x', '<leader>p', [["_dP]], { desc = 'Paste over selection' })
+vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]], { desc = 'Delete without yanking' })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>rp', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = '[R]e[P]lace inside cursor' })
+vim.keymap.set('n', '<leader>rc', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gc<Left><Left><Left>]], { desc = '[R]eplace [C]onfirm inside cursor' })
+vim.keymap.set('n', '<leader>ot', '<cmd>:tabnew<cr>', { desc = '[O]pen New [T]ab' })
+vim.keymap.set('n', '<leader>rl', '<cmd>:yank<cr>:lua <C-R>"<cr>', { desc = '[R]un in [L]ua' })
