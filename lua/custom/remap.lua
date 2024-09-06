@@ -23,3 +23,11 @@ vim.keymap.set('n', '<leader>rp', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left>
 vim.keymap.set('n', '<leader>rc', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gc<Left><Left><Left>]], { desc = '[R]eplace [C]onfirm inside cursor' })
 vim.keymap.set('n', '<leader>ot', '<cmd>:tabnew<cr>', { desc = '[O]pen New [T]ab' })
 vim.keymap.set('n', '<leader>rl', '<cmd>:yank<cr>:lua <C-R>"<cr>', { desc = '[R]un in [L]ua' })
+
+vim.keymap.set('n', '<leader>tt', vim.cmd.ToggleTerm, { desc = 'Toggle [T]erminal' })
+vim.keymap.set('t', '<Esc>', vim.cmd.ToggleTerm, { desc = 'Close Terminal' })
+vim.keymap.set('t', '<C-\\>', vim.cmd.ToggleTerm, { desc = 'Close Terminal' })
+vim.keymap.set('n', '<leader>otv', '<cmd>:ToggleTerm direction=vertical<CR>', { desc = '[O]pen [T]erminal [V]ertical' })
+vim.keymap.set('n', '<leader>oth', '<cmd>:ToggleTerm direction=horizontal<CR>', { desc = '[O]pen [T]erminal [H]orizontal' })
+vim.keymap.set('n', '<leader>ott', '<cmd>:ToggleTerm direction=tab<CR>', { desc = '[O]pen [T]erminal [T]ab' })
+vim.keymap.set('n', '<leader>otf', '<cmd>:ToggleTerm direction=float<CR>', { desc = '[O]pen [T]erminal [F]loat' })
