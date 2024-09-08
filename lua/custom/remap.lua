@@ -43,7 +43,6 @@ vim.keymap.set('n', '<leader>ofs', '<cmd>:ToggleTerm direction=float<CR>', { des
 vim.keymap.set('n', '<leader>ovs', '<cmd>:ToggleTerm direction=vertical<CR>', { desc = '[O]pen [V]ertical [S]hell - ToggleTerm' })
 vim.keymap.set('n', '<leader>ohs', '<cmd>:ToggleTerm direction=horizontal<CR>', { desc = '[O]pen [H]orizontal [S]hell - ToggleTerm' })
 vim.keymap.set('n', '<leader>ows', '<cmd>:ToggleTerm direction=tab<CR>', { desc = '[O]pen [W]indow [S]hell - ToggleTerm' })
-
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode - ToggleTerm' })
 exports.toggleterm = {
   set_keymaps = function(terminal)
@@ -52,55 +51,7 @@ exports.toggleterm = {
 }
 
 -- copilot
-local copilot_on_file = vim.fn.stdpath 'config' .. '/lua/custom/copilot_on.txt'
-local function file_exists(file)
-  local f = io.open(file, 'rb')
-  if f then
-    f:close()
-  end
-  return f ~= nil
-end
-
-local function copilot_on()
-  if not file_exists(copilot_on_file) then
-    local file = io.open(copilot_on_file, 'w')
-    if not file then
-      return false
-    end
-    file:write 'false'
-    file:close()
-    return false
-  end
-  local lines = {}
-  for line in io.lines(copilot_on_file) do
-    lines[#lines + 1] = line
-  end
-
-  return lines[1] == 'true' and true or false
-end
-
-local function set_copilot(state)
-  local f = io.open(copilot_on_file, 'w')
-  if not f then
-    return
-  end
-  f:write(state)
-  f:close()
-end
-
-Copilot_toggle = function()
-  if copilot_on() then
-    vim.cmd 'Copilot disable'
-    vim.print 'Copilot disabled'
-    set_copilot 'false'
-  else
-    vim.cmd 'Copilot enable'
-    vim.print 'Copilot enabled'
-    set_copilot 'true'
-  end
-end
-
-vim.keymap.set('n', '<leader>tc', Copilot_toggle, { desc = '[T]oggle [C]opilot' })
+vim.keymap.set('n', '<leader>tc', require 'custom.copilot_toggle', { desc = '[T]oggle [C]opilot' })
 
 -- harpoon
 exports.harpoon = {
