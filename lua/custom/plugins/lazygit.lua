@@ -15,9 +15,7 @@ return {
   },
   -- setting the keybinding for LazyGit with 'keys' is recommended in
   -- order to load the plugin when the command is run for the first time
-  keys = {
-    { '<leader>og', '<cmd>LazyGit<cr>', desc = '[O]pen [G]it ' },
-  },
+  keys = require('custom.remap').lazygit,
   config = function()
     require('telescope').load_extension 'lazygit'
   end,

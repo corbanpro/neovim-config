@@ -10,9 +10,7 @@ return {
     'MunifTanjim/nui.nvim',
   },
   cmd = 'Neotree',
-  keys = {
-    { '\\', ':Neotree reveal<CR>:set relativenumber<CR>', desc = 'NeoTree reveal', silent = true },
-  },
+  keys = require('custom.remap').neo_tree,
   opts = {
     filesystem = {
       window = {

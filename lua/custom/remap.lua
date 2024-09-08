@@ -1,33 +1,207 @@
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
-
+local exports = {}
+-- helpers
 vim.keymap.set('i', '<C-R>', '<C-G>u<C-R>', { desc = 'augmented paste' })
-vim.keymap.set('i', '<A-j>', '<Esc><cmd>:m .+1<CR>==gi', { desc = 'Move line down' })
-vim.keymap.set('i', '<A-k>', '<Esc><cmd>:m .-2<CR>==gi', { desc = 'Move line up' })
-
-vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move lines up' })
-vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move lines down' })
-
 vim.keymap.set('n', '<CR>', 'o<ESC>', { desc = 'Insert newline below' })
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-vim.keymap.set('n', '<A-j>', '<cmd>:m .+1<CR>==', { desc = 'Move line down' })
-vim.keymap.set('n', '<A-k>', '<cmd>:m .-2<CR>==', { desc = 'Move line up' })
 vim.keymap.set('n', '<C-q>', '<C-v>', { desc = 'enter visual block mode' })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'scroll down' })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'scroll up' })
+
 vim.keymap.set('n', '<C-Space>', '$', { desc = 'Move to end of line' })
-
 vim.keymap.set('x', '<leader>p', [["_dP]], { desc = 'Paste over selection' })
-vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]], { desc = 'Delete without yanking' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-vim.keymap.set('n', '<leader>rp', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = '[R]e[P]lace inside cursor' })
-vim.keymap.set('n', '<leader>rc', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gc<Left><Left><Left>]], { desc = '[R]eplace [C]onfirm inside cursor' })
-vim.keymap.set('n', '<leader>ot', '<cmd>:tabnew<cr>', { desc = '[O]pen New [T]ab' })
-vim.keymap.set('n', '<leader>rl', '<cmd>:yank<cr>:lua <C-R>"<cr>', { desc = '[R]un in [L]ua' })
+vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]], { desc = '[D]elete without yanking' })
+vim.keymap.set('n', '<leader>el', '<cmd>:yank<cr>:lua <C-R>"<cr>', { desc = '[E]xecute in [L]ua' })
 
-vim.keymap.set('n', '<leader>tt', vim.cmd.ToggleTerm, { desc = 'Toggle [T]erminal' })
-vim.keymap.set('t', '<Esc>', vim.cmd.ToggleTerm, { desc = 'Close Terminal' })
-vim.keymap.set('t', '<C-\\>', vim.cmd.ToggleTerm, { desc = 'Close Terminal' })
-vim.keymap.set('n', '<leader>otv', '<cmd>:ToggleTerm direction=vertical<CR>', { desc = '[O]pen [T]erminal [V]ertical' })
-vim.keymap.set('n', '<leader>oth', '<cmd>:ToggleTerm direction=horizontal<CR>', { desc = '[O]pen [T]erminal [H]orizontal' })
-vim.keymap.set('n', '<leader>ott', '<cmd>:ToggleTerm direction=tab<CR>', { desc = '[O]pen [T]erminal [T]ab' })
-vim.keymap.set('n', '<leader>otf', '<cmd>:ToggleTerm direction=float<CR>', { desc = '[O]pen [T]erminal [F]loat' })
+-- diagnostics
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+
+-- replace
+vim.keymap.set('n', '<leader>rp', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = '[R]e[P]lace inside cursor' })
+vim.keymap.set('v', '<leader>rp', [["5y:%s/\<C-r>5/<C-r>5/gI<Left><Left><Left>]], { desc = '[R]e[P]lace inside cursor' })
+vim.keymap.set('n', '<leader>rc', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gc<Left><Left><Left>]], { desc = '[R]eplace [C]onfirm inside cursor' })
+vim.keymap.set('v', '<leader>rc', [["5y:%s/\<C-r>5/<C-r>5/gc<Left><Left><Left>]], { desc = '[R]eplace [C]onfirm inside cursor' })
+
+-- file
+vim.keymap.set('n', '<leader>on', '<cmd>:enew<cr>', { desc = '[O]pen [N]ew file' })
+
+-- move lines
+vim.keymap.set('i', '<A-j>', '<Esc><cmd>:m .+1<CR>==gi', { desc = 'Move line down' })
+vim.keymap.set('i', '<A-k>', '<Esc><cmd>:m .-2<CR>==gi', { desc = 'Move line up' })
+vim.keymap.set('n', '<A-j>', '<cmd>:m .+1<CR>==', { desc = 'Move line down' })
+vim.keymap.set('n', '<A-k>', '<cmd>:m .-2<CR>==', { desc = 'Move line up' })
+vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move lines up' })
+vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move lines down' })
+
+-- Tab
+vim.keymap.set('n', '<leader>ot', '<cmd>:tabnew<cr>', { desc = '[O]pen [T]ab' })
+vim.keymap.set('n', '<leader>ovt', '<C-W>v<cmd>:enew<cr>', { desc = '[O]pen [V]ertical [T]ab' })
+vim.keymap.set('n', '<leader>oht', '<C-W>s<cmd>:enew<cr>', { desc = '[O]pen [H]orizontal [T]ab' })
+
+-- ToggleTerm
+vim.keymap.set('n', '<leader>os', '<cmd>:ToggleTerm direction=float<CR>', { desc = '[O]pen [S]hell - ToggleTerm' })
+vim.keymap.set('n', '<leader>ofs', '<cmd>:ToggleTerm direction=float<CR>', { desc = '[O]pen [F]loat [S]hell - ToggleTerm' })
+vim.keymap.set('n', '<leader>ovs', '<cmd>:ToggleTerm direction=vertical<CR>', { desc = '[O]pen [V]ertical [S]hell - ToggleTerm' })
+vim.keymap.set('n', '<leader>ohs', '<cmd>:ToggleTerm direction=horizontal<CR>', { desc = '[O]pen [H]orizontal [S]hell - ToggleTerm' })
+vim.keymap.set('n', '<leader>ows', '<cmd>:ToggleTerm direction=tab<CR>', { desc = '[O]pen [W]indow [S]hell - ToggleTerm' })
+
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode - ToggleTerm' })
+exports.toggleterm = {
+  set_keymaps = function(terminal)
+    vim.api.nvim_buf_set_keymap(terminal.bufnr, 'n', '<Esc>', '<cmd>close<CR>', { noremap = true, silent = true, desc = 'Close Shell - ToggleTerm' })
+  end,
+}
+
+-- copilot
+local copilot_on_file = vim.fn.stdpath 'config' .. '/lua/custom/copilot_on.txt'
+local function file_exists(file)
+  local f = io.open(file, 'rb')
+  if f then
+    f:close()
+  end
+  return f ~= nil
+end
+
+local function copilot_on()
+  if not file_exists(copilot_on_file) then
+    local file = io.open(copilot_on_file, 'w')
+    if not file then
+      return false
+    end
+    file:write 'false'
+    file:close()
+    return false
+  end
+  local lines = {}
+  for line in io.lines(copilot_on_file) do
+    lines[#lines + 1] = line
+  end
+
+  return lines[1] == 'true' and true or false
+end
+
+local function set_copilot(state)
+  local f = io.open(copilot_on_file, 'w')
+  if not f then
+    return
+  end
+  f:write(state)
+  f:close()
+end
+
+Copilot_toggle = function()
+  if copilot_on() then
+    vim.cmd 'Copilot disable'
+    vim.print 'Copilot disabled'
+    set_copilot 'false'
+  else
+    vim.cmd 'Copilot enable'
+    vim.print 'Copilot enabled'
+    set_copilot 'true'
+  end
+end
+
+
+vim.keymap.set('n', '<leader>tc', Copilot_toggle, { desc = '[T]oggle [C]opilot' })
+vim.keymap.set('n', '<leader>cc', '<cmd>:Copilot disable<cr>', { desc = '[C]lose [C]opilot' })
+vim.keymap.set('n', '<leader>oc', '<cmd>:Copilot enable<cr>', { desc = '[O]pen [C]opilot' })
+
+-- harpoon
+exports.harpoon = {
+  set_keymaps = function(harpoon)
+    vim.keymap.set('n', '<leader>a', function()
+      harpoon:list():add()
+    end, { desc = '[A]dd current file to Harpoon' })
+    vim.keymap.set('n', '<C-e>', function()
+      harpoon.ui:toggle_quick_menu(harpoon:list())
+    end, { desc = 'Open Harpoon window' })
+
+    vim.keymap.set('n', '<C-H>', function()
+      harpoon:list():select(1)
+    end, { desc = 'Select Harpoon entry 1' })
+    vim.keymap.set('n', '<C-J>', function()
+      harpoon:list():select(2)
+    end, { desc = 'Select Harpoon entry 2' })
+    vim.keymap.set('n', '<C-K>', function()
+      harpoon:list():select(3)
+    end, { desc = 'Select Harpoon entry 3' })
+    vim.keymap.set('n', '<C-L>', function()
+      harpoon:list():select(4)
+    end, { desc = 'Select Harpoon entry 4' })
+
+    vim.keymap.set('n', '<C-up>', function()
+      harpoon:list():prev()
+    end, { desc = 'Select previous Harpoon entry' })
+    vim.keymap.set('n', '<C-down>', function()
+      harpoon:list():next()
+    end, { desc = 'Select next Harpoon entry' })
+  end,
+}
+
+-- undotree
+exports.undotree = {
+  set_keymaps = function()
+    vim.keymap.set('n', '<leader>tu', '<cmd>:UndotreeToggle<CR>:UndotreeFocus<CR>', { desc = '[T]oggle [U]ndotree' })
+  end,
+}
+
+-- neo-tree
+exports.neo_tree = {
+  { '\\', ':Neotree position=float %:p:h<CR>:set relativenumber<CR>', desc = 'Open NeoTree', silent = true },
+  { '<leader>ofn', ':Neotree reveal position=float %:p:h<CR>:set relativenumber<CR>', desc = '[O]pen [F]loat [N]eoTree', silent = true },
+  { '<leader>oln', ':Neotree reveal position=left %:p:h<CR>:set relativenumber<CR>', desc = '[O]pen [L]eft [N]eoTree', silent = true },
+}
+
+-- lazygit
+exports.lazygit = {
+  { '<leader>og', '<cmd>LazyGit<cr>', desc = '[O]pen [G]it - LazyGit' },
+}
+
+-- conform
+exports.conform = {
+  keys = {
+    {
+      '<leader>f',
+      function()
+        require('conform').format { async = true, lsp_format = 'fallback' }
+      end,
+      mode = '',
+      desc = '[F]ormat buffer - Conform',
+    },
+  },
+}
+
+-- telescope
+exports.telescope = {
+  set_keymaps = function(builtin)
+    vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp - ' })
+    vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
+    vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+    vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
+    vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
+    vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+    vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
+    vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
+    vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+    vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+    vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, { desc = '[/] Fuzzily search in current buffer' })
+
+    vim.keymap.set('n', '<leader>s/', function()
+      builtin.live_grep {
+        grep_open_files = true,
+        prompt_title = 'Live Grep in Open Files',
+      }
+    end, { desc = '[S]earch [/] in Open Files' })
+
+    vim.keymap.set('n', '<leader>sc', function()
+      builtin.git_files { cwd = '~/' }
+    end, { desc = '[S]earch [C]onfig files' })
+    vim.keymap.set('n', '<leader>sn', function()
+      builtin.find_files { cwd = vim.fn.stdpath 'config' }
+    end, { desc = '[S]earch [N]eovim files' })
+  end,
+}
+
+-- lsp-config
+-- go to lsp-config file. It's too complicated to make sense to put here
+
+return exports
