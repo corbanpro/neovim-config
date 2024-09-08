@@ -101,8 +101,6 @@ Copilot_toggle = function()
 end
 
 vim.keymap.set('n', '<leader>tc', Copilot_toggle, { desc = '[T]oggle [C]opilot' })
-vim.keymap.set('n', '<leader>cc', '<cmd>:Copilot disable<cr>', { desc = '[C]lose [C]opilot' })
-vim.keymap.set('n', '<leader>oc', '<cmd>:Copilot enable<cr>', { desc = '[O]pen [C]opilot' })
 
 -- harpoon
 exports.harpoon = {
@@ -147,8 +145,6 @@ exports.undotree = {
 exports.neo_tree = {
   { '\\', ':Neotree position=float %:p:h<CR>:set relativenumber<CR>', desc = 'Open NeoTree', silent = true },
   { '<C-\\>', ':Neotree position=left %:p:h<CR>:set relativenumber<CR>', desc = 'Open NeoTree', silent = true },
-  { '<leader>ofn', ':Neotree reveal position=float %:p:h<CR>:set relativenumber<CR>', desc = '[O]pen [F]loat [N]eoTree', silent = true },
-  { '<leader>ovn', ':Neotree reveal position=left %:p:h<CR>:set relativenumber<CR>', desc = '[O]pen [V]ertical [N]eoTree', silent = true },
 }
 
 -- lazygit

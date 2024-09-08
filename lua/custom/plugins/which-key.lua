@@ -45,13 +45,11 @@ return {
         { '<leader>o', group = '[O]pen' },
         { '<leader>ov', group = '[O]pen [V]ertical' },
         { '<leader>oh', group = '[O]pen [H]orizontal' },
-        { '<leader>ol', group = '[O]pen [L]eft' },
         { '<leader>of', group = '[O]pen [F]loat' },
         { '<leader>ow', group = '[O]pen [W]indow' },
 
         { '<leader>e', group = '[E]xecute' },
         { '<leader>r', group = '[R]eplace' },
-        { '<leader>c', group = '[C]lose' },
         { '<leader>d', group = '[D]ocument' },
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
