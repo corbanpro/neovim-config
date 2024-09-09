@@ -51,7 +51,7 @@ exports.toggleterm = {
 }
 
 -- copilot
-vim.keymap.set('n', '<leader>tc', require 'custom.copilot_toggle', { desc = '[T]oggle [C]opilot' })
+vim.keymap.set('n', '<leader>tc', require('custom.copilot_toggle').copilot_toggle, { desc = '[T]oggle [C]opilot' })
 
 -- harpoon
 exports.harpoon = {

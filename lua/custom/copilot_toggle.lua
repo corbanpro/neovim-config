@@ -1,3 +1,5 @@
+local mod = {}
+
 local copilot_on_file = vim.fn.stdpath 'config' .. '/lua/custom/copilot_on.txt'
 local function file_exists(file)
   local f = io.open(file, 'rb')
@@ -32,18 +34,25 @@ local function set_copilot(state)
   end
   f:write(state)
   f:close()
+  if state == 'false' then
+    vim.cmd 'Copilot disable'
+    vim.print 'Copilot disabled'
+  else
+    vim.cmd 'Copilot enable'
+    vim.print 'Copilot enabled'
+  end
 end
 
 local copilot_toggle = function()
   if copilot_on() then
-    vim.cmd 'Copilot disable'
-    vim.print 'Copilot disabled'
     set_copilot 'false'
   else
-    vim.cmd 'Copilot enable'
-    vim.print 'Copilot enabled'
     set_copilot 'true'
   end
 end
 
-return copilot_toggle
+mod.copilot_on = copilot_on
+mod.copilot_toggle = copilot_toggle
+mod.set_copilot = set_copilot
+
+return mod
