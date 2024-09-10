@@ -14,22 +14,32 @@ return {
         end,
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
+      -- {
+      --   'nvim-telescope/telescope-live-grep-args.nvim',
+      --   -- This will not install any breaking changes.
+      --   -- For major updates, this must be adjusted manually.
+      --   version = '^1.0.0',
+      -- },
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
-      require('telescope').setup {
+      local telescope = require 'telescope'
+      telescope.setup {
         defaults = {
-          file_ignore_patterns = { 'node_modules' },
+          file_ignore_patterns = { 'node_modules', '.git', '.cargo', '.rustup' },
+
           mappings = {
             i = { ['<c-enter>'] = 'to_fuzzy_refine' },
           },
         },
         extensions = {
+          -- live_grep_args = {},
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
           },
         },
       }
+      -- telescope.load_extension 'live_grep_args'
 
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
