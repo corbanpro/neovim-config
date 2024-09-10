@@ -1,7 +1,6 @@
 local exports = {}
 -- helpers
 vim.keymap.set('i', '<C-R>', '<C-G>u<C-R>', { desc = 'augmented paste' })
-vim.keymap.set('n', '<CR>', 'o<ESC>', { desc = 'Insert newline below' })
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<C-q>', '<C-v>', { desc = 'enter visual block mode' })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'scroll down' })
@@ -12,8 +11,14 @@ vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]], { desc = '[D]elete without ya
 vim.keymap.set({ 'n', 'v' }, '<leader>x', [["_x]], { desc = '[X] Delete without yanking' })
 vim.keymap.set('n', '<leader>el', '<cmd>:yank<cr>:lua <C-R>"<cr>', { desc = '[E]xecute in [L]ua' })
 
--- diagnostics
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+-- quickfix
+vim.keymap.set('n', '<leader>oq', '<cmd>:copen<CR>', { desc = '[O]pen [Q]uickfix' })
+vim.keymap.set('n', ']c', '<cmd>:cnext<CR>', { desc = 'Next Quickfix' })
+vim.keymap.set('n', ']C', '<cmd>:clast<CR>', { desc = 'Last Quickfix' })
+vim.keymap.set('n', '[c', '<cmd>:cprevious<CR>', { desc = 'Prev Quickfix' })
+vim.keymap.set('n', '[C', '<cmd>:cfirst<CR>', { desc = 'First Quickfix' })
+vim.keymap.set('n', '[q', '<cmd>:colder<CR>', { desc = 'Older Quickfix List' })
+vim.keymap.set('n', ']q', '<cmd>:cnewer<CR>', { desc = 'Newer Quickfix List' })
 
 -- replace
 vim.keymap.set('n', '<leader>rp', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = '[R]e[P]lace inside cursor' })
@@ -29,6 +34,10 @@ vim.keymap.set('n', '<A-k>', '<cmd>:m .-2<CR>==', { desc = 'Move line up' })
 vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move lines up' })
 vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move lines down' })
 
+-- buffer
+vim.keymap.set('n', '<leader>bd', '<cmd>:bd<cr>', { desc = '[B]uffer [D]elete' })
+vim.keymap.set('n', '<leader>bw', '<cmd>:w<CR>:bd<cr>', { desc = '[B]uffer [W]rite and Delete' })
+
 -- file
 vim.keymap.set('n', '<leader>on', '<cmd>:enew<cr>', { desc = '[O]pen [N]ew file' })
 
@@ -38,15 +47,17 @@ vim.keymap.set('n', '<leader>ovt', '<C-W>v<cmd>:enew<cr>', { desc = '[O]pen [V]e
 vim.keymap.set('n', '<leader>oht', '<C-W>s<cmd>:enew<cr>', { desc = '[O]pen [H]orizontal [T]ab' })
 
 -- ToggleTerm
-vim.keymap.set('n', '<leader>os', '<cmd>:ToggleTerm direction=float<CR>', { desc = '[O]pen [S]hell - ToggleTerm' })
-vim.keymap.set('n', '<leader>ofs', '<cmd>:ToggleTerm direction=float<CR>', { desc = '[O]pen [F]loat [S]hell - ToggleTerm' })
-vim.keymap.set('n', '<leader>ovs', '<cmd>:ToggleTerm direction=vertical<CR>', { desc = '[O]pen [V]ertical [S]hell - ToggleTerm' })
-vim.keymap.set('n', '<leader>ohs', '<cmd>:ToggleTerm direction=horizontal<CR>', { desc = '[O]pen [H]orizontal [S]hell - ToggleTerm' })
-vim.keymap.set('n', '<leader>ows', '<cmd>:ToggleTerm direction=tab<CR>', { desc = '[O]pen [W]indow [S]hell - ToggleTerm' })
+vim.keymap.set('n', '<leader>ts', '<cmd>:ToggleTerm direction=float<CR>', { desc = '[T]oggle [S]hell - ToggleTerm' })
+vim.keymap.set('n', '<leader>tfs', '<cmd>:ToggleTerm direction=float<CR>', { desc = '[T]oggle [F]loat [S]hell - ToggleTerm' })
+vim.keymap.set('n', '<leader>tvs', '<cmd>:ToggleTerm direction=vertical<CR>', { desc = '[T]oggle [V]ertical [S]hell - ToggleTerm' })
+vim.keymap.set('n', '<leader>ths', '<cmd>:ToggleTerm direction=horizontal<CR>', { desc = '[T]oggle [H]orizontal [S]hell - ToggleTerm' })
+vim.keymap.set('n', '<leader>tws', '<cmd>:ToggleTerm direction=tab<CR>', { desc = '[T]oggle [W]indow [S]hell - ToggleTerm' })
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode - ToggleTerm' })
 exports.toggleterm = {
   set_keymaps = function(terminal)
+    vim.api.nvim_buf_set_keymap(terminal.bufnr, 'n', '<C-\\>', '<cmd>close<CR>', { noremap = true, silent = true, desc = 'Close Shell - ToggleTerm' })
     vim.api.nvim_buf_set_keymap(terminal.bufnr, 'n', '<Esc>', '<cmd>close<CR>', { noremap = true, silent = true, desc = 'Close Shell - ToggleTerm' })
+    vim.api.nvim_buf_set_keymap(terminal.bufnr, 't', '<C-\\>', '<cmd>close<CR>', { noremap = true, silent = true, desc = 'Close Shell - ToggleTerm' })
   end,
 }
 
@@ -94,8 +105,8 @@ exports.undotree = {
 
 -- neo-tree
 exports.neo_tree = {
-  { '\\', ':Neotree position=float %:p:h<CR>:set relativenumber<CR>', desc = 'Open NeoTree', silent = true },
-  { '<C-\\>', ':Neotree position=left %:p:h<CR>:set relativenumber<CR>', desc = 'Open NeoTree', silent = true },
+  { '\\', ':Neotree position=float %:p:h toggle=true<CR>:set relativenumber<CR>', desc = 'Open NeoTree', silent = true },
+  { '<C-\\>', ':Neotree position=left %:p:h toggle=true<CR>:set relativenumber<CR>', desc = 'Open NeoTree', silent = true },
 }
 
 -- lazygit
@@ -120,13 +131,18 @@ exports.conform = {
 -- telescope
 exports.telescope = {
   set_keymaps = function(builtin)
-    vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp - ' })
+    vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
     vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
     vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
     vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
     vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-    vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+    vim.keymap.set('n', '<leader>sg', function()
+      builtin.live_grep { additional_args = { '-uu' } }
+    end, { desc = '[S]earch by [G]rep' })
     vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
+    vim.keymap.set('n', '<leader>sq', builtin.quickfix, { desc = '[S]earch [Q]uickfix' })
+    vim.keymap.set('n', '<leader>s-', builtin.quickfixhistory, { desc = '[S]earch [-] Quickfix History' })
+
     vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
     vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
     vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
