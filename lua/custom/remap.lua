@@ -52,11 +52,11 @@ vim.keymap.set('n', '<leader>tfs', '<cmd>:ToggleTerm direction=float<CR>', { des
 vim.keymap.set('n', '<leader>tvs', '<cmd>:ToggleTerm direction=vertical<CR>', { desc = '[T]oggle [V]ertical [S]hell - ToggleTerm' })
 vim.keymap.set('n', '<leader>ths', '<cmd>:ToggleTerm direction=horizontal<CR>', { desc = '[T]oggle [H]orizontal [S]hell - ToggleTerm' })
 vim.keymap.set('n', '<leader>tws', '<cmd>:ToggleTerm direction=tab<CR>', { desc = '[T]oggle [W]indow [S]hell - ToggleTerm' })
-vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode - ToggleTerm' })
 exports.toggleterm = {
   set_keymaps = function(terminal)
     vim.api.nvim_buf_set_keymap(terminal.bufnr, 'n', '<C-\\>', '<cmd>close<CR>', { noremap = true, silent = true, desc = 'Close Shell - ToggleTerm' })
     vim.api.nvim_buf_set_keymap(terminal.bufnr, 'n', '<Esc>', '<cmd>close<CR>', { noremap = true, silent = true, desc = 'Close Shell - ToggleTerm' })
+    vim.api.nvim_buf_set_keymap(terminal.bufnr, 't', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true, desc = 'Exit terminal mode - ToggleTerm' })
     vim.api.nvim_buf_set_keymap(terminal.bufnr, 't', '<C-\\>', '<cmd>close<CR>', { noremap = true, silent = true, desc = 'Close Shell - ToggleTerm' })
   end,
 }
@@ -136,9 +136,7 @@ exports.telescope = {
     vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
     vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
     vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-    vim.keymap.set('n', '<leader>sg', function()
-      builtin.live_grep { additional_args = { '-uu' } }
-    end, { desc = '[S]earch by [G]rep' })
+    vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
     vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
     vim.keymap.set('n', '<leader>sq', builtin.quickfix, { desc = '[S]earch [Q]uickfix' })
     vim.keymap.set('n', '<leader>s-', builtin.quickfixhistory, { desc = '[S]earch [-] Quickfix History' })
@@ -156,7 +154,7 @@ exports.telescope = {
     end, { desc = '[S]earch [/] in Open Files' })
 
     vim.keymap.set('n', '<leader>sc', function()
-      builtin.git_files { cwd = '~/' }
+      builtin.find_files { cwd = '~/.config/ubuntu/' }
     end, { desc = '[S]earch [C]onfig files' })
     vim.keymap.set('n', '<leader>sn', function()
       builtin.find_files { cwd = vim.fn.stdpath 'config' }
