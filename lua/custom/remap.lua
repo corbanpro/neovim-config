@@ -21,10 +21,11 @@ vim.keymap.set('n', '[q', '<cmd>:colder<CR>', { desc = 'Older Quickfix List' })
 vim.keymap.set('n', ']q', '<cmd>:cnewer<CR>', { desc = 'Newer Quickfix List' })
 
 -- replace
-vim.keymap.set('n', '<leader>rp', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = '[R]e[P]lace inside cursor' })
-vim.keymap.set('v', '<leader>rp', [["5y:%s/\<C-r>5/<C-r>5/gI<Left><Left><Left>]], { desc = '[R]e[P]lace inside cursor' })
-vim.keymap.set('n', '<leader>rc', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gc<Left><Left><Left>]], { desc = '[R]eplace [C]onfirm inside cursor' })
-vim.keymap.set('v', '<leader>rc', [["5y:%s/\<C-r>5/<C-r>5/gc<Left><Left><Left>]], { desc = '[R]eplace [C]onfirm inside cursor' })
+local replace = require 'custom.replace'
+vim.keymap.set('n', '<leader>ra', replace.n_replace_all, { desc = '[R]eplace Word - [A]ll' })
+vim.keymap.set('v', '<leader>ra', replace.v_replace_all, { desc = '[R]eplace Selection - [A]ll' })
+vim.keymap.set('n', '<leader>rc', replace.n_replace_confirm_all, { desc = '[R]eplace Word - [C]onfirm' })
+vim.keymap.set('v', '<leader>rc', replace.v_replace_confirm_all, { desc = '[R]eplace Selection - [C]onfirm' })
 
 -- move lines
 vim.keymap.set('i', '<A-j>', '<Esc><cmd>:m .+1<CR>==gi', { desc = 'Move line down' })
