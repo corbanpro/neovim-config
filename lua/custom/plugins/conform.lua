@@ -7,29 +7,15 @@ return {
     keys = require('custom.remap').conform.keys,
     opts = {
       formatters = {
+        prettierd = {
+          inherit = true,
+          prepend_args = { '--print-width=100' },
+        },
         prettier = {
-          arrow_parens = 'always',
-          bracket_spacing = true,
-          bracket_same_line = false,
-          embedded_language_formatting = 'auto',
-          end_of_line = 'lf',
-          html_whitespace_sensitivity = 'css',
-          -- jsx_bracket_same_line = false,
-          jsx_single_quote = false,
-          print_width = 40,
-          prose_wrap = 'preserve',
-          quote_props = 'as-needed',
-          semi = false,
-          single_attribute_per_line = false,
-          single_quote = false,
-          tab_width = 2,
-          trailing_comma = 'es5',
-          use_tabs = false,
-          vue_indent_script_and_style = false,
+          inherit = true,
+          prepend_args = { '--print-width=100' },
         },
       },
-
-      notify_on_error = false,
       format_on_save = function(bufnr)
         local disable_filetypes = { c = true, cpp = true }
         local lsp_format_opt
@@ -45,12 +31,13 @@ return {
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        markdown = { 'prettier' },
-
-        javascript = { 'prettier' },
-        javascriptreact = { 'prettier' },
-        typescript = { 'prettier' },
-        typescriptreact = { 'prettier' },
+        sh = { 'shfmt' },
+        markdown = { 'prettierd', 'prettier' },
+        javascript = { 'prettierd', 'prettier' },
+        javascriptreact = { 'prettierd', 'prettier' },
+        typescript = { 'prettierd', 'prettier' },
+        typescriptreact = { 'prettierd', 'prettier' },
+        ['*'] = { 'trim_whitespace' },
       },
     },
   },
