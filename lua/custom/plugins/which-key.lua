@@ -47,7 +47,6 @@ return {
         { '<leader>oh', group = '[O]pen [H]orizontal' },
         { '<leader>of', group = '[O]pen [F]loat' },
         { '<leader>ow', group = '[O]pen [W]indow' },
-
         { '<leader>e', group = '[E]xecute' },
         { '<leader>b', group = '[B]uffer' },
         { '<leader>r', group = '[R]eplace' },

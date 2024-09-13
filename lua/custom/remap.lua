@@ -49,6 +49,7 @@ vim.keymap.set('n', '<leader>oht', '<C-W>s<cmd>:enew<cr>', { desc = '[O]pen [H]o
 
 -- ToggleTerm
 vim.keymap.set('n', '<leader>ts', '<cmd>:ToggleTerm direction=float<CR>', { desc = '[T]oggle [S]hell - ToggleTerm' })
+vim.keymap.set('n', '<C-\\>', '<cmd>:ToggleTerm direction=float<CR>', { desc = '[T]oggle [S]hell - ToggleTerm' })
 vim.keymap.set('n', '<leader>tfs', '<cmd>:ToggleTerm direction=float<CR>', { desc = '[T]oggle [F]loat [S]hell - ToggleTerm' })
 vim.keymap.set('n', '<leader>tvs', '<cmd>:ToggleTerm direction=vertical<CR>', { desc = '[T]oggle [V]ertical [S]hell - ToggleTerm' })
 vim.keymap.set('n', '<leader>ths', '<cmd>:ToggleTerm direction=horizontal<CR>', { desc = '[T]oggle [H]orizontal [S]hell - ToggleTerm' })
@@ -106,8 +107,7 @@ exports.undotree = {
 
 -- neo-tree
 exports.neo_tree = {
-  { '\\', ':Neotree position=float %:p:h toggle=true<CR>:set relativenumber<CR>', desc = 'Open NeoTree', silent = true },
-  { '<C-\\>', ':Neotree position=left %:p:h toggle=true<CR>:set relativenumber<CR>', desc = 'Open NeoTree', silent = true },
+  { '\\', ':Neotree position=left %:p:h toggle=true<CR>:set relativenumber<CR>', desc = 'Open NeoTree', silent = true },
 }
 
 -- lazygit
