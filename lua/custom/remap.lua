@@ -9,6 +9,9 @@ vim.keymap.set('n', '<C-Space>', '$', { desc = 'Move to end of line' })
 vim.keymap.set('x', '<leader>p', [["_dP]], { desc = '[P]aste over selection' })
 vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]], { desc = '[D]elete without yanking' })
 vim.keymap.set({ 'n', 'v' }, '<leader>x', [["_x]], { desc = '[X] Delete without yanking' })
+vim.keymap.set({ 'n', 'v' }, '<leader>c', [["_c]], { desc = '[C] Delete without yanking' })
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { desc = "navigate wrapped lines except you're not a psycho", expr = true, silent = true })
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { desc = "navigate wrapped lines except you're not a psycho", expr = true, silent = true })
 vim.keymap.set('n', '<leader>el', '<cmd>:yank<cr>:lua <C-R>"<cr>', { desc = '[E]xecute in [L]ua' })
 
 -- quickfix
@@ -46,10 +49,12 @@ vim.keymap.set('n', '<leader>on', '<cmd>:enew<cr>', { desc = '[O]pen [N]ew file'
 vim.keymap.set('n', '<leader>ot', '<cmd>:tabnew<cr>', { desc = '[O]pen [T]ab' })
 vim.keymap.set('n', '<leader>ovt', '<C-W>v<cmd>:enew<cr>', { desc = '[O]pen [V]ertical [T]ab' })
 vim.keymap.set('n', '<leader>oht', '<C-W>s<cmd>:enew<cr>', { desc = '[O]pen [H]orizontal [T]ab' })
+vim.keymap.set('n', ']t', 'gt', { desc = 'next tab' })
+vim.keymap.set('n', '[t', 'gT', { desc = 'previous tab' })
 
 -- ToggleTerm
 vim.keymap.set('n', '<leader>ts', '<cmd>:ToggleTerm direction=float<CR>', { desc = '[T]oggle [S]hell - ToggleTerm' })
-vim.keymap.set('n', '<C-\\>', '<cmd>:ToggleTerm direction=float<CR>', { desc = '[T]oggle [S]hell - ToggleTerm' })
+vim.keymap.set({ 'n', 'i' }, '<C-\\>', '<cmd>:ToggleTerm direction=float<CR>', { desc = '[T]oggle [S]hell - ToggleTerm' })
 vim.keymap.set('n', '<leader>tfs', '<cmd>:ToggleTerm direction=float<CR>', { desc = '[T]oggle [F]loat [S]hell - ToggleTerm' })
 vim.keymap.set('n', '<leader>tvs', '<cmd>:ToggleTerm direction=vertical<CR>', { desc = '[T]oggle [V]ertical [S]hell - ToggleTerm' })
 vim.keymap.set('n', '<leader>ths', '<cmd>:ToggleTerm direction=horizontal<CR>', { desc = '[T]oggle [H]orizontal [S]hell - ToggleTerm' })
@@ -70,6 +75,7 @@ vim.keymap.set('n', '<leader>tc', require('custom.copilot_toggle').copilot_toggl
 exports.harpoon = {
   set_keymaps = function(harpoon)
     vim.keymap.set('n', '<leader>a', function()
+      vim.print 'Pinned'
       harpoon:list():add()
     end, { desc = '[A]dd current file to Harpoon' })
     vim.keymap.set('n', '<C-e>', function()
@@ -88,13 +94,6 @@ exports.harpoon = {
     vim.keymap.set('n', '<C-L>', function()
       harpoon:list():select(4)
     end, { desc = 'Select Harpoon entry 4' })
-
-    vim.keymap.set('n', '<C-up>', function()
-      harpoon:list():prev()
-    end, { desc = 'Select previous Harpoon entry' })
-    vim.keymap.set('n', '<C-down>', function()
-      harpoon:list():next()
-    end, { desc = 'Select next Harpoon entry' })
   end,
 }
 
@@ -107,7 +106,7 @@ exports.undotree = {
 
 -- neo-tree
 exports.neo_tree = {
-  { '\\', ':Neotree position=left %:p:h toggle=true<CR>:set relativenumber<CR>', desc = 'Open NeoTree', silent = true },
+  { '\\', ':Neotree position=left toggle=true<CR>:set relativenumber<CR>', desc = 'Open NeoTree', silent = true },
 }
 
 -- lazygit
@@ -135,7 +134,7 @@ exports.telescope = {
     vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
     vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
     vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-    vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
+    vim.keymap.set('n', '<leader>st', builtin.builtin, { desc = '[S]earch Select [T]elescope' })
     vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
     vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
     vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
@@ -163,6 +162,15 @@ exports.telescope = {
   end,
 }
 
+--  multicursor
+exports.multicursor = {
+  {
+    mode = { 'v', 'n' },
+    '<Leader>m',
+    '<cmd>MCstart<cr>',
+    desc = '[M]ulticursor',
+  },
+}
 -- lsp-config
 -- go to lsp-config file. It's too complicated to make sense to put here
 
