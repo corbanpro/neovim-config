@@ -6,7 +6,8 @@ vim.g.have_nerd_font = false
 vim.opt.colorcolumn = '100'
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.wrap = false
+vim.opt.wrap = true
+vim.opt.linebreak = true
 vim.opt.mouse = 'a'
 vim.opt.showmode = false
 vim.schedule(function()
@@ -25,7 +26,7 @@ vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
-vim.opt.scrolloff = 15
+vim.opt.scrolloff = 20
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
 
