@@ -5,8 +5,8 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<C-q>', '<C-v>', { desc = 'enter visual block mode' })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'scroll down' })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'scroll up' })
-vim.keymap.set('n', '<C-Space>', '$', { desc = 'Move to end of line' })
 vim.keymap.set('x', '<leader>p', [["_dP]], { desc = '[P]aste over selection' })
+vim.keymap.set({ 'v', 'n' }, '<C-Space>', '$', { desc = 'Move to end of line' })
 vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]], { desc = '[D]elete without yanking' })
 vim.keymap.set({ 'n', 'v' }, '<leader>x', [["_x]], { desc = '[X] Delete without yanking' })
 vim.keymap.set({ 'n', 'v' }, '<leader>c', [["_c]], { desc = '[C] Delete without yanking' })
@@ -53,12 +53,36 @@ vim.keymap.set('n', ']t', 'gt', { desc = 'next tab' })
 vim.keymap.set('n', '[t', 'gT', { desc = 'previous tab' })
 
 -- ToggleTerm
-vim.keymap.set('n', '<leader>ts', '<cmd>:ToggleTerm direction=float<CR>', { desc = '[T]oggle [S]hell - ToggleTerm' })
-vim.keymap.set({ 'n', 'i' }, '<C-\\>', '<cmd>:ToggleTerm direction=float<CR>', { desc = '[T]oggle [S]hell - ToggleTerm' })
-vim.keymap.set('n', '<leader>tfs', '<cmd>:ToggleTerm direction=float<CR>', { desc = '[T]oggle [F]loat [S]hell - ToggleTerm' })
-vim.keymap.set('n', '<leader>tvs', '<cmd>:ToggleTerm direction=vertical<CR>', { desc = '[T]oggle [V]ertical [S]hell - ToggleTerm' })
-vim.keymap.set('n', '<leader>ths', '<cmd>:ToggleTerm direction=horizontal<CR>', { desc = '[T]oggle [H]orizontal [S]hell - ToggleTerm' })
-vim.keymap.set('n', '<leader>tws', '<cmd>:ToggleTerm direction=tab<CR>', { desc = '[T]oggle [W]indow [S]hell - ToggleTerm' })
+local shells = {}
+local function open_default_shell(direction, name)
+  return function()
+    local shell_name = name or vim.fn.input 'Terminal Name: '
+    local index = '0'
+    for k, v in pairs(shells) do
+      if v == shell_name then
+        index = k
+      end
+    end
+
+    if index == '0' then
+      table.insert(shells, shell_name)
+      index = tostring(#shells)
+    end
+
+    local command = index .. 'ToggleTerm direction=' .. direction .. ' name=' .. shell_name
+    vim.print(command)
+    vim.cmd(command)
+  end
+end
+
+vim.keymap.set('n', '<leader>ts', open_default_shell 'float', { desc = '[T]oggle [S]hell - ToggleTerm' })
+vim.keymap.set({ 'n', 'i' }, '<C-\\>', open_default_shell('float', 'default'), { desc = '[T]oggle [S]hell - ToggleTerm' })
+vim.keymap.set('n', '<leader>tfs', open_default_shell 'float', { desc = '[T]oggle [F]loat [S]hell - ToggleTerm' })
+vim.keymap.set('n', '<leader>tvs', open_default_shell 'vertical', { desc = '[T]oggle [V]ertical [S]hell - ToggleTerm' })
+vim.keymap.set('n', '<leader>ths', open_default_shell 'horizontal', { desc = '[T]oggle [H]orizontal [S]hell - ToggleTerm' })
+vim.keymap.set('n', '<leader>tts', open_default_shell 'tab', { desc = '[T]oggle [T]ab [S]hell - ToggleTerm' })
+vim.keymap.set('n', '<C-s>', '<cmd>:TermSelect<CR>', { desc = 'Select Terminal' })
+
 exports.toggleterm = {
   set_keymaps = function(terminal)
     vim.api.nvim_buf_set_keymap(terminal.bufnr, 'n', '<C-\\>', '<cmd>close<CR>', { noremap = true, silent = true, desc = 'Close Shell - ToggleTerm' })
