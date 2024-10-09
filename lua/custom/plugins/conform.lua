@@ -41,6 +41,7 @@ return {
         html = { 'prettierd', 'prettier' },
         vue = { 'prettierd' },
         python = { 'black' },
+        rust = { 'rustfmt' },
         ['*'] = { 'trim_whitespace' },
       },
     },
