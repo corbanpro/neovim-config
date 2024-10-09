@@ -86,7 +86,7 @@ return {
             },
           },
         },
-        tsserver = {},
+        ts_ls = {},
         emmet_ls = {},
         lua_ls = {
           settings = {
