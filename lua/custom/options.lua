@@ -25,7 +25,7 @@ vim.opt.tabstop = 4
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 vim.opt.list = true
 vim.opt.signcolumn = 'yes'
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 vim.opt.showmode = false
 vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
