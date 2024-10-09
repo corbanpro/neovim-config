@@ -6,13 +6,16 @@ vim.keymap.set('n', '<C-q>', '<C-v>', { desc = 'enter visual block mode' })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'scroll down' })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'scroll up' })
 vim.keymap.set('x', '<leader>p', [["_dP]], { desc = '[P]aste over selection' })
-vim.keymap.set({ 'v', 'n' }, '<C-Space>', '$', { desc = 'Move to end of line' })
+vim.keymap.set({ 'n', 'v' }, '<C-Space>', '$', { desc = 'Move to end of line' })
 vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]], { desc = '[D]elete without yanking' })
 vim.keymap.set({ 'n', 'v' }, '<leader>x', [["_x]], { desc = '[X] Delete without yanking' })
 vim.keymap.set({ 'n', 'v' }, '<leader>c', [["_c]], { desc = '[C] Delete without yanking' })
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { desc = "navigate wrapped lines except you're not a psycho", expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { desc = "navigate wrapped lines except you're not a psycho", expr = true, silent = true })
+vim.keymap.set({ 'n', 'v' }, 'k', "v:count == 0 ? 'gk' : 'k'", { desc = "navigate wrapped lines except you're not a psycho", expr = true, silent = true })
+vim.keymap.set({ 'n', 'v' }, 'j', "v:count == 0 ? 'gj' : 'j'", { desc = "navigate wrapped lines except you're not a psycho", expr = true, silent = true })
 vim.keymap.set('n', '<leader>el', '<cmd>:yank<cr>:lua <C-R>"<cr>', { desc = '[E]xecute in [L]ua' })
+vim.keymap.set('n', '<c-z>', function()
+  vim.print "Don't do that"
+end, { desc = 'Stop' })
 
 -- quickfix
 vim.keymap.set('n', '<leader>oq', '<cmd>:copen<CR>', { desc = '[O]pen [Q]uickfix' })
@@ -54,29 +57,44 @@ vim.keymap.set('n', '[t', 'gT', { desc = 'previous tab' })
 
 -- ToggleTerm
 local shells = {}
-local function open_default_shell(direction, name)
+local last_used = 0
+
+local function open_default_shell(direction, default)
   return function()
-    local shell_name = name or vim.fn.input 'Terminal Name: '
-    local index = '0'
-    for k, v in pairs(shells) do
-      if v == shell_name then
-        index = k
+    local shell_name = ''
+    local index = 0
+
+    if default then
+      if #shells == 0 then
+        index = 1
+        table.insert(shells, 'default')
+      else
+        index = last_used
+      end
+      shell_name = shells[index] or 'default'
+    else
+      shell_name = vim.fn.input 'Terminal Name: '
+      for k, v in pairs(shells) do
+        if v == shell_name then
+          index = k
+        end
+      end
+
+      if index == 0 then
+        table.insert(shells, shell_name)
+        index = #shells
       end
     end
 
-    if index == '0' then
-      table.insert(shells, shell_name)
-      index = tostring(#shells)
-    end
-
-    local command = index .. 'ToggleTerm direction=' .. direction .. ' name=' .. shell_name
+    last_used = index
+    local command = index .. 'ToggleTerm direction=' .. direction .. ' name="' .. shell_name .. '"'
     vim.print(command)
     vim.cmd(command)
   end
 end
 
 vim.keymap.set('n', '<leader>ts', open_default_shell 'float', { desc = '[T]oggle [S]hell - ToggleTerm' })
-vim.keymap.set({ 'n', 'i' }, '<C-\\>', open_default_shell('float', 'default'), { desc = '[T]oggle [S]hell - ToggleTerm' })
+vim.keymap.set({ 'n', 'i' }, '<C-\\>', open_default_shell('float', true), { desc = '[T]oggle [S]hell - ToggleTerm' })
 vim.keymap.set('n', '<leader>tfs', open_default_shell 'float', { desc = '[T]oggle [F]loat [S]hell - ToggleTerm' })
 vim.keymap.set('n', '<leader>tvs', open_default_shell 'vertical', { desc = '[T]oggle [V]ertical [S]hell - ToggleTerm' })
 vim.keymap.set('n', '<leader>ths', open_default_shell 'horizontal', { desc = '[T]oggle [H]orizontal [S]hell - ToggleTerm' })
@@ -189,8 +207,8 @@ exports.telescope = {
 --  multicursor
 exports.multicursor = {
   {
-    mode = { 'v', 'n' },
-    '<Leader>m',
+    mode = { 'n', 'v' },
+    '<leader>m',
     '<cmd>MCstart<cr>',
     desc = '[M]ulticursor',
   },
