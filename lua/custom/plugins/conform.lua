@@ -1,3 +1,5 @@
+vim.g.conform_format_on_save = 1
+
 return {
 
   { -- Autoformat
@@ -17,6 +19,10 @@ return {
         },
       },
       format_on_save = function(bufnr)
+        if vim.g.conform_format_on_save == 0 then
+          return false
+        end
+
         local disable_filetypes = { c = true, cpp = true }
         local lsp_format_opt
         if disable_filetypes[vim.bo[bufnr].filetype] then
