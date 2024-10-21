@@ -42,17 +42,18 @@ return {
 
       -- Document existing key chains
       spec = {
+        { '<leader>e', group = '[E]xecute' },
+        { '<leader>b', group = '[B]uffer' },
+        { '<leader>r', group = '[R]eplace' },
+        { '<leader>s', group = '[S]earch' },
+        { '<leader>w', group = '[W]orkspace' },
+
         { '<leader>o', group = '[O]pen' },
         { '<leader>ov', group = '[O]pen [V]ertical' },
         { '<leader>oh', group = '[O]pen [H]orizontal' },
         { '<leader>of', group = '[O]pen [F]loat' },
         { '<leader>ow', group = '[O]pen [W]indow' },
-        { '<leader>e', group = '[E]xecute' },
-        { '<leader>b', group = '[B]uffer' },
-        { '<leader>r', group = '[R]eplace' },
-        { '<leader>d', group = '[D]ocument' },
-        { '<leader>s', group = '[S]earch' },
-        { '<leader>w', group = '[W]orkspace' },
+
         { '<leader>t', group = '[T]oggle' },
         { '<leader>tv', group = '[T]oggle [V]ertical' },
         { '<leader>th', group = '[T]oggle [H]orizontal' },
