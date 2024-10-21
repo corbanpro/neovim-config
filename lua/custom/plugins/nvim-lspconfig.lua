@@ -60,8 +60,10 @@ return {
       local servers = {
         jedi_language_server = {},
         cssls = {},
+        volar = {
+          filetypes = { 'vue' },
+        },
         rust_analyzer = {
-          vue_language_server = {},
 
           handlers = {
             ['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
