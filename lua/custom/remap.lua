@@ -9,7 +9,7 @@ vim.keymap.set('x', '<leader>p', [["_dP]], { desc = '[P]aste over selection' })
 vim.keymap.set({ 'n', 'v' }, '<C-Space>', '$', { desc = 'Move to end of line' })
 vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]], { desc = '[D]elete without yanking' })
 vim.keymap.set({ 'n', 'v' }, '<leader>x', [["_x]], { desc = '[X] Delete without yanking' })
-vim.keymap.set({ 'n', 'v' }, '<leader>c', [["_c]], { desc = '[C] Delete without yanking' })
+vim.keymap.set({ 'n', 'v' }, '<leader>c', [["_c]], { desc = '[C]hange without yanking' })
 vim.keymap.set({ 'n', 'v' }, 'k', "v:count == 0 ? 'gk' : 'k'", { desc = "navigate wrapped lines except you're not a psycho", expr = true, silent = true })
 vim.keymap.set({ 'n', 'v' }, 'j', "v:count == 0 ? 'gj' : 'j'", { desc = "navigate wrapped lines except you're not a psycho", expr = true, silent = true })
 vim.keymap.set('n', '<leader>el', '<cmd>:yank<cr>:lua <C-R>"<cr>', { desc = '[E]xecute in [L]ua' })
@@ -52,8 +52,9 @@ vim.keymap.set('n', '<leader>on', '<cmd>:enew<cr>', { desc = '[O]pen [N]ew file'
 vim.keymap.set('n', '<leader>ot', '<cmd>:tabnew<cr>', { desc = '[O]pen [T]ab' })
 vim.keymap.set('n', '<leader>ovt', '<C-W>v<cmd>:enew<cr>', { desc = '[O]pen [V]ertical [T]ab' })
 vim.keymap.set('n', '<leader>oht', '<C-W>s<cmd>:enew<cr>', { desc = '[O]pen [H]orizontal [T]ab' })
-vim.keymap.set('n', ']t', 'gt', { desc = 'next tab' })
-vim.keymap.set('n', '[t', 'gT', { desc = 'previous tab' })
+
+-- todo-comments
+vim.keymap.set('n', '<leader>st', '<cmd>:TodoTelescope<CR>', { desc = '[S]earch [T]odo' })
 
 -- ToggleTerm
 local shells = {}
@@ -140,15 +141,11 @@ exports.harpoon = {
 }
 
 -- undotree
-exports.undotree = {
-  set_keymaps = function()
-    vim.keymap.set('n', '<leader>tu', '<cmd>:UndotreeToggle<CR>:UndotreeFocus<CR>', { desc = '[T]oggle [U]ndotree' })
-  end,
-}
+vim.keymap.set('n', '<leader>tu', '<cmd>:UndotreeToggle<CR>:UndotreeFocus<CR>', { desc = '[T]oggle [U]ndotree' })
 
 -- neo-tree
 exports.neo_tree = {
-  { '\\', ':Neotree position=left toggle=true<CR>:set relativenumber<CR>', desc = 'Open NeoTree', silent = true },
+  { '\\', ':Neotree position=left toggle=true<CR>', desc = 'Open NeoTree', silent = true },
 }
 
 -- lazygit
@@ -160,6 +157,21 @@ exports.lazygit = {
 exports.conform = {
   keys = {
     {
+      '<leader>tl',
+      function()
+        if vim.g.conform_format_on_save == 1 then
+          vim.g.conform_format_on_save = 0
+          vim.print 'format on save disabled'
+        else
+          vim.g.conform_format_on_save = 1
+          vim.print 'format on save enabled'
+        end
+      end,
+      mode = '',
+      desc = '[T]oggle [L]ayout - Conform',
+    },
+    {
+
       '<leader>f',
       function()
         require('conform').format { async = true, lsp_format = 'fallback' }
@@ -175,16 +187,22 @@ exports.telescope = {
   set_keymaps = function(builtin)
     vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
     vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-    vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-    vim.keymap.set('n', '<leader>st', builtin.builtin, { desc = '[S]earch Select [T]elescope' })
+    vim.keymap.set('n', '<leader>sf', function()
+      builtin.find_files { hidden = true, no_ignore = true }
+    end, { desc = '[S]earch [F]iles' })
+    vim.keymap.set('n', '<leader>sb', builtin.builtin, { desc = '[S]earch Telescope [B]uiltin' })
     vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-    vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+    vim.keymap.set('n', '<leader>sg', function()
+      builtin.live_grep { hidden = true, no_ignore = true }
+    end, { desc = '[S]earch by [G]rep' })
     vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
     vim.keymap.set('n', '<leader>sq', builtin.quickfix, { desc = '[S]earch [Q]uickfix' })
     vim.keymap.set('n', '<leader>s-', builtin.quickfixhistory, { desc = '[S]earch [-] Quickfix History' })
 
     vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-    vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+    vim.keymap.set('n', '<leader>s.', function()
+      builtin.oldfiles { hidden = true, no_ignore = true }
+    end, { desc = '[S]earch Recent Files ("." for repeat)' })
     vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
     vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, { desc = '[/] Fuzzily search in current buffer' })
 
@@ -209,10 +227,61 @@ exports.multicursor = {
   {
     mode = { 'n', 'v' },
     '<leader>m',
-    '<cmd>MCstart<cr>',
+    '<cmd>MCunderCursor<cr>',
     desc = '[M]ulticursor',
   },
 }
+
+-- live-server
+vim.g.live_server_active = false
+vim.keymap.set('n', '<leader>es', function()
+  if vim.g.live_server_active then
+    vim.cmd 'LiveServerStop'
+    vim.g.live_server_active = false
+  else
+    vim.cmd 'LiveServerStart'
+    vim.g.live_server_active = true
+  end
+end, { desc = '[E]xecute Live [S]erver' })
+
+-- doge
+-- Generate comment for current line
+vim.g.doge_mapping = '<Leader>od'
+
+--trouble
+exports.trouble = {
+  {
+    '<leader>xx',
+    '<cmd>Trouble diagnostics toggle<cr>',
+    desc = 'Diagnostics (Trouble)',
+  },
+  {
+    '<leader>xX',
+    '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
+    desc = 'Buffer Diagnostics (Trouble)',
+  },
+  {
+    '<leader>xs',
+    '<cmd>Trouble symbols toggle focus=false<cr>',
+    desc = 'Symbols (Trouble)',
+  },
+  -- {
+  --   '<leader>xl',
+  --   '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
+  --   desc = 'LSP Definitions / references / ... (Trouble)',
+  -- },
+  -- {
+  --   '<leader>xL',
+  --   '<cmd>Trouble loclist toggle<cr>',
+  --   desc = 'Location List (Trouble)',
+  -- },
+  -- {
+  --   '<leader>xQ',
+  --   '<cmd>Trouble qflist toggle<cr>',
+  --   desc = 'Quickfix List (Trouble)',
+  -- },
+}
+
 -- lsp-config
 -- go to lsp-config file. It's too complicated to make sense to put here
 
