@@ -11,9 +11,12 @@ return {
   { 'Bilal2453/luvit-meta', lazy = true },
   {
     'mbbill/undotree',
-    config = function()
-      require('custom.remap').undotree.set_keymaps()
-    end,
   },
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  {
+    'kkoomen/vim-doge', -- easy documentation
+    config = function()
+      -- vim.cmd 'call doge#install()'
+    end,
+  },
 }
