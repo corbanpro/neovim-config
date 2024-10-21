@@ -26,10 +26,27 @@ return {
       local telescope = require 'telescope'
       telescope.setup {
         defaults = {
-          file_ignore_patterns = { 'node_modules', '.git', '.cargo', '.rustup' },
+          file_ignore_patterns = { 'node_modules', '.git', '.cargo', '.rustup', '.nuxt', 'package-lock.json' },
 
           mappings = {
             i = { ['<c-enter>'] = 'to_fuzzy_refine' },
+          },
+        },
+        pickers = {
+          find_files = {
+            hidden = true,
+          },
+          oldfiles = {
+            hidden = true,
+          },
+          live_grep = {
+            hidden = true,
+          },
+          resume = {
+            hidden = true,
+          },
+          buffers = {
+            hidden = true,
           },
         },
         extensions = {
