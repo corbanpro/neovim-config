@@ -2,6 +2,8 @@ return {
   {
     'neovim/nvim-lspconfig',
     dependencies = {
+      'williamboman/mason-registry',
+      'b0o/schemastore.nvim',
       { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -57,11 +59,53 @@ return {
       })
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+      local mason_registry = require 'mason-registry'
+      local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path() .. '/node_modules/@vue/language-server'
       local servers = {
-        jedi_language_server = {},
+        html = {},
         cssls = {},
-        volar = {
-          filetypes = { 'vue' },
+        eslint = {},
+        emmet_ls = {},
+        jedi_language_server = {},
+        volar = {},
+
+        yamlls = {
+          settings = {
+            yaml = {
+              customTags = {
+                '!Base64 scalar',
+                '!Cidr scalar',
+                '!And sequence',
+                '!Equals sequence',
+                '!If sequence',
+                '!Not sequence',
+                '!Or sequence',
+                '!Condition scalar',
+                '!FindInMap sequence',
+                '!GetAtt sequence',
+                '!GetAZs scalar',
+                '!ImportValue scalar',
+                '!Join sequence',
+                '!Select sequence',
+                '!Split sequence',
+                '!Sub scalar',
+                '!Transform mapping',
+                '!Ref scalar',
+              },
+              validate = true,
+              hover = true,
+              completion = true,
+              format = {
+                singleQuote = true,
+                bracketSpacing = false,
+              },
+              schemaStore = {
+                enable = false,
+                url = '',
+              },
+              schemas = require('schemastore').json.schemas(),
+            },
+          },
         },
         rust_analyzer = {
 
@@ -88,8 +132,18 @@ return {
             },
           },
         },
-        ts_ls = {},
-        emmet_ls = {},
+        ts_ls = {
+          init_options = {
+            plugins = {
+              {
+                name = '@vue/typescript-plugin',
+                location = vue_language_server_path,
+                languages = { 'vue' },
+              },
+            },
+          },
+          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+        },
         lua_ls = {
           settings = {
             Lua = {
@@ -105,7 +159,7 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'black',
-        'stylua', -- Used to format Lua code
+        'stylua',
         'prettierd',
         'prettier',
         'shfmt',
