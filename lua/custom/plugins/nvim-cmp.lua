@@ -35,6 +35,7 @@ return {
       --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      'Jezda1337/nvim-html-css',
     },
     config = function()
       -- See `:help cmp`
@@ -129,23 +130,23 @@ return {
           {
             name = 'html-css',
             option = {
-              'html',
               enable_on = {
-                'jsx',
-                'tsx',
-                'js',
-                'ts',
+                'html',
+                'css',
+                'javascriptreact',
+                'typescriptreact',
+                'javascript.jsx',
+                'typescript.jsx',
               }, -- set the file types you want the plugin to work on
               file_extensions = { 'css' }, -- set the local filetypes from which you want to derive classes
-              style_sheets = {
-                'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css',
-              },
+              style_sheets = {},
             },
           },
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'path' },
           { name = 'volar' },
+          { name = 'yamlls' },
         },
       }
     end,
