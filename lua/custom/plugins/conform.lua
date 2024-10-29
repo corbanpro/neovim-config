@@ -48,6 +48,7 @@ return {
         vue = { 'prettierd' },
         python = { 'black' },
         rust = { 'rustfmt' },
+        yaml = { 'prettierd', 'prettier' },
         ['*'] = { 'trim_whitespace' },
       },
     },
