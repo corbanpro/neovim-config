@@ -1,4 +1,5 @@
 local exports = {}
+
 -- helpers
 vim.keymap.set('i', '<C-R>', '<C-G>u<C-R>', { desc = 'augmented paste' })
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -12,19 +13,37 @@ vim.keymap.set({ 'n', 'v' }, '<leader>x', [["_x]], { desc = '[X] Delete without 
 vim.keymap.set({ 'n', 'v' }, '<leader>c', [["_c]], { desc = '[C]hange without yanking' })
 vim.keymap.set({ 'n', 'v' }, 'k', "v:count == 0 ? 'gk' : 'k'", { desc = "navigate wrapped lines except you're not a psycho", expr = true, silent = true })
 vim.keymap.set({ 'n', 'v' }, 'j', "v:count == 0 ? 'gj' : 'j'", { desc = "navigate wrapped lines except you're not a psycho", expr = true, silent = true })
-vim.keymap.set('n', '<leader>el', '<cmd>:yank<cr>:lua <C-R>"<cr>', { desc = '[E]xecute in [L]ua' })
+vim.keymap.set('n', '<leader>el', '"6yy:lua <C-R>"<cr>', { desc = '[E]xecute in [L]ua' })
+vim.keymap.set('n', 'n', 'nzzzv', { desc = 'search terms stay centered' })
+vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'search terms stay centered' })
+vim.keymap.set('n', 'J', 'mzJ`z', { desc = "join lines, don't move cursor" })
+vim.keymap.set('n', '<leader>ri', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = '[R]eplace [I]nline' })
+vim.keymap.set('v', '<leader>ri', [["6y:%s/\<<C-r>6\>/<C-r>6/gI<Left><Left><Left>]], { desc = '[R]eplace [I]nline' })
 vim.keymap.set('n', '<c-z>', function()
+  vim.print "Don't do that"
+end, { desc = 'Stop' })
+vim.keymap.set('n', 'Q', function()
   vim.print "Don't do that"
 end, { desc = 'Stop' })
 
 -- quickfix
-vim.keymap.set('n', '<leader>oq', '<cmd>:copen<CR>', { desc = '[O]pen [Q]uickfix' })
-vim.keymap.set('n', ']c', '<cmd>:cnext<CR>', { desc = 'Next Quickfix' })
-vim.keymap.set('n', ']C', '<cmd>:clast<CR>', { desc = 'Last Quickfix' })
-vim.keymap.set('n', '[c', '<cmd>:cprevious<CR>', { desc = 'Prev Quickfix' })
-vim.keymap.set('n', '[C', '<cmd>:cfirst<CR>', { desc = 'First Quickfix' })
-vim.keymap.set('n', '[q', '<cmd>:colder<CR>', { desc = 'Older Quickfix List' })
-vim.keymap.set('n', ']q', '<cmd>:cnewer<CR>', { desc = 'Newer Quickfix List' })
+local quickfix_open = false
+local function quickfix_toggle()
+  if quickfix_open then
+    vim.cmd 'cclose'
+    quickfix_open = false
+  else
+    vim.cmd 'copen'
+    quickfix_open = true
+  end
+end
+vim.keymap.set('n', '<leader>tq', quickfix_toggle, { desc = '[T]oggle [Q]uickfix' })
+vim.keymap.set('n', ']c', '<cmd>:cnext<CR>', { desc = 'Next quickfix' })
+vim.keymap.set('n', ']C', '<cmd>:clast<CR>', { desc = 'Last quickfix' })
+vim.keymap.set('n', '[c', '<cmd>:cprevious<CR>', { desc = 'Previous quickfix' })
+vim.keymap.set('n', '[C', '<cmd>:cfirst<CR>', { desc = 'First quickfix' })
+vim.keymap.set('n', '[q', '<cmd>:colder<CR>', { desc = 'Previous quickfix list' })
+vim.keymap.set('n', ']q', '<cmd>:cnewer<CR>', { desc = 'Next quickfix list' })
 
 -- replace
 local replace = require 'custom.replace'
@@ -41,10 +60,6 @@ vim.keymap.set('n', '<A-k>', '<cmd>:m .-2<CR>==', { desc = 'Move line up' })
 vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move lines up' })
 vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move lines down' })
 
--- buffer
-vim.keymap.set('n', '<leader>bd', '<cmd>:bd<cr>', { desc = '[B]uffer [D]elete' })
-vim.keymap.set('n', '<leader>bw', '<cmd>:w<CR>:bd<cr>', { desc = '[B]uffer [W]rite and Delete' })
-
 -- file
 vim.keymap.set('n', '<leader>on', '<cmd>:enew<cr>', { desc = '[O]pen [N]ew file' })
 
@@ -52,6 +67,8 @@ vim.keymap.set('n', '<leader>on', '<cmd>:enew<cr>', { desc = '[O]pen [N]ew file'
 vim.keymap.set('n', '<leader>ot', '<cmd>:tabnew<cr>', { desc = '[O]pen [T]ab' })
 vim.keymap.set('n', '<leader>ovt', '<C-W>v<cmd>:enew<cr>', { desc = '[O]pen [V]ertical [T]ab' })
 vim.keymap.set('n', '<leader>oht', '<C-W>s<cmd>:enew<cr>', { desc = '[O]pen [H]orizontal [T]ab' })
+vim.keymap.set('n', ']t', 'gt', { desc = 'Next tab' })
+vim.keymap.set('n', '[t', 'gT', { desc = 'Previous tab' })
 
 -- todo-comments
 vim.keymap.set('n', '<leader>st', '<cmd>:TodoTelescope<CR>', { desc = '[S]earch [T]odo' })
@@ -173,9 +190,7 @@ exports.conform = {
     {
 
       '<leader>f',
-      function()
-        require('conform').format { async = true, lsp_format = 'fallback' }
-      end,
+      '<cmd>:w<CR>',
       mode = '',
       desc = '[F]ormat buffer - Conform',
     },
@@ -191,10 +206,18 @@ exports.telescope = {
       builtin.find_files { hidden = true, no_ignore = true }
     end, { desc = '[S]earch [F]iles' })
     vim.keymap.set('n', '<leader>sb', builtin.builtin, { desc = '[S]earch Telescope [B]uiltin' })
-    vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
     vim.keymap.set('n', '<leader>sg', function()
+      builtin.grep_string {
+        shorten_path = true,
+        word_match = '-w',
+        only_sort_text = true,
+        search = '',
+      }
+    end, { desc = '[S]earch [G]rep' })
+
+    vim.keymap.set('n', '<leader>se', function()
       builtin.live_grep { hidden = true, no_ignore = true }
-    end, { desc = '[S]earch by [G]rep' })
+    end, { desc = '[S]earch by Grep [E]xact' })
     vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
     vim.keymap.set('n', '<leader>sq', builtin.quickfix, { desc = '[S]earch [Q]uickfix' })
     vim.keymap.set('n', '<leader>s-', builtin.quickfixhistory, { desc = '[S]earch [-] Quickfix History' })
@@ -225,9 +248,15 @@ exports.telescope = {
 --  multicursor
 exports.multicursor = {
   {
-    mode = { 'n', 'v' },
+    mode = 'n',
     '<leader>m',
-    '<cmd>MCunderCursor<cr>',
+    '<cmd>:MCunderCursor<cr>',
+    desc = '[M]ulticursor',
+  },
+  {
+    mode = 'v',
+    '<leader>m',
+    '<cmd>:MCstart<cr>',
     desc = '[M]ulticursor',
   },
 }
@@ -265,23 +294,38 @@ exports.trouble = {
     '<cmd>Trouble symbols toggle focus=false<cr>',
     desc = 'Symbols (Trouble)',
   },
-  -- {
-  --   '<leader>xl',
-  --   '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
-  --   desc = 'LSP Definitions / references / ... (Trouble)',
-  -- },
-  -- {
-  --   '<leader>xL',
-  --   '<cmd>Trouble loclist toggle<cr>',
-  --   desc = 'Location List (Trouble)',
-  -- },
-  -- {
-  --   '<leader>xQ',
-  --   '<cmd>Trouble qflist toggle<cr>',
-  --   desc = 'Quickfix List (Trouble)',
-  -- },
 }
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Cellular Automaton
 
+local function choose_random_kms()
+  local kmss = {
+    'swirl',
+    'ripple',
+    'rotate',
+    'matrix',
+    'random', --[['slide']]
+    'game_of_life',
+    'make_it_rain',
+    'scramble',
+  }
+  local kms = kmss[math.random(1, #kmss)]
+  vim.cmd('CellularAutomaton ' .. kms)
+end
+--[[
+vim.cmd('CellularAutomaton ' .. 'swirl')
+vim.cmd('CellularAutomaton ' .. 'ripple')
+vim.cmd('CellularAutomaton ' .. 'rotate')
+vim.cmd('CellularAutomaton ' .. 'matrix')
+vim.cmd('CellularAutomaton ' .. 'random')
+
+vim.cmd('CellularAutomaton ' .. 'game_of_life')
+vim.cmd('CellularAutomaton ' .. 'make_it_rain')
+vim.cmd('CellularAutomaton ' .. 'scramble')
+vim.cmd('CellularAutomaton ' .. 'slide')
+--]]
+
+vim.keymap.set('n', '<leader>kms', choose_random_kms, { desc = '[K][M][S]' })
 -- lsp-config
 -- go to lsp-config file. It's too complicated to make sense to put here
 
