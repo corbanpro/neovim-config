@@ -54,6 +54,9 @@ return {
         { '<leader>of', group = '[O]pen [F]loat' },
         { '<leader>ow', group = '[O]pen [W]indow' },
 
+        { '<leader>k', group = '[K][M][S]' },
+        { '<leader>km', group = '[K][M][S]' },
+
         { '<leader>t', group = '[T]oggle' },
         { '<leader>tv', group = '[T]oggle [V]ertical' },
         { '<leader>th', group = '[T]oggle [H]orizontal' },
