@@ -1,13 +1,9 @@
 return {
-  { -- Useful plugin to show you pending keybinds.
+  {
     'folke/which-key.nvim',
-    event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     opts = {
       icons = {
-        -- set icon mappings to true if you have a Nerd Font
         mappings = vim.g.have_nerd_font,
-        -- If you are using a Nerd Font: set icons.keys to an empty table which will use the
-        -- default whick-key.nvim defined Nerd Font icons, otherwise define a string table
         keys = vim.g.have_nerd_font and {} or {
           Up = '<Up> ',
           Down = '<Down> ',
@@ -40,7 +36,6 @@ return {
         },
       },
 
-      -- Document existing key chains
       spec = {
         { '<leader>e', group = '[E]xecute' },
         { '<leader>b', group = '[B]uffer' },
@@ -58,10 +53,6 @@ return {
         { '<leader>km', group = '[K][M][S]' },
 
         { '<leader>t', group = '[T]oggle' },
-        { '<leader>tv', group = '[T]oggle [V]ertical' },
-        { '<leader>th', group = '[T]oggle [H]orizontal' },
-        { '<leader>tf', group = '[T]oggle [F]loat' },
-        { '<leader>tw', group = '[T]oggle [W]indow' },
       },
     },
   },

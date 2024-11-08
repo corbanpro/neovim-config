@@ -1,3 +1,4 @@
 return {
-  'tpope/vim-sleuth', -- detect tabstop and shiftwidth automatically
+  'tpope/vim-sleuth',
+  event = 'BufRead',
 }

@@ -35,19 +35,15 @@ local function open_default_shell(direction, default)
   end
 end
 
-vim.keymap.set('n', '<leader>ts', open_default_shell 'float', { desc = '[T]oggle [S]hell - ToggleTerm' })
-vim.keymap.set({ 'n', 'i' }, '<C-\\>', open_default_shell('float', true), { desc = '[T]oggle [S]hell - ToggleTerm' })
-vim.keymap.set('n', '<leader>tfs', open_default_shell 'float', { desc = '[T]oggle [F]loat [S]hell - ToggleTerm' })
-vim.keymap.set('n', '<leader>tvs', open_default_shell 'vertical', { desc = '[T]oggle [V]ertical [S]hell - ToggleTerm' })
-vim.keymap.set('n', '<leader>ths', open_default_shell 'horizontal', { desc = '[T]oggle [H]orizontal [S]hell - ToggleTerm' })
-vim.keymap.set('n', '<leader>tts', open_default_shell 'tab', { desc = '[T]oggle [T]ab [S]hell - ToggleTerm' })
+vim.keymap.set('n', '<leader>tt', open_default_shell 'float', { desc = '[T]oggle [T]erminal - ToggleTerm' })
+vim.keymap.set({ 'n', 'i' }, '<C-\\>', open_default_shell('float', true), { desc = 'Toggle Terminal - ToggleTerm' })
 vim.keymap.set('n', '<C-s>', '<cmd>:TermSelect<CR>', { desc = 'Select Terminal' })
 
 return {
   {
     'akinsho/toggleterm.nvim',
     version = '*',
-    event = 'BufWinEnter',
+    event = 'VeryLazy',
     opts = {
       direction = 'float',
       on_open = function(terminal)

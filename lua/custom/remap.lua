@@ -5,26 +5,20 @@ vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'scroll down' })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'scroll up' })
 vim.keymap.set('n', 'n', 'nzzzv', { desc = 'search terms stay centered' })
 vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'search terms stay centered' })
-vim.keymap.set('x', '<leader>p', [["_dP]], { desc = '[P]aste over selection' })
+vim.keymap.set({ 'n', 'v' }, '<leader>p', [["_dP]], { desc = '[P]aste over selection' })
 vim.keymap.set({ 'n', 'v' }, '<C-Space>', '$', { desc = 'Move to end of line' })
-vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]], { desc = '[D]elete without yanking' })
-vim.keymap.set({ 'n', 'v' }, '<leader>x', [["_x]], { desc = '[X] Delete without yanking' })
-vim.keymap.set({ 'n', 'v' }, '<leader>c', [["_c]], { desc = '[C]hange without yanking' })
-vim.keymap.set({ 'n', 'v' }, '<leader>D', [["_D]], { desc = '[D]elete without yanking' })
-vim.keymap.set({ 'n', 'v' }, '<leader>X', [["_X]], { desc = '[X] Delete without yanking' })
-vim.keymap.set({ 'n', 'v' }, '<leader>C', [["_C]], { desc = '[C]hange without yanking' })
 vim.keymap.set({ 'n', 'v' }, 'k', "v:count == 0 ? 'gk' : 'k'", { desc = "navigate wrapped lines except you're not a psycho", expr = true, silent = true })
 vim.keymap.set({ 'n', 'v' }, 'j', "v:count == 0 ? 'gj' : 'j'", { desc = "navigate wrapped lines except you're not a psycho", expr = true, silent = true })
 vim.keymap.set('n', '<leader>el', '"6yy:lua <C-R>"<cr>', { desc = '[E]xecute in [L]ua' })
 vim.keymap.set('n', 'J', 'mzJ`z', { desc = "join lines, don't move cursor" })
-vim.keymap.set('n', '<leader>ri', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = '[R]eplace [I]nline' })
-vim.keymap.set('v', '<leader>ri', [["6y:%s/\<<C-r>6\>/<C-r>6/gI<Left><Left><Left>]], { desc = '[R]eplace [I]nline' })
-vim.keymap.set('n', '<c-z>', function()
-  vim.print "Don't do that"
-end, { desc = 'Stop' })
-vim.keymap.set('n', 'Q', function()
-  vim.print "Don't do that"
-end, { desc = 'Stop' })
+
+-- delete
+vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]], { desc = '[D]elete without yanking' })
+vim.keymap.set({ 'n', 'v' }, '<leader>D', [["_D]], { desc = '[D]elete without yanking' })
+vim.keymap.set({ 'n', 'v' }, '<leader>x', [["_x]], { desc = '[X] Delete without yanking' })
+vim.keymap.set({ 'n', 'v' }, '<leader>X', [["_X]], { desc = '[X] Delete without yanking' })
+vim.keymap.set({ 'n', 'v' }, '<leader>c', [["_c]], { desc = '[C]hange without yanking' })
+vim.keymap.set({ 'n', 'v' }, '<leader>C', [["_C]], { desc = '[C]hange without yanking' })
 
 -- replace
 local replace = require 'custom.replace'
@@ -32,6 +26,8 @@ vim.keymap.set('n', '<leader>ra', replace.n_replace_all, { desc = '[R]eplace Wor
 vim.keymap.set('v', '<leader>ra', replace.v_replace_all, { desc = '[R]eplace Selection - [A]ll' })
 vim.keymap.set('n', '<leader>rc', replace.n_replace_confirm_all, { desc = '[R]eplace Word - [C]onfirm' })
 vim.keymap.set('v', '<leader>rc', replace.v_replace_confirm_all, { desc = '[R]eplace Selection - [C]onfirm' })
+vim.keymap.set('n', '<leader>ri', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = '[R]eplace [I]nline' })
+vim.keymap.set('v', '<leader>ri', [["6y:%s/\<<C-r>6\>/<C-r>6/gI<Left><Left><Left>]], { desc = '[R]eplace [I]nline' })
 
 -- move lines
 vim.keymap.set('i', '<A-j>', '<Esc><cmd>:m .+1<CR>==gi', { desc = 'Move line down' })
@@ -43,13 +39,10 @@ vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move lines down' })
 
 -- file
 vim.keymap.set('n', '<leader>on', '<cmd>:enew<cr>', { desc = '[O]pen [N]ew file' })
-
--- Tab
 vim.keymap.set('n', '<leader>ot', '<cmd>:tabnew<cr>', { desc = '[O]pen [T]ab' })
-vim.keymap.set('n', '<leader>ovt', '<C-W>v<cmd>:enew<cr>', { desc = '[O]pen [V]ertical [T]ab' })
-vim.keymap.set('n', '<leader>oht', '<C-W>s<cmd>:enew<cr>', { desc = '[O]pen [H]orizontal [T]ab' })
 
 -- quickfix
+-- TODO: make quickfix preview window
 local function quickfix_toggle()
   local open = false
   for _, buffer in pairs(vim.fn.getwininfo()) do
@@ -76,7 +69,6 @@ vim.keymap.set('n', ']q', '<cmd>:cnewer<CR>', { desc = 'Next quickfix list' })
 -- info hover
 vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = 'rounded',
-  focus_id = 'lsp_hover',
   width = 50,
 })
 vim.keymap.set('n', 'K', function()
@@ -130,13 +122,23 @@ vim.g.showing_diagnostic_hints = false
 vim.keymap.set('n', '<leader>td', function()
   if vim.g.showing_diagnostic_hints then
     vim.g.showing_diagnostic_hints = false
+    vim.print 'Disabling diagnostic hints'
     vim.diagnostic.config {
       virtual_text = false,
     }
   else
     vim.g.showing_diagnostic_hints = true
+    vim.print 'Enabling diagnostic hints'
     vim.diagnostic.config {
       virtual_text = true,
     }
   end
-end, { desc = '[T]oggle [D]iagnositc hints' })
+end, { desc = '[T]oggle [D]iagnostic hints' })
+
+--Stop
+vim.keymap.set('n', '<c-z>', function()
+  vim.print "Don't do that"
+end, { desc = 'Stop' })
+vim.keymap.set('n', 'Q', function()
+  vim.print "Don't do that"
+end, { desc = 'Stop' })

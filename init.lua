@@ -1,3 +1,4 @@
+-- TODO: check lazy profile and lazy load more stuff
 require 'custom.options'
 require 'custom.remap'
 

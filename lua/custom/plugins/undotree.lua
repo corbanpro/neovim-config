@@ -2,4 +2,5 @@ vim.keymap.set('n', '<leader>tu', '<cmd>:UndotreeToggle<CR>:UndotreeFocus<CR>', 
 
 return {
   'mbbill/undotree',
+  event = 'VeryLazy',
 }

@@ -29,8 +29,9 @@ vim.keymap.set('n', '<leader>kms', choose_random_kms, { desc = '[K][M][S]' })
 
 return {
   {
-
     'eandrju/cellular-automaton.nvim',
+    lazy = true,
+    event = 'VeryLazy',
     config = function()
       local ce = require 'cellular-automaton'
       local blank_char = { char = ' ', hl_group = '' }

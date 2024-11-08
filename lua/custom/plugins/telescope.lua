@@ -57,7 +57,6 @@ return {
           },
         },
       }
-      -- telescope.load_extension 'live_grep_args'
 
       vim.keymap.set('n', '<leader>sp', function()
         telescope.extensions.project.project { display_type = 'full' }
@@ -90,7 +89,12 @@ return {
         builtin.oldfiles { hidden = true, no_ignore = true }
       end, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
-      vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, { desc = '[/] Fuzzily search in current buffer' })
+      vim.keymap.set('n', '<leader>/', function()
+        builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+          winblend = 10,
+          previewer = true,
+        })
+      end, { desc = '[/] Fuzzily search in current buffer' })
 
       vim.keymap.set('n', '<leader>s/', function()
         builtin.live_grep {

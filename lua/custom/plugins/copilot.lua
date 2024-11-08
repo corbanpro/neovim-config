@@ -53,6 +53,7 @@ vim.keymap.set('n', '<leader>tc', copilot_toggle, { desc = '[T]oggle [C]opilot' 
 
 return {
   'github/copilot.vim',
+  event = 'VimEnter',
   config = function()
     if copilot_on() then
       set_copilot 'true'
