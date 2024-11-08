@@ -1,65 +1,63 @@
+local copilot_on_file = vim.fn.stdpath 'config' .. '/lua/custom/copilot_on.txt'
+local function file_exists(file)
+  local f = io.open(file, 'rb')
+  if f then
+    f:close()
+  end
+  return f ~= nil
+end
+
+local function copilot_on()
+  if not file_exists(copilot_on_file) then
+    local file = io.open(copilot_on_file, 'w')
+    if not file then
+      return false
+    end
+    file:write 'false'
+    file:close()
+    return false
+  end
+  local lines = {}
+  for line in io.lines(copilot_on_file) do
+    lines[#lines + 1] = line
+  end
+
+  return lines[1] == 'true' and true or false
+end
+
+local function set_copilot(state)
+  local f = io.open(copilot_on_file, 'w')
+  if not f then
+    return
+  end
+  f:write(state)
+  f:close()
+  if state == 'false' then
+    vim.cmd 'Copilot disable'
+    vim.print 'Copilot disabled'
+  else
+    vim.cmd 'Copilot enable'
+    vim.print 'Copilot enabled'
+  end
+end
+
+local copilot_toggle = function()
+  if copilot_on() then
+    set_copilot 'false'
+  else
+    set_copilot 'true'
+  end
+end
+
+vim.keymap.set('n', '<leader>tc', copilot_toggle, { desc = '[T]oggle [C]opilot' })
+
 return {
   'github/copilot.vim',
   config = function()
-    local copilot_mod = require 'custom.copilot_toggle'
-    if copilot_mod.copilot_on() then
-      copilot_mod.set_copilot 'true'
+    if copilot_on() then
+      set_copilot 'true'
     else
-      copilot_mod.set_copilot 'false'
+      set_copilot 'false'
     end
   end,
 }
-
--- return {
-
---   'zbirenbaum/copilot.lua',
---   cmd = 'Copilot',
---   event = 'InsertEnter',
---   config = true,
---
---   otps = {
---     panel = {
---       enabled = true,
---       auto_refresh = false,
---       keymap = {
---         jump_prev = '[[',
---         jump_next = ']]',
---         accept = '<CR>',
---         refresh = 'gr',
---         open = '<M-CR>',
---       },
---       layout = {
---         position = 'bottom', -- | top | left | right
---         ratio = 0.4,
---       },
---     },
---     suggestion = {
---       enabled = true,
---       auto_trigger = false,
---       -- hide_during_completion = true,
---       hide_during_completion = false,
---       debounce = 75,
---       keymap = {
---         accept = '<M-l>',
---         accept_word = false,
---         accept_line = false,
---         next = '<M-]>',
---         prev = '<M-[>',
---         dismiss = '<C-]>',
---       },
---     },
---     filetypes = {
---       yaml = false,
---       markdown = false,
---       help = false,
---       gitcommit = false,
---       gitrebase = false,
---       hgcommit = false,
---       svn = false,
---       cvs = false,
---       ['.'] = false,
---     },
---     -- copilot_node_command = 'node', -- Node.js version must be > 18.x
---     -- server_opts_overrides = {},
---   },
--- }

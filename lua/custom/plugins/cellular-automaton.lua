@@ -1,3 +1,32 @@
+local function choose_random_kms()
+  local kmss = {
+    'swirl',
+    'ripple',
+    'rotate',
+    'matrix',
+    'random', --[['slide']]
+    'game_of_life',
+    'make_it_rain',
+    'scramble',
+  }
+  local kms = kmss[math.random(1, #kmss)]
+  vim.cmd('CellularAutomaton ' .. kms)
+end
+--[[
+vim.cmd('CellularAutomaton ' .. 'swirl')
+vim.cmd('CellularAutomaton ' .. 'ripple')
+vim.cmd('CellularAutomaton ' .. 'rotate')
+vim.cmd('CellularAutomaton ' .. 'matrix')
+vim.cmd('CellularAutomaton ' .. 'random')
+
+vim.cmd('CellularAutomaton ' .. 'game_of_life')
+vim.cmd('CellularAutomaton ' .. 'make_it_rain')
+vim.cmd('CellularAutomaton ' .. 'scramble')
+vim.cmd('CellularAutomaton ' .. 'slide')
+--]]
+
+vim.keymap.set('n', '<leader>kms', choose_random_kms, { desc = '[K][M][S]' })
+
 return {
   {
 

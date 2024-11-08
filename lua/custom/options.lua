@@ -2,6 +2,10 @@ vim.g.netrw_liststyle = 3
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+vim.diagnostic.config {
+  virtual_text = false,
+}
+
 vim.opt.colorcolumn = '100'
 vim.opt.number = true
 vim.opt.relativenumber = true

@@ -3,6 +3,7 @@
 
 return {
   'nvim-neo-tree/neo-tree.nvim',
+
   version = '*',
   dependencies = {
     'nvim-lua/plenary.nvim',
@@ -10,7 +11,7 @@ return {
     'MunifTanjim/nui.nvim',
   },
   cmd = 'Neotree',
-  keys = require('custom.remap').neo_tree,
+  keys = { { '\\', ':Neotree position=left toggle=true<CR>', desc = 'Open NeoTree', silent = true } },
   opts = {
     enable_git_status = false,
     close_if_last_window = true,
