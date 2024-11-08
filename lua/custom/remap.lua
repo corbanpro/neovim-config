@@ -12,6 +12,26 @@ vim.keymap.set({ 'n', 'v' }, 'j', "v:count == 0 ? 'gj' : 'j'", { desc = "navigat
 vim.keymap.set('n', '<leader>el', '"6yy:lua <C-R>"<cr>', { desc = '[E]xecute in [L]ua' })
 vim.keymap.set('n', 'J', 'mzJ`z', { desc = "join lines, don't move cursor" })
 
+-- smart quit
+vim.keymap.set(
+  'n',
+  '<leader>q',
+  [[:Neotree close
+  :cclose
+  :Trouble diagnostics close
+  :UndotreeHide
+  :wa
+  :qa ]],
+  { desc = 'Smart [Q]uit' }
+)
+
+vim.api.nvim_create_autocmd('VimLeavePre', {
+  pattern = '*',
+  callback = function()
+    vim.cmd('mksession! ' .. './.session.vim')
+  end,
+})
+
 -- delete
 vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]], { desc = '[D]elete without yanking' })
 vim.keymap.set({ 'n', 'v' }, '<leader>D', [["_D]], { desc = '[D]elete without yanking' })

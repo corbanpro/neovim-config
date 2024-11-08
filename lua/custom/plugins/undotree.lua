@@ -1,6 +1,11 @@
 return {
   {
     'mbbill/undotree',
+    cmd = {
+      'UndotreeFocus',
+      'UndotreeToggle',
+      'UndotreeHide',
+    },
     keys = {
       {
         '<leader>tu',

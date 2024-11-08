@@ -39,6 +39,11 @@ return {
   {
     'akinsho/toggleterm.nvim',
     version = '*',
+    cmd = {
+      'ToggleTerm',
+      'TermExec',
+      'TermSelect',
+    },
     keys = {
       {
         '<leader>tt',
@@ -61,6 +66,13 @@ return {
       direction = 'float',
       on_open = function(terminal)
         vim.api.nvim_buf_set_keymap(terminal.bufnr, 'n', '<C-\\>', '<cmd>close<CR>', { noremap = true, silent = true, desc = 'Close Shell - ToggleTerm' })
+        vim.api.nvim_buf_set_keymap(
+          terminal.bufnr,
+          'n',
+          ':ToggleTermClose',
+          '<cmd>close<CR>',
+          { noremap = true, silent = true, desc = 'Close Shell - ToggleTerm' }
+        )
         vim.api.nvim_buf_set_keymap(terminal.bufnr, 'n', '<Esc>', '<cmd>close<CR>', { noremap = true, silent = true, desc = 'Close Shell - ToggleTerm' })
         vim.api.nvim_buf_set_keymap(terminal.bufnr, 't', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true, desc = 'Exit terminal mode - ToggleTerm' })
         vim.api.nvim_buf_set_keymap(terminal.bufnr, 't', '<C-\\>', '<cmd>close<CR>', { noremap = true, silent = true, desc = 'Close Shell - ToggleTerm' })
