@@ -1,23 +1,20 @@
 return {
+  { 'nvim-telescope/telescope-project.nvim', lazy = true },
+  {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    lazy = true,
+    build = 'make',
+    cond = function()
+      return vim.fn.executable 'make' == 1
+    end,
+  },
+  { 'nvim-lua/plenary.nvim', lazy = true }, -- Telescope, todo-comments, neo-tree, harpoon, nvim-html-css, LazyGit
+  { 'nvim-telescope/telescope-ui-select.nvim', lazy = true },
+  { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font, lazy = true },
   {
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
     branch = '0.1.x',
-
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope-project.nvim',
-      {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make',
-        cond = function()
-          return vim.fn.executable 'make' == 1
-        end,
-      },
-      { 'nvim-telescope/telescope-ui-select.nvim' },
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
-    },
-
     config = function()
       require('telescope').load_extension 'fzf'
       require('telescope').load_extension 'ui-select'
@@ -33,7 +30,7 @@ return {
           },
         },
         defaults = {
-          file_ignore_patterns = { 'node_modules', '.git', '.cargo', '.rustup', '.nuxt', '%lock.json', 'archive', 'docs', 'dist' },
+          file_ignore_patterns = { 'node_modules', '.git/', '.cargo', '.rustup', '.nuxt', '%lock.json', 'archive', 'docs', 'dist' },
 
           mappings = {
             i = { ['<c-enter>'] = 'to_fuzzy_refine' },

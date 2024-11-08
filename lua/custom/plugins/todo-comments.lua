@@ -9,15 +9,12 @@ vim.keymap.set('n', '[t', function()
 end, { desc = 'Previous todo comment' })
 
 return {
-  'folke/todo-comments.nvim',
-  dependencies = { 'nvim-lua/plenary.nvim' },
-  event = 'VimEnter',
-  opts = {
-    signs = true,
-    highlight = {
-      before = 'fg',
-      keyword = 'wide',
-      after = 'fg',
+  { 'nvim-lua/plenary.nvim', lazy = true },
+  {
+    'folke/todo-comments.nvim',
+    event = 'BufRead',
+    opts = {
+      signs = true,
     },
   },
 }

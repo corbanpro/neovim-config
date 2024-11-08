@@ -25,13 +25,15 @@ vim.cmd('CellularAutomaton ' .. 'scramble')
 vim.cmd('CellularAutomaton ' .. 'slide')
 --]]
 
-vim.keymap.set('n', '<leader>kms', choose_random_kms, { desc = '[K][M][S]' })
-
 return {
   {
     'eandrju/cellular-automaton.nvim',
-    lazy = true,
-    event = 'VeryLazy',
+    keys = {
+      { '<leader>kms', choose_random_kms, mode = 'n', desc = '[K][M][S]' },
+    },
+    cmd = {
+      'CellularAutomaton',
+    },
     config = function()
       local ce = require 'cellular-automaton'
       local blank_char = { char = ' ', hl_group = '' }

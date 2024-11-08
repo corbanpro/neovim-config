@@ -35,15 +35,28 @@ local function open_default_shell(direction, default)
   end
 end
 
-vim.keymap.set('n', '<leader>tt', open_default_shell 'float', { desc = '[T]oggle [T]erminal - ToggleTerm' })
-vim.keymap.set({ 'n', 'i' }, '<C-\\>', open_default_shell('float', true), { desc = 'Toggle Terminal - ToggleTerm' })
-vim.keymap.set('n', '<C-s>', '<cmd>:TermSelect<CR>', { desc = 'Select Terminal' })
-
 return {
   {
     'akinsho/toggleterm.nvim',
     version = '*',
-    event = 'VeryLazy',
+    keys = {
+      {
+        '<leader>tt',
+        open_default_shell 'float',
+        { noremap = true, silent = true, desc = '[T]oggle [T]erminal - ToggleTerm' },
+      },
+      {
+        '<C-\\>',
+        open_default_shell('float', true),
+        mode = { 'i', 'n' },
+        { noremap = true, silent = true, desc = 'Toggle Terminal - ToggleTerm' },
+      },
+      {
+        '<C-s>',
+        '<cmd>:TermSelect<CR>',
+        { noremap = true, silent = true, desc = 'Select Terminal' },
+      },
+    },
     opts = {
       direction = 'float',
       on_open = function(terminal)

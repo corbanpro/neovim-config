@@ -1,6 +1,10 @@
 vim.g.doge_mapping = '<leader>od'
 
 return {
-  'kkoomen/vim-doge',
-  event = 'VeryLazy',
+  {
+    'kkoomen/vim-doge',
+    keys = {
+      '<leader>od',
+    },
+  },
 }

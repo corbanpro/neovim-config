@@ -1,7 +1,7 @@
 return {
   {
     'jose-elias-alvarez/null-ls.nvim',
-    event = 'VeryLazy',
+    ft = 'lua',
     config = function()
       require 'null-ls'
     end,

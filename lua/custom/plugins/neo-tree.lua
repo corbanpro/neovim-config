@@ -2,33 +2,28 @@
 -- https://github.com/nvim-neo-tree/neo-tree.nvim
 
 return {
-  'nvim-neo-tree/neo-tree.nvim',
-  event = 'VeryLazy',
-  version = '*',
-  dependencies = {
-    'nvim-lua/plenary.nvim',
-    'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
-    'MunifTanjim/nui.nvim',
-  },
-  cmd = 'Neotree',
-  keys = { { '\\', ':Neotree position=left toggle=true<CR>', desc = 'Open NeoTree', silent = true } },
-  opts = {
-    enable_git_status = false,
-    close_if_last_window = true,
-    default_component_configs = {
-      name = {
-        trailing_slash = true,
+  -- dependencies
+  { 'MunifTanjim/nui.nvim', lazy = true },
+  { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font, lazy = true },
+  { 'nvim-lua/plenary.nvim', lazy = true },
+  {
+    'nvim-neo-tree/neo-tree.nvim',
+    version = '*',
+    keys = { { '\\', ':Neotree reveal position=left toggle=true<CR>', desc = 'Open NeoTree', silent = true } },
+    cmd = { 'Neotree' },
+    opts = {
+      enable_git_status = false,
+      close_if_last_window = true,
+      default_component_configs = {
+        name = {
+          trailing_slash = true,
+        },
       },
-    },
-    filesystem = {
-      filtered_items = {
-        visible = true, -- This is what you want: If you set this to `true`, all "hide" just mean "dimmed out"
-        hide_dotfiles = false,
-        hide_gitignored = false,
-      },
-      window = {
-        mappings = {
-          ['\\'] = 'close_window',
+      filesystem = {
+        filtered_items = {
+          visible = true, -- This is what you want: If you set this to `true`, all "hide" just mean "dimmed out"
+          hide_dotfiles = false,
+          hide_gitignored = false,
         },
       },
     },

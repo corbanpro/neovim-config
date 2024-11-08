@@ -1,4 +1,6 @@
 return {
-  'tpope/vim-sleuth',
-  event = 'BufRead',
+  {
+    'tpope/vim-sleuth',
+    event = 'BufRead',
+  },
 }

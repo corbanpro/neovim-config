@@ -1,23 +1,33 @@
 return {
-  'smoka7/multicursors.nvim',
-  event = 'VeryLazy',
-  dependencies = {
+  -- dependencies
+  {
     'nvimtools/hydra.nvim',
+    lazy = true,
   },
-  opts = {},
-  cmd = { 'MCstart', 'MCvisual', 'MCclear', 'MCpattern', 'MCvisualPattern', 'MCunderCursor' },
-  keys = {
-    {
-      mode = 'n',
-      '<leader>m',
-      '<cmd>:MCunderCursor<cr>',
-      desc = '[M]ulticursor',
+  {
+    'smoka7/multicursors.nvim',
+    opts = {},
+    cmd = {
+      'MCstart',
+      'MCvisual',
+      'MCclear',
+      'MCpattern',
+      'MCvisualPattern',
+      'MCunderCursor',
     },
-    {
-      mode = 'v',
-      '<leader>m',
-      '<cmd>:MCstart<cr>',
-      desc = '[M]ulticursor',
+    keys = {
+      {
+        mode = 'n',
+        '<leader>m',
+        '<cmd>:MCunderCursor<cr>',
+        desc = '[M]ulticursor',
+      },
+      {
+        mode = 'v',
+        '<leader>m',
+        '<cmd>:MCstart<cr>',
+        desc = '[M]ulticursor',
+      },
     },
   },
 }

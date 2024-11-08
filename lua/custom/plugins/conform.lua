@@ -22,7 +22,6 @@ return {
         desc = '[T]oggle [L]ayout - Conform',
       },
       {
-
         '<leader>f',
         function()
           require('conform').format()

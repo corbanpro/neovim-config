@@ -1,14 +1,34 @@
 return {
+  --dependencies
+  {
+    'williamboman/mason-registry',
+    lazy = true,
+  },
+  {
+    'b0o/schemastore.nvim',
+    lazy = true,
+  },
+  {
+    'williamboman/mason-lspconfig.nvim',
+    lazy = true,
+  },
+  {
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    lazy = true,
+  },
+  {
+    'j-hui/fidget.nvim',
+    opts = {},
+    lazy = true,
+  },
+  {
+    'hrsh7th/cmp-nvim-lsp',
+    lazy = true,
+  },
   {
     'neovim/nvim-lspconfig',
     dependencies = {
-      'williamboman/mason-registry',
-      'b0o/schemastore.nvim',
       { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
-      'williamboman/mason-lspconfig.nvim',
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
-      { 'j-hui/fidget.nvim', opts = {} },
-      'hrsh7th/cmp-nvim-lsp',
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {

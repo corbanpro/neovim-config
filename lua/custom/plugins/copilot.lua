@@ -49,16 +49,24 @@ local copilot_toggle = function()
   end
 end
 
-vim.keymap.set('n', '<leader>tc', copilot_toggle, { desc = '[T]oggle [C]opilot' })
-
 return {
-  'github/copilot.vim',
-  event = 'VimEnter',
-  config = function()
-    if copilot_on() then
-      set_copilot 'true'
-    else
-      set_copilot 'false'
-    end
-  end,
+  {
+    'github/copilot.vim',
+    event = 'InsertEnter',
+    keys = {
+      {
+        '<leader>tc',
+        copilot_toggle,
+        mode = 'n',
+        desc = '[T]oggle [C]opilot',
+      },
+    },
+    config = function()
+      if copilot_on() then
+        set_copilot 'true'
+      else
+        set_copilot 'false'
+      end
+    end,
+  },
 }

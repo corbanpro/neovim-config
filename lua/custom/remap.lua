@@ -42,7 +42,6 @@ vim.keymap.set('n', '<leader>on', '<cmd>:enew<cr>', { desc = '[O]pen [N]ew file'
 vim.keymap.set('n', '<leader>ot', '<cmd>:tabnew<cr>', { desc = '[O]pen [T]ab' })
 
 -- quickfix
--- TODO: make quickfix preview window
 local function quickfix_toggle()
   local open = false
   for _, buffer in pairs(vim.fn.getwininfo()) do

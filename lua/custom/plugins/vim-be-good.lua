@@ -1,4 +1,6 @@
 return {
-  'theprimeagen/vim-be-good',
-  event = 'VeryLazy',
+  {
+    'theprimeagen/vim-be-good',
+    cmd = 'VimBeGood',
+  },
 }
