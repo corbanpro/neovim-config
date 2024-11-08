@@ -40,3 +40,17 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+
+vim.keymap.set('n', '<leader>q', function()
+  vim.cmd 'Neotree close'
+  vim.cmd 'Trouble diagnostics close'
+  vim.cmd('mksession! ' .. './.session.vim')
+  vim.cmd ':wqa'
+end, { desc = 'Smart [Q]uit' })
+
+vim.api.nvim_create_autocmd('VimLeavePre', {
+  pattern = '*',
+  callback = function()
+    vim.cmd('mksession! ' .. './.session.vim')
+  end,
+})
