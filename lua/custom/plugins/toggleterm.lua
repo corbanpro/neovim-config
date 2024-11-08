@@ -48,18 +48,18 @@ return {
       {
         '<leader>tt',
         open_default_shell 'float',
-        { noremap = true, silent = true, desc = '[T]oggle [T]erminal - ToggleTerm' },
+        desc = '[T]oggle [T]erminal - ToggleTerm',
       },
       {
         '<C-\\>',
         open_default_shell('float', true),
         mode = { 'i', 'n' },
-        { noremap = true, silent = true, desc = 'Toggle Terminal - ToggleTerm' },
+        desc = 'Toggle Terminal - ToggleTerm',
       },
       {
         '<C-s>',
         '<cmd>:TermSelect<CR>',
-        { noremap = true, silent = true, desc = 'Select Terminal' },
+        desc = 'Select Terminal',
       },
     },
     opts = {

@@ -5,6 +5,12 @@ return {
     opts = {
       icons = {
         mappings = vim.g.have_nerd_font,
+        rules = {
+          { pattern = 'elete', icon = '󰗨', color = 'red' },
+          { pattern = 'hange', icon = '~', color = 'yellow' },
+          { pattern = 'ulticursor', icon = '󰇀', color = 'yellow' },
+          { pattern = 'aste', icon = '', color = 'cyan' },
+        },
         keys = vim.g.have_nerd_font and {} or {
           Up = '<Up> ',
           Down = '<Down> ',
@@ -37,25 +43,19 @@ return {
         },
       },
 
-      -- TODO: add visual mode mappings
-
       spec = {
-        { '<leader>e', group = '[E]xecute', mode = 'v' },
-        { '<leader>r', group = '[R]eplace', mode = 'v' },
-        { '<leader>t', group = '[T]oggle', mode = 'v' },
-        { '<leader>e', group = '[E]xecute' },
-        { '<leader>b', group = '[B]uffer' },
-        { '<leader>r', group = '[R]eplace' },
-        { '<leader>s', group = '[S]earch' },
-        { '<leader>w', group = '[W]orkspace' },
-        { '<leader>o', group = '[O]pen' },
-        { '<leader>ov', group = '[O]pen [V]ertical' },
-        { '<leader>oh', group = '[O]pen [H]orizontal' },
-        { '<leader>of', group = '[O]pen [F]loat' },
-        { '<leader>ow', group = '[O]pen [W]indow' },
-        { '<leader>k', group = '[K][M][S]' },
-        { '<leader>km', group = '[K][M][S]' },
-        { '<leader>t', group = '[T]oggle' },
+        { '<leader>e', group = '[E]xecute', mode = 'v', icon = { icon = '', color = 'azure' } },
+        { '<leader>r', group = '[R]eplace', mode = 'v', icon = { icon = '󰛔', color = 'azure' } },
+        { '<leader>t', group = '[T]oggle', mode = 'v', icon = { icon = '', color = 'azure' } },
+        { '<leader>e', group = '[E]xecute', icon = { icon = '', color = 'azure' } },
+        { '<leader>b', group = '[B]uffer', icon = { icon = '󰈔', color = 'azure' } },
+        { '<leader>r', group = '[R]eplace', icon = { icon = '󰛔', color = 'azure' } },
+        { '<leader>s', group = '[S]earch', icon = { icon = '', color = 'azure' } },
+        { '<leader>w', group = '[W]orkspace', icon = { icon = '󰈔', color = 'azure' } },
+        { '<leader>o', group = '[O]pen', icon = { icon = '', color = 'azure' } },
+        { '<leader>k', group = '[K][M][S]', icon = { icon = '󱚝', color = 'orange' } },
+        { '<leader>km', group = '[K][M][S]', icon = { icon = '󱚝', color = 'orange' } },
+        { '<leader>t', group = '[T]oggle', icon = { icon = '', color = 'azure' } },
       },
     },
   },

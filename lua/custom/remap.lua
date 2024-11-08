@@ -137,7 +137,7 @@ vim.keymap.set('n', 'L', function()
 end, { desc = 'show diagnostic under cursor' })
 
 -- toggle diagnostic hints
-vim.g.showing_diagnostic_hints = false
+vim.g.showing_diagnostic_hints = true
 vim.keymap.set('n', '<leader>td', function()
   if vim.g.showing_diagnostic_hints then
     vim.g.showing_diagnostic_hints = false

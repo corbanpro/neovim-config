@@ -4,7 +4,10 @@ return {
   {
     'kkoomen/vim-doge',
     keys = {
-      '<leader>od',
+      {
+        '<leader>od',
+        desc = '[O]pen [D]ocumentation',
+      },
     },
   },
 }

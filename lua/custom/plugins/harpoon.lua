@@ -11,42 +11,42 @@ return {
           vim.print 'Pinned'
           require('harpoon'):list():add()
         end,
-        { desc = 'Add current file to Harpoon' },
+        desc = '[A]dd current file to Harpoon',
       },
       {
         '<C-e>',
         function()
           require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())
         end,
-        { desc = 'Open Harpoon window' },
+        desc = 'Open Harpoon window',
       },
       {
         '<C-H>',
         function()
           require('harpoon'):list():select(1)
         end,
-        { desc = 'Select Harpoon entry 1' },
+        desc = 'Select Harpoon entry 1',
       },
       {
         '<C-J>',
         function()
           require('harpoon'):list():select(2)
         end,
-        { desc = 'Select Harpoon entry 2' },
+        desc = 'Select Harpoon entry 2',
       },
       {
         '<C-K>',
         function()
           require('harpoon'):list():select(3)
         end,
-        { desc = 'Select Harpoon entry 3' },
+        desc = 'Select Harpoon entry 3',
       },
       {
         '<C-L>',
         function()
           require('harpoon'):list():select(4)
         end,
-        { desc = 'Select Harpoon entry 4' },
+        desc = 'Select Harpoon entry 4',
       },
     },
     config = function()
