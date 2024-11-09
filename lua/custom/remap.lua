@@ -21,16 +21,10 @@ vim.keymap.set(
   :Trouble diagnostics close
   :UndotreeHide
   :wa
+  :mksession! ./.session.vim
   :qa ]],
   { desc = 'Smart [Q]uit' }
 )
-
-vim.api.nvim_create_autocmd('VimLeavePre', {
-  pattern = '*',
-  callback = function()
-    vim.cmd('mksession! ' .. './.session.vim')
-  end,
-})
 
 -- delete
 vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]], { desc = '[D]elete without yanking' })
@@ -106,10 +100,10 @@ end, { desc = 'Show hover' })
 
 -- diagnostic float
 vim.keymap.set('n', ']d', function()
-  vim.diagnostic.goto_next { wrap = true, float = false }
+  vim.diagnostic.goto_next { float = false }
 end, { desc = 'jump to next diagnostic' })
 vim.keymap.set('n', '[d', function()
-  vim.diagnostic.goto_prev { wrap = true, float = false }
+  vim.diagnostic.goto_prev { float = false }
 end, { desc = 'jump to previos diagnostic' })
 vim.keymap.set('n', 'L', function()
   local open = false

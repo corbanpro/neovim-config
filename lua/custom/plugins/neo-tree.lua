@@ -21,7 +21,9 @@ return {
       },
       filesystem = {
         filtered_items = {
-          visible = true,
+          hide_by_name = {
+            '.session.vim',
+          },
           hide_dotfiles = false,
           hide_gitignored = false,
         },

@@ -1,7 +1,8 @@
 return {
+  { 'nvim-lua/plenary.nvim', lazy = true },
   { -- Snippet Engine & its associated nvim-cmp source
     'L3MON4D3/LuaSnip',
-    lazy = true,
+    event = 'InsertEnter',
     build = (function()
       if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
         return
@@ -11,27 +12,26 @@ return {
   },
   {
     'saadparwaiz1/cmp_luasnip',
-    lazy = true,
+    event = 'InsertEnter',
   },
   {
     'hrsh7th/cmp-nvim-lsp',
-    lazy = true,
+    event = 'InsertEnter',
   },
   {
     'hrsh7th/cmp-path',
-    lazy = true,
+    event = 'InsertEnter',
   },
-  { 'nvim-lua/plenary.nvim', lazy = true },
   {
     'Jezda1337/nvim-html-css',
-    lazy = true,
+    event = 'InsertEnter',
     config = function()
       require('html-css'):setup()
     end,
   },
   {
     'rafamadriz/friendly-snippets',
-    lazy = true,
+    event = 'InsertEnter',
     config = function()
       require('luasnip.loaders.from_vscode').lazy_load()
     end,
