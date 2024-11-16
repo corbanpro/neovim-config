@@ -21,10 +21,18 @@ vim.keymap.set(
   :Trouble diagnostics close
   :UndotreeHide
   :wa
-  :mksession! ./.session.vim
   :qa ]],
   { desc = 'Smart [Q]uit' }
 )
+
+vim.api.nvim_create_autocmd('VimLeavePre', {
+  pattern = '*',
+  callback = function()
+    local path = '~/.local/share/nvim/sessions' .. vim.fn.getcwd()
+    vim.cmd('!mkdir -p ' .. path)
+    vim.cmd('mksession! ' .. path .. '/Session.vim')
+  end,
+})
 
 -- delete
 vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]], { desc = '[D]elete without yanking' })
@@ -53,7 +61,6 @@ vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move lines down' })
 
 -- file
 vim.keymap.set('n', '<leader>on', '<cmd>:enew<cr>', { desc = '[O]pen [N]ew file' })
-vim.keymap.set('n', '<leader>ot', '<cmd>:tabnew<cr>', { desc = '[O]pen [T]ab' })
 
 -- quickfix
 local function quickfix_toggle()
