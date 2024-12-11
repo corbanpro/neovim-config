@@ -30,10 +30,9 @@ return {
           },
         },
         defaults = {
-          file_ignore_patterns = { 'node_modules', '.git/', '.cargo', '.rustup', '.nuxt', '%lock.json', 'archive', 'docs', 'dist' },
-
+          file_ignore_patterns = { 'node_modules/', '.git/', '.cargo/', '.rustup/', '.nuxt/', 'package.lock.json', 'archive/', 'docs/', 'dist/' },
           mappings = {
-            i = { ['<c-enter>'] = 'to_fuzzy_refine' },
+            i = { ['<C-Space>'] = 'to_fuzzy_refine' },
           },
         },
         pickers = {
@@ -45,6 +44,11 @@ return {
           },
           live_grep = {
             hidden = true,
+            path_display = { shorten = { len = 1, exclude = { -1, -2, -3 } } },
+          },
+          grep_string = {
+            hidden = true,
+            path_display = { shorten = { len = 1, exclude = { -1, -2, -3 } } },
           },
           resume = {
             hidden = true,
@@ -52,6 +56,13 @@ return {
           buffers = {
             hidden = true,
           },
+          keymaps = {},
+          help_tags = {},
+          builtin = {},
+          diagnostics = {},
+          quickfix = {},
+          quickfixhistory = {},
+          current_buffer_fuzzy_find = {},
         },
       }
 
@@ -100,9 +111,6 @@ return {
         }
       end, { desc = '[S]earch [/] in Open Files' })
 
-      vim.keymap.set('n', '<leader>sc', function()
-        builtin.find_files { cwd = '~/.config/ubuntu/' }
-      end, { desc = '[S]earch [C]onfig files' })
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })

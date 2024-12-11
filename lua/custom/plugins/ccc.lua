@@ -1,6 +1,7 @@
 return {
   {
     'uga-rosa/ccc.nvim',
+    event = 'BufRead',
     cmd = {
       'CccPick',
       'CccConvert',
@@ -12,6 +13,14 @@ return {
       highlighter = {
         auto_enable = true,
         lsp = true,
+      },
+    },
+    keys = {
+      {
+
+        '<leader>oc',
+        '<cmd>:CccPick<CR>',
+        desc = '[O]pen [C]olor Picker',
       },
     },
   },

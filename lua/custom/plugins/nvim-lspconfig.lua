@@ -5,6 +5,9 @@ return {
     lazy = true,
   },
   {
+    'nvim-java/nvim-java',
+  },
+  {
     'b0o/schemastore.nvim',
     lazy = true,
   },
@@ -83,10 +86,13 @@ return {
       local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path() .. '/node_modules/@vue/language-server'
       local servers = {
         bashls = {},
+        jdtls = {},
         html = {},
         cssls = {},
         eslint = {},
-        emmet_ls = {},
+        emmet_ls = {
+          filetypes = { 'html', 'css', 'javascript', 'typescript', 'vue', 'javascriptreact', 'typescriptreact' },
+        },
         jedi_language_server = {},
         volar = {},
 
@@ -179,6 +185,7 @@ return {
 
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
+        'google-java-format',
         'black',
         'stylua',
         'prettierd',

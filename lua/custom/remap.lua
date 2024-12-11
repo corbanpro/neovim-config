@@ -9,26 +9,28 @@ vim.keymap.set({ 'n', 'v' }, '<leader>p', [["_dP]], { desc = '[P]aste over selec
 vim.keymap.set({ 'n', 'v' }, '<C-Space>', '$', { desc = 'Move to end of line' })
 vim.keymap.set({ 'n', 'v' }, 'k', "v:count == 0 ? 'gk' : 'k'", { desc = "navigate wrapped lines except you're not a psycho", expr = true, silent = true })
 vim.keymap.set({ 'n', 'v' }, 'j', "v:count == 0 ? 'gj' : 'j'", { desc = "navigate wrapped lines except you're not a psycho", expr = true, silent = true })
-vim.keymap.set('n', '<leader>el', '"6yy:lua <C-R>"<cr>', { desc = '[E]xecute in [L]ua' })
+vim.keymap.set('n', '<leader>el', '"nyy:lua <C-R>"<cr>', { desc = '[E]xecute in [L]ua' })
 vim.keymap.set('n', 'J', 'mzJ`z', { desc = "join lines, don't move cursor" })
 
 -- smart quit
-vim.keymap.set(
-  'n',
-  '<leader>q',
-  [[:Neotree close
-  :cclose
-  :Trouble diagnostics close
-  :UndotreeHide
-  :wa
-  :qa ]],
-  { desc = 'Smart [Q]uit' }
-)
+local function close_everything()
+  vim.cmd 'Neotree close'
+  vim.cmd 'cclose'
+  vim.cmd 'Trouble diagnostics close'
+  vim.cmd 'UndotreeHide'
+end
+
+vim.keymap.set('n', '<leader>q', function()
+  close_everything()
+  vim.cmd 'wa'
+  vim.cmd 'qa'
+end, { desc = 'Smart [Q]uit' })
 
 vim.api.nvim_create_autocmd('VimLeavePre', {
   pattern = '*',
   callback = function()
     local path = '~/.local/share/nvim/sessions' .. vim.fn.getcwd()
+    close_everything()
     vim.cmd('!mkdir -p ' .. path)
     vim.cmd('mksession! ' .. path .. '/Session.vim')
   end,
@@ -49,7 +51,7 @@ vim.keymap.set('v', '<leader>ra', replace.v_replace_all, { desc = '[R]eplace Sel
 vim.keymap.set('n', '<leader>rc', replace.n_replace_confirm_all, { desc = '[R]eplace Word - [C]onfirm' })
 vim.keymap.set('v', '<leader>rc', replace.v_replace_confirm_all, { desc = '[R]eplace Selection - [C]onfirm' })
 vim.keymap.set('n', '<leader>ri', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = '[R]eplace [I]nline' })
-vim.keymap.set('v', '<leader>ri', [["6y:%s/\<<C-r>6\>/<C-r>6/gI<Left><Left><Left>]], { desc = '[R]eplace [I]nline' })
+vim.keymap.set('v', '<leader>ri', [["ny:%s/\<<C-r>6\>/<C-r>6/gI<Left><Left><Left>]], { desc = '[R]eplace [I]nline' })
 
 -- move lines
 vim.keymap.set('i', '<A-j>', '<Esc><cmd>:m .+1<CR>==gi', { desc = 'Move line down' })
@@ -162,3 +164,43 @@ end, { desc = 'Stop' })
 vim.keymap.set('n', 'Q', function()
   vim.print "Don't do that"
 end, { desc = 'Stop' })
+
+-- Run File
+--[[
+-- i am writing a bunch of stuff, and it's pretty cool
+--
+--]]
+
+local function run_file()
+  local function run_in_toggleterm(command)
+    local Terminal = require('toggleterm.terminal').Terminal
+    local cmd = "echo '" .. command .. "'; echo; " .. command .. '; bash'
+    vim.print(cmd)
+    local term = Terminal:new { cmd = cmd, display_name = 'Run File', direction = 'float' }
+    term:toggle()
+  end
+
+  local buf_num = vim.api.nvim_get_current_buf()
+  local file_type = vim.bo[buf_num].filetype
+  local file_path = vim.api.nvim_buf_get_name(buf_num)
+  local supported_filetypes = {
+    javascript = function()
+      run_in_toggleterm('node ' .. file_path)
+    end,
+    lua = function()
+      run_in_toggleterm('nvim --headless -c "source ' .. file_path .. '" -c "qa"')
+    end,
+    rust = function()
+      run_in_toggleterm('cd ' .. vim.fn.expand '%:p:h' .. ' && (cargo run || cargo script ' .. file_path .. ' ) && cd - > /dev/null')
+    end,
+  }
+
+  if supported_filetypes[file_type] == nil then
+    vim.print('Unsupported File Type: ' .. file_type)
+    return
+  end
+
+  supported_filetypes[file_type]()
+end
+
+vim.keymap.set('n', '<leader>er', run_file, { desc = '[E]xecute [R]un' })

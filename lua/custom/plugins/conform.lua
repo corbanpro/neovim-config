@@ -32,16 +32,6 @@ return {
       },
     },
     opts = {
-      formatters = {
-        prettierd = {
-          inherit = true,
-          prepend_args = { '--print-width=100' },
-        },
-        prettier = {
-          inherit = true,
-          prepend_args = { '--print-width=100' },
-        },
-      },
       format_on_save = function(bufnr)
         if vim.g.conform_format_on_save == 0 then
           return false
@@ -72,6 +62,7 @@ return {
         vue = { 'prettierd' },
         python = { 'black' },
         rust = { 'rustfmt' },
+        java = { 'google-java-format' },
         yaml = { 'prettierd', 'prettier' },
         ['*'] = { 'trim_whitespace' },
       },
