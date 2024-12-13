@@ -1,4 +1,4 @@
-local root_patterns = { '.git', '.clang-format', 'pyproject.toml', 'setup.py' }
+local root_patterns = { 'package.json', '.git', '.clang-format', 'pyproject.toml', 'setup.py' }
 local root_dir = vim.fs.dirname(vim.fs.find(root_patterns, { upward = true })[1])
 
 return {
