@@ -5,6 +5,7 @@ return {
     opts = {
       enable = true,
       multiline_threshold = 1,
+      max_lines = 5,
     },
   },
 }
