@@ -1,4 +1,5 @@
-local copilot_on_file = vim.fn.stdpath 'config' .. '/lua/custom/copilot_on.txt'
+local copilot_on_file_path = vim.fn.stdpath 'data' .. '/copilot_on.txt'
+
 local function file_exists(file)
   local f = io.open(file, 'rb')
   if f then
@@ -8,8 +9,8 @@ local function file_exists(file)
 end
 
 local function copilot_on()
-  if not file_exists(copilot_on_file) then
-    local file = io.open(copilot_on_file, 'w')
+  if not file_exists(copilot_on_file_path) then
+    local file = io.open(copilot_on_file_path, 'w')
     if not file then
       return false
     end
@@ -18,7 +19,7 @@ local function copilot_on()
     return false
   end
   local lines = {}
-  for line in io.lines(copilot_on_file) do
+  for line in io.lines(copilot_on_file_path) do
     lines[#lines + 1] = line
   end
 
@@ -26,7 +27,7 @@ local function copilot_on()
 end
 
 local function set_copilot(state)
-  local f = io.open(copilot_on_file, 'w')
+  local f = io.open(copilot_on_file_path, 'w')
   if not f then
     return
   end
