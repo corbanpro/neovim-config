@@ -1,15 +1,21 @@
 return {
-  { -- Adds git related signs to the gutter, as well as utilities for managing changes
+  {
     'lewis6991/gitsigns.nvim',
-    event = 'BufRead',
-    opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
+    dependancies = {
+      'petertriho/nvim-scrollbar',
     },
+    event = 'BufRead',
+    config = function()
+      require('gitsigns').setup {
+        signs = {
+          add = { text = '+' },
+          change = { text = '~' },
+          delete = { text = '_' },
+          topdelete = { text = '‾' },
+          changedelete = { text = '~' },
+        },
+      }
+      require('scrollbar.handlers.gitsigns').setup()
+    end,
   },
 }

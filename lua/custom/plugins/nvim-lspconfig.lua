@@ -85,10 +85,32 @@ return {
       local mason_registry = require 'mason-registry'
       local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path() .. '/node_modules/@vue/language-server'
       local servers = {
+        tailwindcss = {},
         bashls = {},
         jdtls = {},
         html = {},
-        cssls = {},
+        cssls = {
+          settings = {
+            css = {
+              validate = true,
+              lint = {
+                unknownAtRules = 'ignore',
+              },
+            },
+            scss = {
+              validate = true,
+              lint = {
+                unknownAtRules = 'ignore',
+              },
+            },
+            less = {
+              validate = true,
+              lint = {
+                unknownAtRules = 'ignore',
+              },
+            },
+          },
+        },
         eslint = {},
         emmet_ls = {
           filetypes = { 'html', 'css', 'javascript', 'typescript', 'vue', 'javascriptreact', 'typescriptreact' },
