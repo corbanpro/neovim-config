@@ -14,6 +14,12 @@ return {
           topdelete = { text = '‾' },
           changedelete = { text = '~' },
         },
+        current_line_blame = true,
+        current_line_blame_opts = {
+          virt_text_pos = 'right_align',
+          virt_text_priority = 5000,
+          delay = 500,
+        },
       }
       require('scrollbar.handlers.gitsigns').setup()
     end,
