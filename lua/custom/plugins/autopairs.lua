@@ -9,7 +9,7 @@ return {
       require('nvim-autopairs').setup {}
       local Rule = require 'nvim-autopairs.rule'
       local npairs = require 'nvim-autopairs'
-      npairs.add_rule(Rule('/**', '*/', { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'commonjs', 'modulejs', 'vue' }))
+      npairs.add_rule(Rule('/** ', ' */', { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact', 'commonjs', 'modulejs', 'vue' }))
       -- If you want to automatically add `(` after selecting a function or method
       local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
       local cmp = require 'cmp'
