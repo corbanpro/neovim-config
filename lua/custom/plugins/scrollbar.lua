@@ -7,6 +7,9 @@ return {
     config = function()
       local colors = require('tokyonight.colors').setup()
       require('scrollbar').setup {
+        excluded_filetypes = {
+          'neo-tree',
+        },
         marks = {
           Cursor = {
             text = '#',
