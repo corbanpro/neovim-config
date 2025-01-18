@@ -198,12 +198,9 @@ end, { desc = 'Stop' })
 --]]
 
 local function run_file()
-  local function run_in_toggleterm(command)
-    local Terminal = require('toggleterm.terminal').Terminal
-    local cmd = "echo '" .. command .. "'; echo; " .. command .. '; bash'
-    vim.print(cmd)
-    local term = Terminal:new { cmd = cmd, display_name = 'Run File', direction = 'float' }
-    term:toggle()
+  local function copy_to_clipboard(command)
+    vim.fn.setreg('+', command)
+    vim.print('Copied to clipboard: ' .. command)
   end
 
   local buf_num = vim.api.nvim_get_current_buf()
@@ -211,13 +208,22 @@ local function run_file()
   local file_path = vim.api.nvim_buf_get_name(buf_num)
   local supported_filetypes = {
     javascript = function()
-      run_in_toggleterm('node ' .. file_path)
+      copy_to_clipboard('node ' .. file_path)
     end,
     lua = function()
-      run_in_toggleterm('nvim --headless -c "source ' .. file_path .. '" -c "qa"')
+      copy_to_clipboard('nvim --headless -c "source ' .. file_path .. '" -c "qa"')
     end,
     rust = function()
-      run_in_toggleterm('cd ' .. vim.fn.expand '%:p:h' .. ' && (cargo run || cargo script ' .. file_path .. ' ) && cd - > /dev/null')
+      copy_to_clipboard('cd ' .. vim.fn.expand '%:p:h' .. ' && (cargo run || cargo script ' .. file_path .. ' ) && cd - > /dev/null')
+    end,
+    typescript = function()
+      copy_to_clipboard('tsx ' .. file_path)
+    end,
+    bash = function()
+      copy_to_clipboard('bash ' .. file_path)
+    end,
+    sh = function()
+      copy_to_clipboard('sh ' .. file_path)
     end,
   }
 
@@ -227,6 +233,10 @@ local function run_file()
   end
 
   supported_filetypes[file_type]()
+
+  vim.cmd 'ToggleTerm'
+  vim.cmd 'startinsert'
+  vim.cmd 'normal! p'
 end
 
 vim.keymap.set('n', '<leader>er', run_file, { desc = '[E]xecute [R]un' })
