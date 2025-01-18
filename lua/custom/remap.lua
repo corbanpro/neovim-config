@@ -13,6 +13,31 @@ vim.keymap.set({ 'n', 'v' }, 'j', "v:count == 0 ? 'gj' : 'j'", { desc = "navigat
 vim.keymap.set('n', '<leader>el', '"nyy:lua <C-R>"<cr>', { desc = '[E]xecute in [L]ua' })
 vim.keymap.set('n', 'J', 'mzJ`z', { desc = "join lines, don't move cursor" })
 
+-- Generate a UUID
+local function generate_uuid()
+  local random = math.random
+  local template = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+  return string.gsub(template, '[xy]', function(c)
+    local v = (c == 'x') and random(0, 15) or random(8, 11)
+    return string.format('%x', v)
+  end)
+end
+
+-- Insert UUID at the cursor location
+local function insert_uuid()
+  -- Generate a new UUID
+  local uuid = generate_uuid()
+  -- Get the current line and cursor position
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  local current_line = vim.api.nvim_get_current_line()
+  -- Insert the UUID at the cursor's position
+  local new_line = current_line:sub(1, col) .. uuid .. current_line:sub(col + 1)
+  vim.api.nvim_set_current_line(new_line)
+  -- Move the cursor to the end of the inserted UUID
+  vim.api.nvim_win_set_cursor(0, { row, col + #uuid })
+end
+
+vim.keymap.set('n', '<leader>iu', insert_uuid, { desc = '[I]nsert [U]UID' })
 -- smart quit
 local function close_everything()
   vim.cmd 'Neotree close'
