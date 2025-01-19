@@ -30,7 +30,19 @@ return {
           },
         },
         defaults = {
-          file_ignore_patterns = { 'target', 'node_modules/', '.git/', '.cargo/', '.rustup/', '.nuxt/', 'package.lock.json', 'archive/', 'docs/', 'dist/' },
+          file_ignore_patterns = {
+            '.next',
+            'target',
+            'node_modules/',
+            '.git/',
+            '.cargo/',
+            '.rustup/',
+            '.nuxt/',
+            'package.lock.json',
+            'archive/',
+            'docs/',
+            'dist/',
+          },
           mappings = {
             i = { ['<C-Space>'] = 'to_fuzzy_refine' },
           },
