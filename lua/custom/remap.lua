@@ -225,6 +225,9 @@ local function run_file()
     python = function()
       copy_to_clipboard('python ' .. file_path)
     end,
+    cs = function()
+      copy_to_clipboard('dotnet run ' .. file_path)
+    end,
   }
 
   if supported_filetypes[file_type] == nil then
@@ -239,4 +242,4 @@ local function run_file()
   vim.cmd 'normal! p'
 end
 
-vim.keymap.set('n', '<leader>er', run_file, { desc = '[E]xecute [R]un' })
+vim.keymap.set('n', '<leader>er', run_file, { desc = '[E]xecute [R]un File' })

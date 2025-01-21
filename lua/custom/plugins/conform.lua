@@ -64,6 +64,7 @@ return {
         rust = { 'rustfmt' },
         java = { 'google-java-format' },
         yaml = { 'prettierd', 'prettier' },
+        cs = { 'csharpier' },
         ['*'] = { 'trim_whitespace' },
       },
     },
