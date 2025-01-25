@@ -65,6 +65,7 @@ return {
         java = { 'google-java-format' },
         yaml = { 'prettierd', 'prettier' },
         cs = { 'csharpier' },
+        css = { 'prettierd', 'prettier' },
         ['*'] = { 'trim_whitespace' },
       },
     },
