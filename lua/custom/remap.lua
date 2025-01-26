@@ -211,6 +211,9 @@ local function run_file()
     javascript = function()
       copy_to_clipboard('node ' .. file_path)
     end,
+    javascriptreact = function()
+      copy_to_clipboard('node ' .. file_path)
+    end,
     lua = function()
       copy_to_clipboard('nvim --headless -c "source ' .. file_path .. '" -c "qa"')
     end,
