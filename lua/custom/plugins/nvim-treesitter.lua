@@ -7,6 +7,7 @@ return {
     opts = {
       ensure_installed = {
         'bash',
+        'go',
         'c',
         'comment',
         'c_sharp',

@@ -66,6 +66,7 @@ return {
         yaml = { 'prettierd', 'prettier' },
         cs = { 'csharpier' },
         css = { 'prettierd', 'prettier' },
+        go = { 'gofmt' },
         ['*'] = { 'trim_whitespace' },
       },
     },
