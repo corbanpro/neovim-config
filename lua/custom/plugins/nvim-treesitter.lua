@@ -30,6 +30,7 @@ return {
         'rust',
         'scss',
         'sql',
+        'templ',
         'toml',
         'tsx',
         'typescript',
