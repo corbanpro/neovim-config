@@ -41,6 +41,7 @@ return {
             'package.lock.json',
             'archive/',
             'docs/',
+            'cdk.out/',
             'dist/',
           },
           mappings = {
