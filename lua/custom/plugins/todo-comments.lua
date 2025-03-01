@@ -10,6 +10,7 @@ return {
       signs = true,
       keywords = {
         LATER = { icon = '' },
+        DONE = { icon = '', color = 'hint' },
       },
     },
     keys = {
