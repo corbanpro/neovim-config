@@ -43,6 +43,7 @@ return {
             'docs/',
             'cdk.out/',
             'dist/',
+            'tsc.out/',
           },
           mappings = {
             i = { ['<C-Space>'] = 'to_fuzzy_refine' },
