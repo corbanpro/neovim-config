@@ -31,8 +31,8 @@ return {
         },
         defaults = {
           file_ignore_patterns = {
-            '.next',
-            'target',
+            '.next/',
+            'target/',
             'node_modules/',
             '.git/',
             '.cargo/',
