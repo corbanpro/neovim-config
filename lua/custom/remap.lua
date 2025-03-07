@@ -12,6 +12,8 @@ vim.keymap.set({ 'n', 'v' }, 'k', "v:count == 0 ? 'gk' : 'k'", { desc = "navigat
 vim.keymap.set({ 'n', 'v' }, 'j', "v:count == 0 ? 'gj' : 'j'", { desc = "navigate wrapped lines except you're not a psycho", expr = true, silent = true })
 vim.keymap.set('n', '<leader>el', '"nyy:lua <C-R>"<cr>', { desc = '[E]xecute in [L]ua' })
 vim.keymap.set('n', 'J', 'mzJ`z', { desc = "join lines, don't move cursor" })
+vim.keymap.set('n', '<leader>rc', '<cmd>:Copilot restart<CR>', { desc = '[R]estart [C]opilot' })
+vim.keymap.set('n', '<leader>rl', '<cmd>:LspRestart<CR>', { desc = '[R]estart [L]sp' })
 
 -- Generate a UUID
 local function generate_uuid()
@@ -75,8 +77,6 @@ vim.keymap.set({ 'n', 'v' }, '<leader>C', [["_C]], { desc = '[C]hange without ya
 local replace = require 'custom.replace'
 vim.keymap.set('n', '<leader>ra', replace.n_replace_all, { desc = '[R]eplace Word - [A]ll' })
 vim.keymap.set('v', '<leader>ra', replace.v_replace_all, { desc = '[R]eplace Selection - [A]ll' })
-vim.keymap.set('n', '<leader>rc', replace.n_replace_confirm_all, { desc = '[R]eplace Word - [C]onfirm' })
-vim.keymap.set('v', '<leader>rc', replace.v_replace_confirm_all, { desc = '[R]eplace Selection - [C]onfirm' })
 vim.keymap.set('n', '<leader>ri', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = '[R]eplace [I]nline' })
 vim.keymap.set('v', '<leader>ri', [["ny:%s/\<<C-r>6\>/<C-r>6/gI<Left><Left><Left>]], { desc = '[R]eplace [I]nline' })
 
