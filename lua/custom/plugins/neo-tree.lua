@@ -5,12 +5,12 @@ return {
   -- dependencies
   { 'MunifTanjim/nui.nvim', lazy = true },
   { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font, lazy = true },
-  { 'nvim-lua/plenary.nvim', lazy = true },
+  { 'nvim-lua/plenary.nvim', lazy = true }, -- Telescope, todo-comments, neo-tree, harpoon, nvim-html-css, LazyGit
   {
     'nvim-neo-tree/neo-tree.nvim',
     version = '*',
     keys = { { '\\', ':Neotree reveal position=left toggle=true<CR>', desc = 'Open NeoTree', silent = true } },
-    cmd = { 'Neotree' },
+    event = 'BufRead',
     opts = {
       enable_git_status = false,
       close_if_last_window = true,
@@ -21,9 +21,7 @@ return {
       },
       filesystem = {
         filtered_items = {
-          hide_by_name = {
-            '.session.vim',
-          },
+          visible = true, -- This is what you want: If you set this to `true`, all "hide" just mean "dimmed out"
           hide_dotfiles = false,
           hide_gitignored = false,
         },
