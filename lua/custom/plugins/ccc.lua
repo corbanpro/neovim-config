@@ -11,13 +11,12 @@ return {
     },
     opts = {
       highlighter = {
-        auto_enable = true,
+        auto_enable = false,
         lsp = true,
       },
     },
     keys = {
       {
-
         '<leader>oc',
         '<cmd>:CccPick<CR>',
         desc = '[O]pen [C]olor Picker',
