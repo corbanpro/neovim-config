@@ -78,7 +78,7 @@ local replace = require 'custom.replace'
 vim.keymap.set('n', '<leader>ra', replace.n_replace_all, { desc = '[R]eplace Word - [A]ll' })
 vim.keymap.set('v', '<leader>ra', replace.v_replace_all, { desc = '[R]eplace Selection - [A]ll' })
 vim.keymap.set('n', '<leader>ri', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = '[R]eplace [I]nline' })
-vim.keymap.set('v', '<leader>ri', [["ny:%s/\<<C-r>6\>/<C-r>6/gI<Left><Left><Left>]], { desc = '[R]eplace [I]nline' })
+vim.keymap.set('v', '<leader>ri', [["ny:%s/\<<C-r>n\>/<C-r>n/gI<Left><Left><Left>]], { desc = '[R]eplace [I]nline' })
 
 -- move lines
 vim.keymap.set('i', '<A-j>', '<Esc><cmd>:m .+1<CR>==gi', { desc = 'Move line down' })
