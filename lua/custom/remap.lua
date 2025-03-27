@@ -15,7 +15,7 @@ vim.keymap.set('n', 'J', 'mzJ`z', { desc = "join lines, don't move cursor" })
 vim.keymap.set('n', '<leader>rc', '<cmd>:Copilot restart<CR>', { desc = '[R]estart [C]opilot' })
 vim.keymap.set('n', '<leader>rl', '<cmd>:LspRestart<CR>', { desc = '[R]estart [L]sp' })
 
-vim.api.nvim_create_augroup('TemplGenerate', { clear = true })
+vim.api.nvim_create_augroup('TemplGenerate', {})
 vim.api.nvim_create_autocmd('BufWritePost', {
   group = 'TemplGenerate',
   pattern = '*.templ',

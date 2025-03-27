@@ -67,6 +67,7 @@ return {
         cs = { 'csharpier' },
         css = { 'prettierd', 'prettier' },
         go = { 'gofmt' },
+        templ = { 'templ' },
         ['*'] = { 'trim_whitespace' },
       },
     },
