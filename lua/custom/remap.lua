@@ -15,6 +15,18 @@ vim.keymap.set('n', 'J', 'mzJ`z', { desc = "join lines, don't move cursor" })
 vim.keymap.set('n', '<leader>rc', '<cmd>:Copilot restart<CR>', { desc = '[R]estart [C]opilot' })
 vim.keymap.set('n', '<leader>rl', '<cmd>:LspRestart<CR>', { desc = '[R]estart [L]sp' })
 
+vim.api.nvim_create_augroup('TemplGenerate', { clear = true })
+vim.api.nvim_create_autocmd('BufWritePost', {
+  group = 'TemplGenerate',
+  pattern = '*.templ',
+  callback = function()
+    local buf = vim.api.nvim_get_current_buf() -- Get current buffer
+    local file_path = vim.api.nvim_buf_get_name(buf)
+    local cmd = 'templ generate -f ' .. file_path .. ' > /dev/null 2>&1'
+    os.execute(cmd)
+  end,
+})
+
 -- Generate a UUID
 local function generate_uuid()
   local random = math.random
