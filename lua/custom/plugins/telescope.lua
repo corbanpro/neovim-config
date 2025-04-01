@@ -31,6 +31,7 @@ return {
         },
         defaults = {
           file_ignore_patterns = {
+            '.*_templ.go',
             '.next/',
             'target/',
             'node_modules/',
