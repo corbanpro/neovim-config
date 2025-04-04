@@ -31,6 +31,7 @@ return {
         },
         defaults = {
           file_ignore_patterns = {
+            '.*.min.js',
             '.*_templ.go',
             '.next/',
             'target/',

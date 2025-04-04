@@ -88,7 +88,9 @@ return {
         htmx = {},
         templ = {},
         gopls = {},
-        tailwindcss = {},
+        tailwindcss = {
+          filetypes = { 'templ', 'html', 'css', 'scss', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue' },
+        },
         omnisharp = {
           settings = {
             FormattingOptions = {
@@ -123,7 +125,7 @@ return {
         },
         eslint = {},
         emmet_ls = {
-          filetypes = { 'html', 'css', 'javascript', 'typescript', 'vue', 'javascriptreact', 'typescriptreact' },
+          filetypes = { 'templ', 'html', 'css', 'javascript', 'typescript', 'vue', 'javascriptreact', 'typescriptreact' },
         },
         jedi_language_server = {},
         volar = {},
