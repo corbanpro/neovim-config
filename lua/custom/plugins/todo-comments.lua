@@ -11,6 +11,7 @@ return {
       keywords = {
         LATER = { icon = '' },
         DONE = { icon = '', color = 'hint' },
+        IDEA = { icon = '', color = 'warning' },
       },
     },
     keys = {
