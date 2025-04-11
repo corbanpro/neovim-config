@@ -238,6 +238,9 @@ local function run_file()
     bash = function()
       copy_to_clipboard('bash ' .. file_path)
     end,
+    sh = function()
+      copy_to_clipboard('bash ' .. file_path)
+    end,
     go = function()
       copy_to_clipboard('go run ' .. file_path)
     end,
