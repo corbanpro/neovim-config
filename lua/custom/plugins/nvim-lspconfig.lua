@@ -82,8 +82,8 @@ return {
       })
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-      local mason_registry = require 'mason-registry'
-      local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path() .. '/node_modules/@vue/language-server'
+      -- local mason_registry = require 'mason-registry'
+      -- local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path() .. '/node_modules/@vue/language-server'
       local servers = {
         htmx = {},
         templ = {},
@@ -194,15 +194,15 @@ return {
           },
         },
         ts_ls = {
-          init_options = {
-            plugins = {
-              {
-                name = '@vue/typescript-plugin',
-                location = vue_language_server_path,
-                languages = { 'vue' },
-              },
-            },
-          },
+          -- init_options = {
+          --   plugins = {
+          --     {
+          --       name = '@vue/typescript-plugin',
+          --       location = vue_language_server_path,
+          --       languages = { 'vue' },
+          --     },
+          --   },
+          -- },
           filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
         },
         lua_ls = {
@@ -229,6 +229,8 @@ return {
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
+        ensure_installed = servers,
+        automatic_installation = true,
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
