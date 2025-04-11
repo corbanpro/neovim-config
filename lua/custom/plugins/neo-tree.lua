@@ -10,7 +10,7 @@ return {
     'nvim-neo-tree/neo-tree.nvim',
     version = '*',
     keys = { { '\\', ':Neotree reveal position=left toggle=true<CR>', desc = 'Open NeoTree', silent = true } },
-    event = 'BufRead',
+    event = 'VimEnter',
     opts = {
       enable_git_status = false,
       close_if_last_window = true,
