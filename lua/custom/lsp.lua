@@ -1,0 +1,20 @@
+local servers = {
+  'htmx',
+  'templ',
+  'gopls',
+  'tailwindcss',
+  'omnisharp',
+  'bashls',
+  'jdtls',
+  'html',
+  'cssls',
+  'eslint',
+  'emmet_ls',
+  'jedi_language_server',
+  'volar',
+  'yamlls',
+  'rust_analyzer',
+  'ts_ls',
+  'lua_ls',
+}
+vim.lsp.enable(servers)
