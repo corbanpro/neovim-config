@@ -127,31 +127,16 @@ vim.keymap.set('n', '[C', '<cmd>:cfirst<CR>', { desc = 'First quickfix' })
 vim.keymap.set('n', '[q', '<cmd>:colder<CR>', { desc = 'Previous quickfix list' })
 vim.keymap.set('n', ']q', '<cmd>:cnewer<CR>', { desc = 'Next quickfix list' })
 
--- info hover
-vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
-  border = 'rounded',
-  width = HOVER_WIDTH,
-})
-vim.keymap.set('n', 'K', function()
-  vim.lsp.buf.hover()
-  local hover_buffer = -1
-  for _, buffer in pairs(vim.fn.getwininfo()) do
-    if buffer.variables['textDocument/hover'] ~= nil then
-      hover_buffer = buffer.bufnr
-      break
-    end
-  end
-  if hover_buffer ~= -1 then
-    vim.api.nvim_buf_set_keymap(hover_buffer, 'n', '<Esc>', '<cmd>:q<CR>', { noremap = true, silent = true })
-  end
-end, { desc = 'Show hover' })
+-- vim.keymap.set('n', 'K', function()
+--   vim.lsp.buf.hover { width = HOVER_WIDTH }
+-- end, { desc = 'Show hover' })
 
 -- diagnostic float
 vim.keymap.set('n', ']d', function()
-  vim.diagnostic.goto_next { float = false }
+  vim.diagnostic.jump { count = 1 }
 end, { desc = 'jump to next diagnostic' })
 vim.keymap.set('n', '[d', function()
-  vim.diagnostic.goto_prev { float = false }
+  vim.diagnostic.jump { count = -1 }
 end, { desc = 'jump to previos diagnostic' })
 vim.keymap.set('n', 'L', function()
   local open = false
@@ -162,7 +147,7 @@ vim.keymap.set('n', 'L', function()
     end
   end
   if open then
-    vim.diagnostic.open_float { scope = 'line', focus = true, border = 'rounded', width = HOVER_WIDTH, focus_id = 'diagnostic_float' }
+    vim.diagnostic.open_float { scope = 'line', focus = true, width = HOVER_WIDTH, focus_id = 'diagnostic_float' }
     local hover_buffer = -1
     for _, buffer in pairs(vim.fn.getwininfo()) do
       if buffer.variables.diagnostic_float ~= nil then
@@ -174,7 +159,7 @@ vim.keymap.set('n', 'L', function()
       vim.api.nvim_buf_set_keymap(hover_buffer, 'n', '<Esc>', '<cmd>:q<CR>', { noremap = true, silent = true })
     end
   else
-    vim.diagnostic.open_float { scope = 'line', focus = false, border = 'rounded', width = HOVER_WIDTH, focus_id = 'diagnostic_float' }
+    vim.diagnostic.open_float { scope = 'line', focus = false, width = HOVER_WIDTH, focus_id = 'diagnostic_float' }
   end
 end, { desc = 'show diagnostic under cursor' })
 

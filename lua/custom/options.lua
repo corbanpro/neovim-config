@@ -1,6 +1,7 @@
 vim.g.netrw_liststyle = 3
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.o.winborder = 'rounded'
 
 vim.opt.colorcolumn = '100'
 vim.opt.number = true
@@ -27,6 +28,7 @@ vim.opt.list = true
 vim.opt.signcolumn = 'yes'
 vim.g.have_nerd_font = true
 vim.opt.showmode = false
+
 vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
 end)
@@ -38,3 +40,5 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+
+vim.diagnostic.config { virtual_text = true, virtual_lines = { current_line = true } }
