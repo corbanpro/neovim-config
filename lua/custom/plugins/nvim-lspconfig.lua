@@ -29,9 +29,17 @@ return {
     lazy = true,
   },
   {
+    'saghen/blink.cmp',
+    lazy = true,
+  },
+  {
+    'williamboman/mason.nvim',
+    lazy = true,
+  },
+  {
     'neovim/nvim-lspconfig',
     dependencies = {
-      { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
+      -- NOTE: Must be loaded before dependants
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -80,8 +88,6 @@ return {
           end
         end,
       })
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
       -- local mason_registry = require 'mason-registry'
       -- local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path() .. '/node_modules/@vue/language-server'
       local servers = {
@@ -129,7 +135,6 @@ return {
         },
         jedi_language_server = {},
         volar = {},
-
         yamlls = {
           settings = {
             yaml = {
@@ -215,6 +220,7 @@ return {
           },
         },
       }
+
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'google-java-format',
@@ -225,7 +231,11 @@ return {
         'shfmt',
       })
 
-      -- require('mason').setup()
+      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+      -- capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
+
+      require('mason').setup()
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
       require('mason-lspconfig').setup {
         ensure_installed = {},
