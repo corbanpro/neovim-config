@@ -1,6 +1,10 @@
 return {
   --dependencies
   {
+    'saghen/blink.cmp',
+    lazy = true,
+  },
+  {
     'williamboman/mason-registry',
     lazy = true,
   },
@@ -51,7 +55,7 @@ return {
           map('<leader>ea', vim.lsp.buf.code_action, '[E]xecute Code [A]ction', { 'n', 'x' })
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
           local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if client and client.supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
             local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
               buffer = event.buf,
@@ -73,21 +77,23 @@ return {
               end,
             })
           end
-          if client and client.supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint) then
+          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
             map('<leader>ti', function()
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
             end, '[T]oggle [I]nlay Hints')
           end
         end,
       })
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
+      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+      -- capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
       -- local mason_registry = require 'mason-registry'
       -- local vue_language_server_path = mason_registry.get_package('vue-language-server'):get_install_path() .. '/node_modules/@vue/language-server'
       local servers = {
-        -- htmx = {},
-        -- templ = {},
-        -- gopls = {},
+        htmx = {},
+        templ = {},
+        gopls = {},
         tailwindcss = {
           filetypes = { 'templ', 'html', 'css', 'scss', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue' },
         },
@@ -99,33 +105,33 @@ return {
           },
         },
         jdtls = {},
-        -- html = {},
-        -- cssls = {
-        --   settings = {
-        --     css = {
-        --       validate = true,
-        --       lint = {
-        --         unknownAtRules = 'ignore',
-        --       },
-        --     },
-        --     scss = {
-        --       validate = true,
-        --       lint = {
-        --         unknownAtRules = 'ignore',
-        --       },
-        --     },
-        --     less = {
-        --       validate = true,
-        --       lint = {
-        --         unknownAtRules = 'ignore',
-        --       },
-        --     },
-        --   },
-        -- },
-        -- eslint = {},
-        -- emmet_ls = {
-        --   filetypes = { 'templ', 'html', 'css', 'javascript', 'typescript', 'vue', 'javascriptreact', 'typescriptreact' },
-        -- },
+        html = {},
+        cssls = {
+          settings = {
+            css = {
+              validate = true,
+              lint = {
+                unknownAtRules = 'ignore',
+              },
+            },
+            scss = {
+              validate = true,
+              lint = {
+                unknownAtRules = 'ignore',
+              },
+            },
+            less = {
+              validate = true,
+              lint = {
+                unknownAtRules = 'ignore',
+              },
+            },
+          },
+        },
+        eslint = {},
+        emmet_ls = {
+          filetypes = { 'templ', 'html', 'css', 'javascript', 'typescript', 'vue', 'javascriptreact', 'typescriptreact' },
+        },
         jedi_language_server = {},
         volar = {},
 
@@ -214,7 +220,6 @@ return {
           },
         },
       }
-      require('mason').setup()
 
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
@@ -225,11 +230,12 @@ return {
         'prettier',
         'shfmt',
       })
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
+      require('mason').setup()
+      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
       require('mason-lspconfig').setup {
-        ensure_installed = servers,
-        automatic_installation = true,
+        ensure_installed = {},
+        automatic_installation = false,
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
