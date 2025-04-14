@@ -1,7 +1,7 @@
 -- DONE:
 return {
   cmd = { 'vscode-css-language-server', '--stdio' },
-  -- filetypes = { 'css', 'scss', 'less', 'html' },
+  filetypes = { 'css', 'scss', 'less', 'html', 'javascript', 'typescript', 'javascriptreact', 'typescriptreact' },
   root_markers = { 'package.json', '.git', '.' },
 
   settings = {
