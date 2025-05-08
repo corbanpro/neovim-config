@@ -32,6 +32,9 @@ return {
         },
         defaults = {
           file_ignore_patterns = {
+            '~/.zsh_sessions/',
+            '.cache/',
+            '~/go/',
             '.*.min.js',
             '.*_templ.go',
             '.next/',
