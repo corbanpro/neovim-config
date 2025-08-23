@@ -1,5 +1,3 @@
-vim.g.conform_format_on_save = 1
-
 return {
 
   { -- Autoformat
@@ -32,23 +30,10 @@ return {
       },
     },
     opts = {
-      format_on_save = function(bufnr)
-        if vim.g.conform_format_on_save == 0 then
-          return false
-        end
-
-        local disable_filetypes = { c = true, cpp = true }
-        local lsp_format_opt
-        if disable_filetypes[vim.bo[bufnr].filetype] then
-          lsp_format_opt = 'never'
-        else
-          lsp_format_opt = 'fallback'
-        end
-        return {
-          timeout_ms = 1000,
-          lsp_format = lsp_format_opt,
-        }
-      end,
+      format_on_save = {
+        timeout_ms = 1000,
+        lsp_format = 'fallback',
+      },
       formatters_by_ft = {
         lua = { 'stylua' },
         sh = { 'shfmt' },
