@@ -32,6 +32,7 @@ return {
         },
         defaults = {
           file_ignore_patterns = {
+            'vendor/',
             '~/.zsh_sessions/',
             '.cache/',
             '~/go/',

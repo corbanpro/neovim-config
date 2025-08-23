@@ -242,7 +242,7 @@ local function run_file()
       copy_to_clipboard('bash ' .. file_path)
     end,
     go = function()
-      copy_to_clipboard('go run ' .. file_path)
+      copy_to_clipboard 'go run . '
     end,
     python = function()
       copy_to_clipboard('python ' .. file_path)
