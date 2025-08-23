@@ -59,8 +59,6 @@ return {
         end,
       })
 
-
-
       local servers = {
         htmx = {},
         templ = {},
@@ -96,7 +94,7 @@ return {
           filetypes = { 'templ', 'html', 'css', 'javascript', 'typescript', 'vue', 'javascriptreact', 'typescriptreact' },
         },
         jedi_language_server = {},
-          rust_analyzer = {
+        rust_analyzer = {
 
           -- handlers = {
           --   ['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
