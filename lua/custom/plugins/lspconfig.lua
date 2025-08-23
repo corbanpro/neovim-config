@@ -24,7 +24,6 @@ return {
           map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
           map('gt', require('telescope.builtin').lsp_type_definitions, '[G]oto [T]ype Definition')
           map('<leader>ss', require('telescope.builtin').lsp_document_symbols, '[S]earch Document [S]ymbols')
-          map('<leader>sw', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[S]earch [W]orkspace Symbols')
           map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
           map('<leader>ea', vim.lsp.buf.code_action, '[E]xecute Code [A]ction', { 'n', 'x' })
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')

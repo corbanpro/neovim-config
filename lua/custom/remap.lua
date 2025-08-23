@@ -17,6 +17,7 @@ vim.keymap.set('n', '<leader>rl', '<cmd>:LspRestart<CR>', { desc = '[R]estart [L
 vim.keymap.set('n', '<leader>nt', '<cmd>tabnew<CR>', { desc = '[N]ew [T]ab' })
 vim.keymap.set('n', '<A-h>', '<cmd>tabp<CR>', { desc = 'Previous Tab' })
 vim.keymap.set('n', '<A-l>', '<cmd>tabn<CR>', { desc = 'Next Tab' })
+vim.keymap.set('n', '<leader>w', '<cmd>noa w<CR>', { desc = '[W]rite without formatting' })
 
 vim.api.nvim_create_autocmd('BufWritePost', {
   group = vim.api.nvim_create_augroup('TemplGenerateOnSave', {}),
