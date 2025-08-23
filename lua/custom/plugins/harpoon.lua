@@ -2,7 +2,6 @@ return {
   { 'nvim-lua/plenary.nvim', lazy = true },
   {
     'ThePrimeagen/harpoon',
-    event = 'BufWinEnter',
     branch = 'harpoon2',
     keys = {
       {

@@ -24,7 +24,6 @@ return {
   },
   {
     'Jezda1337/nvim-html-css',
-    event = 'InsertEnter',
     config = function()
       require('html-css'):setup()
     end,
