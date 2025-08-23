@@ -1,6 +1,6 @@
+-- Autoformat
 return {
-
-  { -- Autoformat
+  {
     'stevearc/conform.nvim',
     event = 'BufWritePre',
     cmd = { 'ConformInfo' },
@@ -47,9 +47,7 @@ return {
         vue = { 'prettierd' },
         python = { 'black' },
         rust = { 'rustfmt' },
-        java = { 'google-java-format' },
         yaml = { 'prettierd', 'prettier' },
-        cs = { 'csharpier' },
         css = { 'prettierd', 'prettier' },
         go = { 'gofmt' },
         templ = { 'templ' },

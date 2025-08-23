@@ -15,9 +15,8 @@ vim.keymap.set('n', 'J', 'mzJ`z', { desc = "join lines, don't move cursor" })
 vim.keymap.set('n', '<leader>rc', '<cmd>:Copilot restart<CR>', { desc = '[R]estart [C]opilot' })
 vim.keymap.set('n', '<leader>rl', '<cmd>:LspRestart<CR>', { desc = '[R]estart [L]sp' })
 
-vim.api.nvim_create_augroup('TemplGenerate', {})
 vim.api.nvim_create_autocmd('BufWritePost', {
-  group = 'TemplGenerate',
+  group = vim.api.nvim_create_augroup('TemplGenerateOnSave', {}),
   pattern = '*.templ',
   callback = function()
     local buf = vim.api.nvim_get_current_buf() -- Get current buffer
@@ -102,6 +101,8 @@ vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move lines down' })
 
 -- file
 vim.keymap.set('n', '<leader>on', '<cmd>:enew<cr>', { desc = '[O]pen [N]ew file' })
+local sym_link = require 'custom.symlink'
+vim.keymap.set('n', '<leader>il', sym_link.insert_symbolic_link, { desc = '[I]nsert Symbolic [L]ink' })
 
 -- quickfix
 local function quickfix_toggle()
