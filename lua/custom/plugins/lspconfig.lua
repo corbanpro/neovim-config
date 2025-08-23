@@ -59,179 +59,98 @@ return {
         end,
       })
 
-      local client_capabilities = require('blink.cmp').get_lsp_capabilities()
 
-      vim.lsp.config('*', {
-        capabilities = client_capabilities,
-      })
 
-      vim.lsp.enable 'htmx'
-      vim.lsp.enable 'templ'
-      vim.lsp.enable 'gopls'
-      vim.lsp.enable 'tailwindcss'
-      vim.lsp.enable 'cssls'
-      vim.lsp.enable 'html'
-      vim.lsp.enable 'emmet_ls'
-      vim.lsp.enable 'jedi_language_server'
-      vim.lsp.enable 'rust_analyzer'
-      vim.lsp.enable 'ts_ls'
-      vim.lsp.enable 'ts_ls'
-      vim.lsp.enable 'lua_ls'
+      local servers = {
+        htmx = {},
+        templ = {},
+        gopls = {},
+        tailwindcss = {
+          filetypes = { 'templ', 'html', 'css', 'scss', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue' },
+        },
+        html = {},
+        cssls = {
+          settings = {
+            css = {
+              validate = true,
+              lint = {
+                unknownAtRules = 'ignore',
+              },
+            },
+            scss = {
+              validate = true,
+              lint = {
+                unknownAtRules = 'ignore',
+              },
+            },
+            less = {
+              validate = true,
+              lint = {
+                unknownAtRules = 'ignore',
+              },
+            },
+          },
+        },
+        eslint = {},
+        emmet_ls = {
+          filetypes = { 'templ', 'html', 'css', 'javascript', 'typescript', 'vue', 'javascriptreact', 'typescriptreact' },
+        },
+        jedi_language_server = {},
+          rust_analyzer = {
 
-      -- local servers = {
-      --   htmx = {},
-      --   templ = {},
-      --   gopls = {},
-      --   tailwindcss = {
-      --     filetypes = { 'templ', 'html', 'css', 'scss', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue' },
-      --   },
-      --   omnisharp = {
-      --     settings = {
-      --       FormattingOptions = {
-      --         EnableEditorConfigSupport = true,
-      --       },
-      --     },
-      --   },
-      --   jdtls = {},
-      --   html = {},
-      --   cssls = {
-      --     settings = {
-      --       css = {
-      --         validate = true,
-      --         lint = {
-      --           unknownAtRules = 'ignore',
-      --         },
-      --       },
-      --       scss = {
-      --         validate = true,
-      --         lint = {
-      --           unknownAtRules = 'ignore',
-      --         },
-      --       },
-      --       less = {
-      --         validate = true,
-      --         lint = {
-      --           unknownAtRules = 'ignore',
-      --         },
-      --       },
-      --     },
-      --   },
-      --   eslint = {},
-      --   emmet_ls = {
-      --     filetypes = { 'templ', 'html', 'css', 'javascript', 'typescript', 'vue', 'javascriptreact', 'typescriptreact' },
-      --   },
-      --   jedi_language_server = {},
-      --   volar = {},
-      --
-      --   yamlls = {
-      --     settings = {
-      --       yaml = {
-      --         customTags = {
-      --           '!Base64 scalar',
-      --           '!Cidr scalar',
-      --           '!And sequence',
-      --           '!Equals sequence',
-      --           '!If sequence',
-      --           '!Not sequence',
-      --           '!Or sequence',
-      --           '!Condition scalar',
-      --           '!FindInMap sequence',
-      --           '!GetAtt sequence',
-      --           '!GetAZs scalar',
-      --           '!ImportValue scalar',
-      --           '!Join sequence',
-      --           '!Select sequence',
-      --           '!Split sequence',
-      --           '!Sub scalar',
-      --           '!Transform mapping',
-      --           '!Ref scalar',
-      --         },
-      --         validate = true,
-      --         hover = true,
-      --         completion = true,
-      --         format = {
-      --           singleQuote = true,
-      --           bracketSpacing = false,
-      --         },
-      --         schemaStore = {
-      --           enable = false,
-      --           url = '',
-      --         },
-      --         schemas = require('schemastore').json.schemas(),
-      --       },
-      --     },
-      --   },
-      --   rust_analyzer = {
-      --
-      --     -- handlers = {
-      --     --   ['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      --     --     virtual_text = { prefix = '', spacing = 0 },
-      --     --     signs = true,
-      --     --     underline = true,
-      --     --     update_in_insert = true,
-      --     --   }),
-      --     -- },
-      --
-      --     settings = {
-      --       ['rust-analyzer'] = {
-      --         checkOnSave = {
-      --           command = 'clippy',
-      --         },
-      --         cargo = {
-      --           loadOutDirsFromCheck = true,
-      --         },
-      --         procMacro = {
-      --           enable = true,
-      --         },
-      --       },
-      --     },
-      --   },
-      --   ts_ls = {
-      --     -- init_options = {
-      --     --   plugins = {
-      --     --     {
-      --     --       name = '@vue/typescript-plugin',
-      --     --       location = vue_language_server_path,
-      --     --       languages = { 'vue' },
-      --     --     },
-      --     --   },
-      --     -- },
-      --     filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-      --   },
-      --   lua_ls = {
-      --     settings = {
-      --       Lua = {
-      --         completion = {
-      --           callSnippet = 'Replace',
-      --         },
-      --       },
-      --     },
-      --   },
-      -- }
+          -- handlers = {
+          --   ['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+          --     virtual_text = { prefix = '', spacing = 0 },
+          --     signs = true,
+          --     underline = true,
+          --     update_in_insert = true,
+          --   }),
+          -- },
 
-      -- local ensure_installed = vim.tbl_keys(servers or {})
-      -- vim.list_extend(ensure_installed, {
-      --   'google-java-format',
-      --   'black',
-      --   'stylua',
-      --   'prettierd',
-      --   'prettier',
-      --   'shfmt',
-      -- })
-      --
-      -- require('mason').setup()
-      -- require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-      -- require('mason-lspconfig').setup {
-      --   ensure_installed = {},
-      --   automatic_installation = false,
-      --   handlers = {
-      --     function(server_name)
-      --       local server = servers[server_name] or {}
-      --       server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-      --       require('lspconfig')[server_name].setup(server)
-      --     end,
-      --   },
-      -- }
+          settings = {
+            ['rust-analyzer'] = {
+              checkOnSave = {
+                command = 'clippy',
+              },
+              cargo = {
+                loadOutDirsFromCheck = true,
+              },
+              procMacro = {
+                enable = true,
+              },
+            },
+          },
+        },
+        ts_ls = {
+          -- init_options = {
+          --   plugins = {
+          --     {
+          --       name = '@vue/typescript-plugin',
+          --       location = vue_language_server_path,
+          --       languages = { 'vue' },
+          --     },
+          --   },
+          -- },
+          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+        },
+        lua_ls = {
+          settings = {
+            Lua = {
+              completion = {
+                callSnippet = 'Replace',
+              },
+            },
+          },
+        },
+      }
+
+      local global_capabilities = require('blink.cmp').get_lsp_capabilities()
+
+      for name, config in pairs(servers) do
+        config.capabilities = vim.tbl_deep_extend('force', {}, global_capabilities, config.capabilities or {})
+        vim.lsp.config(name, config or {})
+        vim.lsp.enable(name)
+      end
     end,
   },
 }

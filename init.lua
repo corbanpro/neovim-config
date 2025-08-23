@@ -1,6 +1,5 @@
 require 'custom.options'
 require 'custom.remap'
-require 'custom.lsp'
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
