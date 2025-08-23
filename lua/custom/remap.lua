@@ -14,6 +14,9 @@ vim.keymap.set('n', '<leader>el', '"nyy:lua <C-R>"<cr>', { desc = '[E]xecute in 
 vim.keymap.set('n', 'J', 'mzJ`z', { desc = "join lines, don't move cursor" })
 vim.keymap.set('n', '<leader>rc', '<cmd>:Copilot restart<CR>', { desc = '[R]estart [C]opilot' })
 vim.keymap.set('n', '<leader>rl', '<cmd>:LspRestart<CR>', { desc = '[R]estart [L]sp' })
+vim.keymap.set('n', '<leader>nt', '<cmd>tabnew<CR>', { desc = '[N]ew [T]ab' })
+vim.keymap.set('n', '<A-h>', '<cmd>tabp<CR>', { desc = 'Previous Tab' })
+vim.keymap.set('n', '<A-l>', '<cmd>tabn<CR>', { desc = 'Next Tab' })
 
 vim.api.nvim_create_autocmd('BufWritePost', {
   group = vim.api.nvim_create_augroup('TemplGenerateOnSave', {}),
@@ -54,10 +57,22 @@ end
 vim.keymap.set('n', '<leader>iu', insert_uuid, { desc = '[I]nsert [U]UID' })
 -- smart quit
 local function close_everything()
-  vim.cmd 'Neotree close'
-  vim.cmd 'cclose'
-  vim.cmd 'Trouble diagnostics close'
-  vim.cmd 'UndotreeHide'
+  local close_filetypes = {
+    'neo-tree',
+    'trouble',
+    'undotree',
+    'qf',
+  }
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_loaded(buf) then
+      local bt = vim.bo[buf].filetype
+      if vim.tbl_contains(close_filetypes, bt) then
+        vim.api.nvim_buf_delete(buf, { force = true })
+      else
+        vim.print(bt)
+      end
+    end
+  end
 end
 
 vim.keymap.set('n', '<leader>q', function()

@@ -53,6 +53,7 @@ return {
         { '<leader>s', group = '[S]earch', icon = { icon = '', color = 'azure' } },
         { '<leader>w', group = '[W]orkspace', icon = { icon = '󰈔', color = 'azure' } },
         { '<leader>o', group = '[O]pen', icon = { icon = '', color = 'azure' } },
+        { '<leader>n', group = '[N]ew', icon = { icon = '', color = 'azure' } },
         { '<leader>k', group = '[K][M][S]', icon = { icon = '󱚝', color = 'orange' } },
         { '<leader>km', group = '[K][M][S]', icon = { icon = '󱚝', color = 'orange' } },
         { '<leader>t', group = '[T]oggle', icon = { icon = '', color = 'azure' } },
