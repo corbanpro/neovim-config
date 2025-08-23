@@ -4,25 +4,36 @@ return {
   { 'nvim-telescope/telescope-ui-select.nvim', lazy = true },
   { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font, lazy = true },
   {
+    'isak102/telescope-git-file-history.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'tpope/vim-fugitive',
+    },
+  },
+  {
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
     branch = '0.1.x',
     dependancies = {
-      'nvim-telescope/telescope-fzf-native.nvim',
-      build = 'make',
-      cond = function()
-        return vim.fn.executable 'make' == 1
-      end,
-      config = function()
-        require('telescope').load_extension 'fzf'
-      end,
+      {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        build = 'make',
+        cond = function()
+          return vim.fn.executable 'make' == 1
+        end,
+        config = function()
+          require('telescope').load_extension 'fzf'
+        end,
+      },
     },
     config = function()
       require('telescope').load_extension 'ui-select'
       require('telescope').load_extension 'project'
+      require('telescope').load_extension 'git_file_history'
 
       local telescope = require 'telescope'
       local builtin = require 'telescope.builtin'
+      local git_file_history = telescope.extensions.git_file_history
 
       telescope.setup {
         extensions = {
@@ -108,6 +119,7 @@ return {
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sq', builtin.quickfix, { desc = '[S]earch [Q]uickfix' })
       vim.keymap.set('n', '<leader>s-', builtin.quickfixhistory, { desc = '[S]earch [-] Quickfix History' })
+      vim.keymap.set('n', '<leader>oh', git_file_history.git_file_history, { desc = '[O]pen File [H]istory' })
 
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', function()
