@@ -1,3 +1,4 @@
+-- smart comments depending on file context
 return {
   {
     'numToStr/Comment.nvim',
