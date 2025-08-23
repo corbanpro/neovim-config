@@ -37,7 +37,9 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
   desc = 'set scroll lines when opening a new window',
   group = vim.api.nvim_create_augroup('window-open-scroll', { clear = true }),
   callback = function()
-    vim.opt.scroll = 15
+    pcall(function()
+      vim.opt.scroll = 15
+    end)
   end,
 })
 
