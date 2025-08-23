@@ -12,7 +12,7 @@ return {
     keys = { { '\\', ':Neotree reveal position=left toggle=true<CR>', desc = 'Open NeoTree', silent = true } },
     event = 'VimEnter',
     opts = {
-      enable_git_status = false,
+      enable_git_status = true,
       close_if_last_window = true,
       default_component_configs = {
         name = {
