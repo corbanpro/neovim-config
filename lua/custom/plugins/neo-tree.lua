@@ -9,10 +9,11 @@ return {
   {
     'nvim-neo-tree/neo-tree.nvim',
     version = '*',
-    keys = { { '\\', ':Neotree reveal position=left toggle=true<CR>', desc = 'Open NeoTree', silent = true } },
+    keys = { { '\\', ':Neotree reveal dir=./ position=left toggle=true<CR>', desc = 'Open NeoTree', silent = true } },
     event = 'VimEnter',
+    ---@module 'neo-tree'
+    ---@type neotree.Config
     opts = {
-      use_libuv_file_watcher = true,
       enable_git_status = true,
       close_if_last_window = true,
       default_component_configs = {
@@ -21,6 +22,7 @@ return {
         },
       },
       filesystem = {
+        use_libuv_file_watcher = true,
         filtered_items = {
           visible = true, -- This is what you want: If you set this to `true`, all "hide" just mean "dimmed out"
           hide_dotfiles = false,
