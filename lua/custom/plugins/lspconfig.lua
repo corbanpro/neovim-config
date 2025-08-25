@@ -10,7 +10,6 @@ return {
   },
   {
     'neovim/nvim-lspconfig',
-
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
@@ -119,16 +118,12 @@ return {
           },
         },
         ts_ls = {
-          -- init_options = {
-          --   plugins = {
-          --     {
-          --       name = '@vue/typescript-plugin',
-          --       location = vue_language_server_path,
-          --       languages = { 'vue' },
-          --     },
-          --   },
-          -- },
-          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+          -- TODO: get rid of this when a pr gets merged into lsp-config. Probably in a few days
+          root_dir = function(bufnr, on_dir)
+            local root_markers = { 'tsconfig.json', 'jsconfig.json', 'package.json', '.git' }
+            local project_root = vim.fs.root(bufnr, root_markers)
+            on_dir(project_root)
+          end,
         },
         lua_ls = {
           settings = {
