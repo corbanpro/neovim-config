@@ -67,10 +67,9 @@ local function close_everything()
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
     if vim.api.nvim_buf_is_loaded(buf) then
       local bt = vim.bo[buf].filetype
-      if vim.tbl_contains(close_filetypes, bt) then
+      local name = vim.api.nvim_buf_get_name(buf)
+      if vim.tbl_contains(close_filetypes, bt) or string.find(name, 'gitsigns:///') then
         vim.api.nvim_buf_delete(buf, { force = true })
-      else
-        vim.print(bt)
       end
     end
   end

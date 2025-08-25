@@ -31,10 +31,12 @@ return {
 
           -- Navigation
           map('n', ']h', function()
+            --- @diagnostic disable-next-line: param-type-mismatch
             gitsigns.nav_hunk 'next'
           end, { desc = 'Jump to next [h]unk' })
 
           map('n', '[h', function()
+            --- @diagnostic disable-next-line: param-type-mismatch
             gitsigns.nav_hunk 'prev'
           end, { desc = 'Jump to previous [h]unk' })
 
@@ -69,6 +71,7 @@ return {
               end
             end
             if not deleted then
+              --- @diagnostic disable-next-line: param-type-mismatch
               gitsigns.diffthis '@'
             end
           end, { desc = 'git [D]iff against last commit' })
