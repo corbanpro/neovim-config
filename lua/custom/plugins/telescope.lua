@@ -1,3 +1,18 @@
+local function show_history()
+  local fn = require('telescope').extensions.git_file_history.git_file_history
+  local ok, _ = pcall(fn)
+  if not ok then
+    local path = vim.fn.expand '%:p:h'
+    vim.cmd 'tab split'
+    vim.fn.chdir(path)
+    ok, _ = pcall(fn)
+    if not ok then
+      vim.cmd 'tabclose'
+      vim.notify("Sorry, that's not a git file. Awkward...", vim.log.levels.WARN)
+    end
+  end
+end
+
 return {
   { 'nvim-lua/plenary.nvim', lazy = true }, -- Telescope, todo-comments, neo-tree, harpoon, nvim-html-css, LazyGit
   { 'nvim-telescope/telescope-ui-select.nvim', lazy = true },
@@ -10,7 +25,6 @@ return {
     config = function()
       local telescope = require 'telescope'
       local builtin = require 'telescope.builtin'
-      local git_file_history = telescope.extensions.git_file_history
 
       telescope.setup {
         extensions = {
@@ -94,7 +108,7 @@ return {
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       -- vim.keymap.set('n', '<leader>sq', builtin.quickfix, { desc = '[S]earch [Q]uickfix' })
       vim.keymap.set('n', '<leader>s-', builtin.quickfixhistory, { desc = '[S]earch [-] Quickfix History' })
-      vim.keymap.set('n', '<leader>oh', git_file_history.git_file_history, { desc = '[O]pen File [H]istory' })
+      vim.keymap.set('n', '<leader>oh', show_history, { desc = '[O]pen File [H]istory' })
 
       -- vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       -- vim.keymap.set('n', '<leader>s.', function()
