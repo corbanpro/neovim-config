@@ -4,31 +4,6 @@ return {
     'stevearc/conform.nvim',
     event = 'BufWritePre',
     cmd = { 'ConformInfo' },
-    keys = {
-      {
-        '<leader>tl',
-        function()
-          if vim.g.conform_format_on_save == 1 then
-            vim.g.conform_format_on_save = 0
-            vim.print 'format on save disabled'
-          else
-            vim.g.conform_format_on_save = 1
-            vim.print 'format on save enabled'
-          end
-        end,
-        mode = '',
-        desc = '[T]oggle [L]ayout - Conform',
-      },
-      {
-        '<leader>f',
-        function()
-          require('conform').format()
-          vim.cmd 'w'
-        end,
-        mode = '',
-        desc = '[F]ormat buffer - Conform',
-      },
-    },
     opts = {
       format_on_save = {
         timeout_ms = 1000,
