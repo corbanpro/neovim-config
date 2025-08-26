@@ -11,24 +11,17 @@ return {
     },
   },
   {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    build = 'make',
+  },
+  {
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
-    dependancies = {
-      {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make',
-        cond = function()
-          return vim.fn.executable 'make' == 1
-        end,
-        config = function()
-          require('telescope').load_extension 'fzf'
-        end,
-      },
-    },
     config = function()
       require('telescope').load_extension 'ui-select'
       require('telescope').load_extension 'project'
       require('telescope').load_extension 'git_file_history'
+      require('telescope').load_extension 'fzf'
 
       local telescope = require 'telescope'
       local builtin = require 'telescope.builtin'
@@ -55,8 +48,10 @@ return {
             'archive/',
             'docs/',
             'cdk.out/',
-            'dist/',
+            'vendor/',
+            -- 'dist/',
             'tsc.out/',
+            'fake_*',
           },
           mappings = {
             i = { ['<C-Space>'] = 'to_fuzzy_refine' },
