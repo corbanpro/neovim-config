@@ -18,6 +18,7 @@ return {
             mode = mode or 'n'
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = desc .. ' - LSP' })
           end
+          -- TODO: if filetype is go, use normal lsp go to definition
           map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
           map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
           map('gi', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')

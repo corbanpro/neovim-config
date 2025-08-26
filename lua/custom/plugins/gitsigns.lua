@@ -13,11 +13,14 @@ return {
           changedelete = { text = '~' },
         },
         signs_staged_enable = true,
+
+        current_line_blame = true,
         current_line_blame_opts = {
           virt_text_pos = 'right_align',
           virt_text_priority = 5000,
           delay = 500,
         },
+
         on_attach = function(bufnr)
           local gitsigns = require 'gitsigns'
 
@@ -76,7 +79,7 @@ return {
 
           map({ 'o', 'x' }, 'ih', gitsigns.select_hunk)
 
-          -- Toggles
+          map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle Current Line [B]lame' })
         end,
       }
       require('scrollbar.handlers.gitsigns').setup()
