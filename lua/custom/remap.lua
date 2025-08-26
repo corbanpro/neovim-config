@@ -15,8 +15,8 @@ vim.keymap.set('n', 'J', 'mzJ`z', { desc = "join lines, don't move cursor" })
 vim.keymap.set('n', '<leader>rc', '<cmd>:Copilot restart<CR>', { desc = '[R]estart [C]opilot' })
 vim.keymap.set('n', '<leader>rl', '<cmd>:LspRestart<CR>', { desc = '[R]estart [L]sp' })
 vim.keymap.set('n', '<leader>nt', '<cmd>tabnew<CR>', { desc = '[N]ew [T]ab' })
-vim.keymap.set('n', '<A-h>', '<cmd>tabp<CR>', { desc = 'Previous Tab' })
-vim.keymap.set('n', '<A-l>', '<cmd>tabn<CR>', { desc = 'Next Tab' })
+vim.keymap.set('n', '[t', '<cmd>tabp<CR>', { desc = 'Previous Tab' })
+vim.keymap.set('n', ']t', '<cmd>tabn<CR>', { desc = 'Next Tab' })
 vim.keymap.set('n', '<leader>w', '<cmd>noa w<CR>', { desc = '[W]rite without formatting' })
 
 vim.api.nvim_create_autocmd('BufWritePost', {
