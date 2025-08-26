@@ -1,9 +1,7 @@
 return {
+  { 'petertriho/nvim-scrollbar' },
   {
     'lewis6991/gitsigns.nvim',
-    dependancies = {
-      'petertriho/nvim-scrollbar',
-    },
     event = 'BufRead',
     config = function()
       require('gitsigns').setup {

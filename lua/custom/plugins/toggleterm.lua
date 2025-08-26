@@ -17,7 +17,6 @@ return {
       {
         '<leader>ot',
         '<cmd>ToggleTerm direction=horizontal<CR>',
-        mode = { 'i', 'n' },
         desc = '[O]pen [T]erminal - ToggleTerm',
       },
     },

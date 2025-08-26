@@ -1,9 +1,7 @@
 return {
+  { 'folke/tokyonight.nvim' },
   {
     'petertriho/nvim-scrollbar',
-    dependancies = {
-      'folke/tokyonight.nvim',
-    },
     config = function()
       local colors = require('tokyonight.colors').setup()
       require('scrollbar').setup {
