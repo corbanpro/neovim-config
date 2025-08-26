@@ -20,7 +20,7 @@ return {
           end
           map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
           map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-          map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+          map('gi', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
           map('gt', require('telescope.builtin').lsp_type_definitions, '[G]oto [T]ype Definition')
           map('<leader>ss', require('telescope.builtin').lsp_document_symbols, '[S]earch Document [S]ymbols')
           map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')

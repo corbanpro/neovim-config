@@ -116,8 +116,7 @@ vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move lines down' })
 
 -- file
 vim.keymap.set('n', '<leader>on', '<cmd>:enew<cr>', { desc = '[O]pen [N]ew file' })
-local sym_link = require 'custom.symlink'
-vim.keymap.set('n', '<leader>il', sym_link.insert_symbolic_link, { desc = '[I]nsert Symbolic [L]ink' })
+vim.keymap.set('n', '<leader>il', require('custom.symlink').insert_symbolic_link, { desc = '[I]nsert Symbolic [L]ink' })
 
 -- quickfix
 local function quickfix_toggle()
