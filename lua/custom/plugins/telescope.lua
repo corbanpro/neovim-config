@@ -1,5 +1,6 @@
 local function show_history()
   local fn = require('telescope').extensions.git_file_history.git_file_history
+  local line = vim.api.nvim_win_get_cursor(0)[1]
   local ok, _ = pcall(fn)
   if not ok then
     local path = vim.fn.expand '%:p:h'
@@ -9,7 +10,21 @@ local function show_history()
     if not ok then
       vim.cmd 'tabclose'
       vim.notify("Sorry, that's not a git file. Awkward...", vim.log.levels.WARN)
+      return
     end
+  end
+
+  if line > 15 then
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'TelescopePreviewerLoaded',
+      callback = function()
+        for _ = 1, line - 15 do
+          vim.cmd [[execute "normal! 1\<C-d>"]]
+        end
+
+        vim.cmd 'normal! zz'
+      end,
+    })
   end
 end
 
