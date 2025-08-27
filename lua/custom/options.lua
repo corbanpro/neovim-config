@@ -52,3 +52,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 vim.diagnostic.config { virtual_text = true }
+
+local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+
+---@diagnostic disable-next-line: duplicate-set-field
+function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+  opts = opts or {}
+  opts.width = opts.width or 80 -- default width
+  return orig_util_open_floating_preview(contents, syntax, opts, ...)
+end
