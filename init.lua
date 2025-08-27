@@ -1,5 +1,6 @@
 require 'custom.options'
 require 'custom.remap'
+-- require 'custom.track-keymaps'
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 ---@diagnostic disable-next-line: undefined-field
