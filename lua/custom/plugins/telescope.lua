@@ -48,6 +48,12 @@ return {
           },
         },
         defaults = {
+          sorting_strategy = 'ascending',
+
+          layout_config = {
+            prompt_position = 'top',
+            preview_width = 0.55,
+          },
           -- file_ignore_patterns = {
           --   '.*.min.js',
           --   '.*_templ.go',
@@ -102,7 +108,14 @@ return {
       require('telescope').load_extension 'ui-select'
       require('telescope').load_extension 'git_file_history'
 
-      vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
+      vim.keymap.set('n', '<leader>sh', function()
+        builtin.help_tags {
+          attach_mappings = function(_, map)
+            map({ 'n', 'i' }, '<CR>', 'select_vertical')
+            return true
+          end,
+        }
+      end, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
       -- vim.keymap.set('n', '<leader>sf', function()
       --   builtin.find_files { hidden = true, no_ignore = true }
