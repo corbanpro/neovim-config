@@ -76,17 +76,13 @@ return {
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = desc .. ' - LSP' })
           end
 
-          if ft == 'go' then
-            builtin.lsp_definitions = templ_definition(builtin.lsp_definitions)
-          end
-
           local theme = require('telescope.themes').get_cursor {
             layout_config = {
               width = 200,
               preview_width = 0.55,
               height = 15,
             },
-            sorter = require('telescope.sorters').get_substr_matcher(), -- false disables fuzzy scoring
+            sorter = require('telescope.sorters').get_substr_matcher(),
             winblend = 10,
             previewer = true,
             show_line = false,
@@ -99,6 +95,9 @@ return {
           local custom_picker_overrides = {
             lua = {
               lsp_definitions = builtin.lsp_implementations,
+            },
+            go = {
+              lsp_definitions = templ_definition(builtin.lsp_definitions),
             },
           }
 
