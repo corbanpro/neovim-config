@@ -50,10 +50,6 @@ return {
         defaults = {
           sorting_strategy = 'ascending',
 
-          layout_config = {
-            prompt_position = 'top',
-            preview_width = 0.55,
-          },
           -- file_ignore_patterns = {
           --   '.*.min.js',
           --   '.*_templ.go',
@@ -77,27 +73,23 @@ return {
         pickers = {
           find_files = {
             hidden = true,
+            layout_config = {
+              prompt_position = 'top',
+              preview_width = 0.55,
+            },
           },
-          oldfiles = {
-            hidden = true,
+          help_tags = {
+            layout_config = {
+              prompt_position = 'top',
+              preview_width = 0.55,
+            },
           },
-          live_grep = {
-            hidden = true,
-            path_display = { shorten = { len = 1, exclude = { -1, -2, -3 } } },
+          builtin = {
+            layout_config = {
+              prompt_position = 'top',
+              preview_width = 0.55,
+            },
           },
-          grep_string = {
-            hidden = true,
-            path_display = { shorten = { len = 1, exclude = { -1, -2, -3 } } },
-          },
-          resume = {
-            hidden = true,
-          },
-          buffers = {
-            hidden = true,
-          },
-          keymaps = {},
-          help_tags = {},
-          builtin = {},
           diagnostics = {},
           quickfix = {},
           quickfixhistory = {},
