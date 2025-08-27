@@ -41,7 +41,7 @@ local function templ_definition(og_func)
       end
       local templ_filename = filename:gsub('_templ%.go$', '.templ')
 
-      if templ_definition then
+      if templ_filename then
         local func = vim.fn.expand '<cword>'
         local options = { items = { { filename = templ_filename } } }
         vim.fn.setqflist({}, ' ', options)
