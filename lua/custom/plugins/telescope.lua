@@ -1,12 +1,19 @@
 local function show_history()
   local fn = require('telescope').extensions.git_file_history.git_file_history
   local line = vim.api.nvim_win_get_cursor(0)[1]
-  local ok, _ = pcall(fn)
+  local opts = {
+    layout_config = {
+      prompt_position = 'top',
+      preview_width = 0.55,
+    },
+    sorting_strategy = 'ascending',
+  }
+  local ok, _ = pcall(fn, opts)
   if not ok then
     local path = vim.fn.expand '%:p:h'
     vim.cmd 'tab split'
     vim.fn.chdir(path)
-    ok, _ = pcall(fn)
+    ok, _ = pcall(fn, opts)
     if not ok then
       vim.cmd 'tabclose'
       vim.notify("Sorry, that's not a git file. Awkward...", vim.log.levels.WARN)
