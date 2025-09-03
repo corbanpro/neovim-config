@@ -57,9 +57,10 @@ return {
         desc = '[S]earch [G]rep',
       },
       {
-        '<leader>sb',
-        '<cmd>:FzfLua builtin<CR>',
-        desc = '[S]earch [B]uiltin',
+        mode = 'v',
+        '<leader>sg',
+        '<cmd>:lua FzfLua.live_grep { search = FzfLua.utils.get_visual_selection() }<CR><C-g>',
+        desc = '[S]earch [G]rep',
       },
       {
         '<leader>se',
@@ -67,8 +68,25 @@ return {
         desc = '[S]earch [E]xact',
       },
       {
+        mode = 'v',
+        '<leader>se',
+        '<cmd>:lua FzfLua.live_grep { search = FzfLua.utils.get_visual_selection() }<CR>',
+        desc = '[S]earch [E]xact',
+      },
+      {
+        '<leader>sb',
+        '<cmd>:FzfLua builtin<CR>',
+        desc = '[S]earch [B]uiltin',
+      },
+      {
         '<leader>/',
         '<cmd>:FzfLua lgrep_curbuf<CR>',
+        desc = '[/] Search Current Buffer',
+      },
+      {
+        mode = 'v',
+        '<leader>/',
+        '<cmd>:lua FzfLua.lgrep_curbuf { search = FzfLua.utils.get_visual_selection() }<CR>',
         desc = '[/] Search Current Buffer',
       },
 
