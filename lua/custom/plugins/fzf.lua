@@ -1,3 +1,34 @@
+local function search_projects()
+  local fzf_lua = require 'fzf-lua'
+
+  fzf_lua.fzf_exec(
+    [[ fd --hidden Session.vim ~/.local/share/nvim/sessions/ | sed "s|.*/share/nvim/sessions/||; s|/Session.vim$||; s|Users/corbanprocuniar|~|" ]],
+    {
+      hidden = true,
+      actions = {
+        ['default'] = function(selected_files)
+          local new_cwd = selected_files[1]
+          new_cwd = vim.fn.expand(new_cwd)
+          local session_file = '~/.local/share/nvim/sessions' .. new_cwd .. '/Session.vim'
+          vim.cmd.cd(new_cwd)
+          vim.cmd.source(session_file)
+        end,
+        ['ctrl-x'] = {
+          function(selected)
+            for _, f in ipairs(selected) do
+              f = vim.fn.expand(f)
+              vim.fn.delete(f)
+              local session_file = '~/.local/share/nvim/sessions' .. f .. '/Session.vim'
+              vim.cmd('!rm ' .. session_file)
+            end
+          end,
+          require('fzf-lua').actions.resume,
+        },
+      },
+    }
+  )
+end
+
 return {
   {
 
@@ -48,6 +79,11 @@ return {
         '<leader>ss',
         '<cmd>:FzfLua git_status<CR>',
         desc = '[S]earch Git [S]tatus',
+      },
+      {
+        '<leader>sp',
+        search_projects,
+        desc = 'Search [P]rojects',
       },
 
       --search
