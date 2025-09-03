@@ -1,0 +1,5 @@
+return {
+  {
+    'attrid/asciitree.nvim',
+  },
+}
