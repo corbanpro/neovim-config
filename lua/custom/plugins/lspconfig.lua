@@ -117,8 +117,8 @@ return {
           map_lsp('gt', 'lsp_type_definitions', '[G]oto [T]ype Definition')
 
           -- map('<leader>ss', require('telescope.builtin').lsp_document_symbols, '[S]earch Document [S]ymbols')
-          map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-          map('<leader>ea', vim.lsp.buf.code_action, '[E]xecute Code [A]ction', { 'n', 'x' })
+          map('<leader>rn', vim.lsp.buf.rename, 'Re[N]ame')
+          map('<leader>ea', vim.lsp.buf.code_action, 'Execute Code [A]ction', { 'n', 'x' })
           -- map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
           local client = vim.lsp.get_client_by_id(event.data.client_id)
           if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then

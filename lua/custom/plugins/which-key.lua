@@ -2,6 +2,7 @@ return {
   {
     'folke/which-key.nvim',
     event = 'VimEnter',
+    ---@class wk.Opts
     opts = {
       icons = {
         mappings = vim.g.have_nerd_font,
@@ -57,6 +58,7 @@ return {
         { '<leader>k', group = '[K][M][S]', icon = { icon = '󱚝', color = 'orange' } },
         { '<leader>km', group = '[K][M][S]', icon = { icon = '󱚝', color = 'orange' } },
         { '<leader>t', group = '[T]oggle', icon = { icon = '', color = 'azure' } },
+        { '<leader>h', group = '[H]unk', icon = { icon = '~', color = 'azure' } },
       },
     },
   },

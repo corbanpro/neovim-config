@@ -5,7 +5,7 @@ return {
     {
       '<leader>ii',
       ':IconPickerNormal<CR>',
-      desc = '[I]nsert [I]con',
+      desc = 'Insert [I]con',
     },
   },
   opts = {

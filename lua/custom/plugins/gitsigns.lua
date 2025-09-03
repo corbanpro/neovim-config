@@ -73,11 +73,11 @@ return {
               --- @diagnostic disable-next-line: param-type-mismatch
               gitsigns.diffthis '@'
             end
-          end, { desc = 'git [D]iff against last commit' })
+          end, { desc = 'Git [D]iff against last commit' })
 
           map({ 'o', 'x' }, 'ih', gitsigns.select_hunk)
 
-          map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle Current Line [B]lame' })
+          map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = 'Toggle Current Line [B]lame' })
         end,
       }
       require('scrollbar.handlers.gitsigns').setup()

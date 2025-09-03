@@ -16,14 +16,16 @@ vim.keymap.set({ 'n', 'v' }, '<leader>p', [["_dP]], { desc = '[P]aste over selec
 vim.keymap.set({ 'n', 'v' }, '<C-Space>', '$', { desc = 'Move to end of line' })
 vim.keymap.set({ 'n', 'v' }, 'k', "v:count == 0 ? 'gk' : 'k'", { desc = "navigate wrapped lines except you're not a psycho", expr = true, silent = true })
 vim.keymap.set({ 'n', 'v' }, 'j', "v:count == 0 ? 'gj' : 'j'", { desc = "navigate wrapped lines except you're not a psycho", expr = true, silent = true })
-vim.keymap.set('n', '<leader>el', '"nyy:lua <C-R>"<cr>', { desc = '[E]xecute in [L]ua' })
+vim.keymap.set('n', '<leader>el', '"nyy:lua <C-R>"<cr>', { desc = 'Execute in [L]ua' })
 vim.keymap.set('n', 'J', 'mzJ`z', { desc = "join lines, don't move cursor" })
 vim.keymap.set('n', '<leader>rc', '<cmd>:Copilot restart<CR>', { desc = '[R]estart [C]opilot' })
 vim.keymap.set('n', '<leader>rl', '<cmd>:LspRestart<CR>', { desc = '[R]estart [L]sp' })
-vim.keymap.set('n', '<leader>nt', '<cmd>tabnew<CR>', { desc = '[N]ew [T]ab' })
+vim.keymap.set('n', '<leader>nt', '<cmd>tabnew<CR>', { desc = 'New [T]ab' })
 vim.keymap.set('n', '[t', '<cmd>tabp<CR>', { desc = 'Previous Tab' })
 vim.keymap.set('n', ']t', '<cmd>tabn<CR>', { desc = 'Next Tab' })
 vim.keymap.set('n', '<leader>w', '<cmd>noa w<CR>', { desc = '[W]rite without formatting' })
+vim.keymap.set('', '<leader>ia', [[<cmd>let @+ = fnamemodify(expand('%:p'), ':~') . ':' . line('.')<CR>]], { desc = '[A]bsolute path' })
+vim.keymap.set('n', 'gf', 'gF', { desc = 'Go to file (with line support)' })
 
 vim.api.nvim_create_autocmd('BufWritePost', {
   group = vim.api.nvim_create_augroup('TemplGenerateOnSave', {}),
@@ -61,7 +63,7 @@ local function insert_uuid()
   vim.api.nvim_win_set_cursor(0, { row, col + #uuid })
 end
 
-vim.keymap.set('n', '<leader>iu', insert_uuid, { desc = '[I]nsert [U]UID' })
+vim.keymap.set('n', '<leader>iu', insert_uuid, { desc = 'Insert [U]UID' })
 -- smart quit
 local function close_everything()
   local close_filetypes = {
@@ -157,8 +159,8 @@ vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move lines up' })
 vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move lines down' })
 
 -- file
-vim.keymap.set('n', '<leader>on', '<cmd>:enew<cr>', { desc = '[O]pen [N]ew file' })
-vim.keymap.set('n', '<leader>il', require('custom.symlink').insert_symbolic_link, { desc = '[I]nsert Symbolic [L]ink' })
+vim.keymap.set('n', '<leader>nb', '<cmd>:enew<cr>', { desc = 'New [B]uffer' })
+vim.keymap.set('n', '<leader>il', require('custom.symlink').insert_symbolic_link, { desc = 'Insert Symbolic [L]ink' })
 
 -- quickfix
 local function quickfix_toggle()
@@ -247,63 +249,68 @@ vim.keymap.set('n', 'Q', function()
 end, { desc = 'Stop' })
 
 -- Run File
---[[
--- i am writing a bunch of stuff, and it's pretty cool
---
---]]
+local function run_file(mode)
+  return function()
+    local function copy_to_clipboard(command)
+      vim.fn.setreg('+', command)
+      vim.print('Copied to clipboard: ' .. command)
+    end
 
-local function run_file()
-  local function copy_to_clipboard(command)
-    vim.fn.setreg('+', command)
-    vim.print('Copied to clipboard: ' .. command)
+    local buf_num = vim.api.nvim_get_current_buf()
+    local file_type = vim.bo[buf_num].filetype
+    local file_path = vim.api.nvim_buf_get_name(buf_num)
+    local supported_filetypes = {
+      run = {
+        javascript = function()
+          copy_to_clipboard('node ' .. file_path)
+        end,
+        javascriptreact = function()
+          copy_to_clipboard('node ' .. file_path)
+        end,
+        lua = function()
+          copy_to_clipboard('nvim --headless -c "source ' .. file_path .. '" -c "qa"')
+        end,
+        rust = function()
+          copy_to_clipboard('cd ' .. vim.fn.expand '%:p:h' .. ' && (cargo run || cargo script ' .. file_path .. ' ) && cd - > /dev/null')
+        end,
+        typescript = function()
+          copy_to_clipboard('tsx ' .. file_path)
+        end,
+        bash = function()
+          copy_to_clipboard('bash ' .. file_path)
+        end,
+        sh = function()
+          copy_to_clipboard('bash ' .. file_path)
+        end,
+        go = function()
+          copy_to_clipboard 'go run .'
+        end,
+        python = function()
+          copy_to_clipboard('python ' .. file_path)
+        end,
+        cs = function()
+          copy_to_clipboard('dotnet run ' .. file_path)
+        end,
+      },
+    }
+
+    if supported_filetypes[mode] == nil then
+      vim.print('Unsupported Mode: ' .. mode)
+      return
+    end
+
+    if supported_filetypes[mode][file_type] == nil then
+      vim.print('Unsupported File Type: ' .. file_type)
+      return
+    end
+
+    supported_filetypes[mode][file_type]()
+    if mode == 'run' then
+      vim.cmd 'ToggleTerm'
+      vim.cmd 'startinsert'
+      vim.cmd 'normal! p'
+    end
   end
-
-  local buf_num = vim.api.nvim_get_current_buf()
-  local file_type = vim.bo[buf_num].filetype
-  local file_path = vim.api.nvim_buf_get_name(buf_num)
-  local supported_filetypes = {
-    javascript = function()
-      copy_to_clipboard('node ' .. file_path)
-    end,
-    javascriptreact = function()
-      copy_to_clipboard('node ' .. file_path)
-    end,
-    lua = function()
-      copy_to_clipboard('nvim --headless -c "source ' .. file_path .. '" -c "qa"')
-    end,
-    rust = function()
-      copy_to_clipboard('cd ' .. vim.fn.expand '%:p:h' .. ' && (cargo run || cargo script ' .. file_path .. ' ) && cd - > /dev/null')
-    end,
-    typescript = function()
-      copy_to_clipboard('tsx ' .. file_path)
-    end,
-    bash = function()
-      copy_to_clipboard('bash ' .. file_path)
-    end,
-    sh = function()
-      copy_to_clipboard('bash ' .. file_path)
-    end,
-    go = function()
-      copy_to_clipboard 'go run .'
-    end,
-    python = function()
-      copy_to_clipboard('python ' .. file_path)
-    end,
-    cs = function()
-      copy_to_clipboard('dotnet run ' .. file_path)
-    end,
-  }
-
-  if supported_filetypes[file_type] == nil then
-    vim.print('Unsupported File Type: ' .. file_type)
-    return
-  end
-
-  supported_filetypes[file_type]()
-
-  vim.cmd 'ToggleTerm'
-  vim.cmd 'startinsert'
-  vim.cmd 'normal! p'
 end
 
-vim.keymap.set('n', '<leader>er', run_file, { desc = '[E]xecute [R]un File' })
+vim.keymap.set('n', '<leader>er', run_file 'run', { desc = 'Execute [R]un File' })
