@@ -26,6 +26,7 @@ return {
         css = { 'prettierd', 'prettier' },
         go = { 'gofmt' },
         templ = { 'templ' },
+        swift = { 'swiftformat' },
         ['*'] = { 'trim_whitespace' },
       },
     },

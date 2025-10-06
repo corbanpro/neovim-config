@@ -7,6 +7,9 @@ local function search_projects()
       hidden = true,
       actions = {
         ['default'] = function(selected_files)
+          local old_session_path = '~/.local/share/nvim/sessions' .. vim.fn.getcwd()
+          vim.cmd('silent! !mkdir -p ' .. old_session_path)
+          vim.cmd('mksession! ' .. old_session_path .. '/Session.vim')
           local new_cwd = selected_files[1]
           new_cwd = vim.fn.expand(new_cwd)
           local session_file = '~/.local/share/nvim/sessions' .. new_cwd .. '/Session.vim'
@@ -37,7 +40,11 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     -- or if using mini.icons/mini.nvim
     -- dependencies = { "echasnovski/mini.icons" },
-    opts = {},
+    opts = {
+      files = {
+        fd_opts = [[ --no-ignore-vcs --color=never --hidden --type f --type l --exclude .git ]],
+      },
+    },
     keys = {
       -- files
       {

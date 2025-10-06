@@ -159,7 +159,7 @@ vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move lines up' })
 vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move lines down' })
 
 -- file
-vim.keymap.set('n', '<leader>nb', '<cmd>:enew<cr>', { desc = 'New [B]uffer' })
+vim.keymap.set('n', '<leader>nf', '<cmd>:enew<cr><cmd>:setlocal buftype=nofile bufhidden=hide noswapfile<CR>', { desc = 'New [F]ile' })
 vim.keymap.set('n', '<leader>il', require('custom.symlink').insert_symbolic_link, { desc = 'Insert Symbolic [L]ink' })
 
 -- quickfix
@@ -276,11 +276,8 @@ local function run_file(mode)
         typescript = function()
           copy_to_clipboard('tsx ' .. file_path)
         end,
-        bash = function()
-          copy_to_clipboard('bash ' .. file_path)
-        end,
         sh = function()
-          copy_to_clipboard('bash ' .. file_path)
+          copy_to_clipboard(file_path)
         end,
         go = function()
           copy_to_clipboard 'go run .'

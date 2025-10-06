@@ -230,6 +230,10 @@ return {
             },
           },
         },
+        sourcekit = {
+          cmd = { 'xcrun', 'sourcekit-lsp' },
+        },
+        bashls = {},
       }
 
       local global_capabilities = require('blink.cmp').get_lsp_capabilities()
