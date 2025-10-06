@@ -73,11 +73,6 @@ return {
         desc = '[S]earch [Q]uickfix',
       },
       {
-        '<leader>st',
-        '<cmd>:FzfLua tabs<CR>',
-        desc = '[S]earch [T]abs',
-      },
-      {
         '<leader>sn',
         '<cmd>:FzfLua files cwd=~/.config/nvim/<CR>',
         desc = '[S]earch [N]eovim Files',

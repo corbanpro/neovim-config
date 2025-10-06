@@ -15,9 +15,9 @@ return {
       },
     },
     keys = {
-      { '<leader>sct', '<cmd>:TodoTelescope cwd=' .. (root_dir or vim.fn.getcwd()) .. ' keywords=TODO,BUG<CR>', desc = '[S]earch [C]omments [T]odo' },
-      { '<leader>sca', '<cmd>:TodoTelescope cwd=' .. (root_dir or vim.fn.getcwd()) .. '<CR>', desc = '[S]earch [C]omments [A]ll' },
-      { '<leader>scl', '<cmd>:TodoTelescope cwd=' .. (root_dir or vim.fn.getcwd()) .. ' keywords=LATER<CR>', desc = '[S]earch [C]omments [L]ater' },
+      { '<leader>st', '<cmd>:TodoTelescope cwd=' .. (root_dir or vim.fn.getcwd()) .. ' keywords=TODO,BUG<CR>', desc = '[S]earch [T]odo' },
+      { '<leader>sc', '<cmd>:TodoTelescope cwd=' .. (root_dir or vim.fn.getcwd()) .. '<CR>', desc = '[S]earch [C]omments' },
+      { '<leader>sl', '<cmd>:TodoTelescope cwd=' .. (root_dir or vim.fn.getcwd()) .. ' keywords=LATER<CR>', desc = '[S]earch [L]ater' },
       {
         ']n',
         function()
