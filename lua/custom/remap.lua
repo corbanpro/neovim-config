@@ -18,7 +18,6 @@ vim.keymap.set({ 'n', 'v' }, 'k', "v:count == 0 ? 'gk' : 'k'", { desc = "navigat
 vim.keymap.set({ 'n', 'v' }, 'j', "v:count == 0 ? 'gj' : 'j'", { desc = "navigate wrapped lines except you're not a psycho", expr = true, silent = true })
 vim.keymap.set('n', '<leader>el', '"nyy:lua <C-R>"<cr>', { desc = 'Execute in [L]ua' })
 vim.keymap.set('n', 'J', 'mzJ`z', { desc = "join lines, don't move cursor" })
-vim.keymap.set('n', '<leader>rc', '<cmd>:Copilot restart<CR>', { desc = '[R]estart [C]opilot' })
 vim.keymap.set('n', '<leader>rl', '<cmd>:LspRestart<CR>', { desc = '[R]estart [L]sp' })
 vim.keymap.set('n', '<leader>nt', '<cmd>tabnew<CR>', { desc = 'New [T]ab' })
 vim.keymap.set('n', '[t', '<cmd>tabp<CR>', { desc = 'Previous Tab' })

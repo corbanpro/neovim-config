@@ -50,6 +50,8 @@ local copilot_toggle = function()
   end
 end
 
+vim.keymap.set('n', '<leader>rc', '<cmd>:Copilot restart<CR>', { desc = '[R]estart [C]opilot' })
+
 return {
   {
     'github/copilot.vim',
