@@ -47,14 +47,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
-    vim.highlight.on_yank()
+    vim.hl.on_yank()
   end,
 })
 
 vim.diagnostic.config { virtual_text = true }
 
+-- floating windows will have a width of at least 80
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-
 ---@diagnostic disable-next-line: duplicate-set-field
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
   opts = opts or {}
