@@ -1,0 +1,8 @@
+{
+  "plugins": {
+    "asciitree.nvim": {
+      "rev": "a979a0c",
+      "src": "https://github.com/attrid/asciitree.nvim"
+    }
+  }
+}

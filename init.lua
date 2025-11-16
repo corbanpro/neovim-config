@@ -1,5 +1,6 @@
 require 'custom.options'
 require 'custom.remap'
+require 'custom.pack'
 -- require 'custom.track-keymaps'
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -14,7 +15,7 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-  { import = 'custom.plugins' },
+  { import = 'custom.plugins-lazy' },
 }, {
   change_detection = {
     enabled = false,
