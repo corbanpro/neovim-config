@@ -146,7 +146,10 @@ return {
             })
           end
           if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
+            vim.lsp.inlay_hint.enable(false, { bufnr = event.buf })
             map('<leader>ti', function()
+              local enabled = vim.lsp.inlay_hint.is_enabled { bufnr = event.buf } and 'off' or 'on'
+              print('inlay hints: ' .. enabled)
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
             end, '[T]oggle [I]nlay Hints')
           end
@@ -156,7 +159,21 @@ return {
       local servers = {
         htmx = {},
         templ = {},
-        gopls = {},
+        gopls = {
+          settings = {
+            gopls = {
+              hints = {
+                assignVariableTypes = true,
+                compositeLiteralFields = true,
+                compositeLiteralTypes = true,
+                constantValues = true,
+                functionTypeParameters = true,
+                parameterNames = true,
+                rangeVariableTypes = true,
+              },
+            },
+          },
+        },
         tailwindcss = {
           filetypes = { 'templ', 'html', 'css', 'scss', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue' },
         },
@@ -201,9 +218,7 @@ return {
 
           settings = {
             ['rust-analyzer'] = {
-              checkOnSave = {
-                command = 'clippy',
-              },
+              checkOnSave = true,
               cargo = {
                 loadOutDirsFromCheck = true,
               },
@@ -213,14 +228,7 @@ return {
             },
           },
         },
-        ts_ls = {
-          -- TODO: get rid of this when a pr gets merged into lsp-config. Probably in a few days
-          root_dir = function(bufnr, on_dir)
-            local root_markers = { 'tsconfig.json', 'jsconfig.json', 'package.json', '.git' }
-            local project_root = vim.fs.root(bufnr, root_markers)
-            on_dir(project_root)
-          end,
-        },
+        ts_ls = {},
         lua_ls = {
           settings = {
             Lua = {
