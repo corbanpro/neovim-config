@@ -7,6 +7,7 @@ vim.api.nvim_del_keymap('n', 'grt')
 
 -- helpers
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '<leader>R', '<cmd>restart<CR>', { desc = '[R]estart' })
 vim.keymap.set('n', '<C-q>', '<C-v>', { desc = 'enter visual block mode' })
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'scroll down' })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'scroll up' })
@@ -25,6 +26,16 @@ vim.keymap.set('n', ']t', '<cmd>tabn<CR>', { desc = 'Next Tab' })
 vim.keymap.set('n', '<leader>w', '<cmd>noa w<CR>', { desc = '[W]rite without formatting' })
 vim.keymap.set('', '<leader>ia', [[<cmd>let @+ = fnamemodify(expand('%:p'), ':~') . ':' . line('.')<CR>]], { desc = '[A]bsolute path' })
 vim.keymap.set('n', 'gf', 'gF', { desc = 'Go to file (with line support)' })
+vim.keymap.set('n', '<leader>yp', function()
+  local path = vim.fn.expand '%'
+  vim.fn.setreg('+', path)
+  vim.notify('Copied: ' .. path)
+end, { desc = '[Y]ank relative file [P]ath' })
+vim.keymap.set('n', '<leader>yP', function()
+  local path = vim.fn.expand '%:p'
+  vim.fn.setreg('+', path)
+  vim.notify('Copied: ' .. path)
+end, { desc = '[Y]ank absolute file [P]ath' })
 
 vim.api.nvim_create_autocmd('BufWritePost', {
   group = vim.api.nvim_create_augroup('TemplGenerateOnSave', {}),
