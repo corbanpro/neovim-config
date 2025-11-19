@@ -3,7 +3,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.o.winborder = 'rounded'
 
-vim.opt.colorcolumn = '100'
+vim.opt.colorcolumn = '101'
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.wrap = false
@@ -48,6 +48,16 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
     vim.hl.on_yank()
+  end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'markdown',
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.linebreak = true
+    vim.opt_local.textwidth = 100
+    vim.opt_local.spell = true
   end,
 })
 
