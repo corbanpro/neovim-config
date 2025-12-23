@@ -15,14 +15,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Fetches all history for all tags and branches
+          fetch-depth: 0
 
       - name: Bump version and push tag
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          default_bump: patch # Increments the third digit (e.g., 1.0.1)
+          default_bump: patch
 
       - name: Create a GitHub Release
         uses: ncipollo/release-action@v1
