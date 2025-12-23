@@ -3,6 +3,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.o.winborder = 'rounded'
 
+vim.opt.termguicolors = true
 vim.opt.colorcolumn = '101'
 vim.opt.number = true
 vim.opt.relativenumber = true
