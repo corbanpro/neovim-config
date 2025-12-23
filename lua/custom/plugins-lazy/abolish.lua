@@ -1,4 +1,6 @@
 -- Smart search/replace
 return {
-  'tpope/vim-abolish',
+  {
+    'tpope/vim-abolish',
+  },
 }
