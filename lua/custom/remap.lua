@@ -134,7 +134,8 @@ vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move lines up' })
 vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move lines down' })
 
 -- file
-vim.keymap.set('n', '<leader>nf', '<cmd>:enew<cr><cmd>:setlocal buftype=nofile bufhidden=hide noswapfile<CR>', { desc = 'New [F]ile' })
+vim.keymap.set('n', '<leader>ns', '<cmd>:enew<cr><cmd>:setlocal buftype=nofile bufhidden=hide noswapfile<CR>', { desc = 'New [S]cratch Buffer' })
+vim.keymap.set('n', '<leader>nf', '<cmd>:enew<cr>', { desc = 'New [F]ile' })
 vim.keymap.set('n', '<leader>il', require('custom.symlink').insert_symbolic_link, { desc = 'Insert Symbolic [L]ink' })
 
 -- quickfix
