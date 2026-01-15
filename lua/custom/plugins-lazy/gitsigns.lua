@@ -16,7 +16,7 @@ return {
         current_line_blame_opts = {
           virt_text_pos = 'right_align',
           virt_text_priority = 5000,
-          delay = 500,
+          delay = 0,
         },
 
         on_attach = function(bufnr)
@@ -54,10 +54,11 @@ return {
           map('n', '<leader>hR', gitsigns.reset_buffer, { desc = 'Git [R]eset Buffer' })
           map('n', '<leader>hp', gitsigns.preview_hunk_inline, { desc = 'Git [P]review Hunk Inline' })
           map('n', '<leader>hP', gitsigns.preview_hunk, { desc = 'Git [P]review Hunk' })
-          map('n', '<leader>hb', gitsigns.blame_line, { desc = 'Git [B]lame line' })
-          map('n', '<leader>hB', function()
+          map('n', '<leader>hb', gitsigns.blame, { desc = 'Git [B]lame' })
+          map('n', '<leader>hl', gitsigns.blame_line, { desc = 'Git blame [L]ine' })
+          map('n', '<leader>hL', function()
             gitsigns.blame_line { full = true }
-          end, { desc = 'Git [B]lame line with diff' })
+          end, { desc = 'Git blame [L]ine with diff' })
 
           map('n', '<leader>hd', function()
             local buffers = vim.api.nvim_list_bufs()
