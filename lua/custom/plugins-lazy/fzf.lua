@@ -43,6 +43,9 @@ return {
       files = {
         fd_opts = [[ --no-ignore-vcs --color=never --hidden --type f --type l --exclude .git ]],
       },
+      grep = {
+        rg_opts = [[ --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -g "!**/vendor/**" -e ]],
+      },
     },
     keys = {
       -- files
