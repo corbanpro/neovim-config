@@ -41,7 +41,7 @@ return {
     -- dependencies = { "echasnovski/mini.icons" },
     opts = {
       files = {
-        fd_opts = [[ --no-ignore-vcs --color=never --hidden --type f --type l --exclude .git ]],
+        fd_opts = [[ --no-ignore-vcs --color=never --hidden --type f --type l --exclude .git -E "*_templ.go" ]],
       },
       grep = {
         rg_opts = [[ --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -g "!**/vendor/**" -e ]],
