@@ -2,7 +2,15 @@ local exports = {}
 
 function exports.insert_symbolic_link()
   local filetype = vim.bo[vim.api.nvim_get_current_buf()].filetype
-  if filetype ~= 'sh' and filetype ~= 'python' then
+  local valid_filetypes = { 'sh', 'zsh', 'python', 'zsh', 'perl' }
+  local found = false
+  for _, value in ipairs(valid_filetypes) do
+    if filetype == value then
+      found = true
+      break
+    end
+  end
+  if not found then
     vim.print('invalid file type: ' .. filetype)
     return
   end
