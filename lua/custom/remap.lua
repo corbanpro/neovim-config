@@ -253,7 +253,7 @@ local function run_file(mode)
           copy_to_clipboard('tsx ' .. file_path)
         end,
         sh = function()
-          copy_to_clipboard(file_path)
+          copy_to_clipboard('bash ' .. file_path)
         end,
         go = function()
           copy_to_clipboard 'go run .'
