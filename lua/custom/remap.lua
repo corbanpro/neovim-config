@@ -26,6 +26,7 @@ vim.keymap.set('n', ']t', '<cmd>tabn<CR>', { desc = 'Next Tab' })
 vim.keymap.set('n', '<leader>w', '<cmd>noa w<CR>', { desc = '[W]rite without formatting' })
 vim.keymap.set('', '<leader>ia', [[<cmd>let @+ = fnamemodify(expand('%:p'), ':~') . ':' . line('.')<CR>]], { desc = '[A]bsolute path' })
 vim.keymap.set('n', 'gf', 'gF', { desc = 'Go to file (with line support)' })
+vim.keymap.set('n', 'ef', '<cmd>:set filetype?<CR>', { desc = '[E]xecute [F]iletype Print' })
 vim.keymap.set('n', '<leader>yp', function()
   local path = vim.fn.expand '%'
   vim.fn.setreg('+', path)
@@ -82,6 +83,9 @@ local function close_everything()
     'undotree',
     'qf',
     'help',
+    'dbui',
+    'sql',
+    'dbout',
   }
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
     if vim.api.nvim_buf_is_loaded(buf) then
