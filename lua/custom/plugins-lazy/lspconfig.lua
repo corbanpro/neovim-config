@@ -91,6 +91,7 @@ return {
   {
     'saghen/blink.cmp',
     lazy = true,
+    -- TODO: make blink the default cmp engine
     version = '*',
     opts = {
       sources = {

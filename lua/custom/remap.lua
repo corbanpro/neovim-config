@@ -26,7 +26,7 @@ vim.keymap.set('n', ']t', '<cmd>tabn<CR>', { desc = 'Next Tab' })
 vim.keymap.set('n', '<leader>w', '<cmd>noa w<CR>', { desc = '[W]rite without formatting' })
 vim.keymap.set('', '<leader>ia', [[<cmd>let @+ = fnamemodify(expand('%:p'), ':~') . ':' . line('.')<CR>]], { desc = '[A]bsolute path' })
 vim.keymap.set('n', 'gf', 'gF', { desc = 'Go to file (with line support)' })
-vim.keymap.set('n', 'ef', '<cmd>:set filetype?<CR>', { desc = '[E]xecute [F]iletype Print' })
+vim.keymap.set('n', 'ef', '<cmd>:set filetype?<CR>', { desc = 'Execute [F]iletype Print' })
 vim.keymap.set('n', '<leader>yp', function()
   local path = vim.fn.expand '%'
   vim.fn.setreg('+', path)
@@ -124,10 +124,10 @@ vim.keymap.set({ 'n', 'v' }, '<leader>C', [["_C]], { desc = '[C]hange without ya
 
 -- replace
 local replace = require 'custom.replace'
-vim.keymap.set('n', '<leader>ra', replace.n_replace_all, { desc = '[R]eplace Word - [A]ll' })
-vim.keymap.set('v', '<leader>ra', replace.v_replace_all, { desc = '[R]eplace Selection - [A]ll' })
-vim.keymap.set('n', '<leader>ri', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = '[R]eplace [I]nline' })
-vim.keymap.set('v', '<leader>ri', [["ny:%s/\<<C-r>n\>/<C-r>n/gI<Left><Left><Left>]], { desc = '[R]eplace [I]nline' })
+vim.keymap.set('n', '<leader>ra', replace.n_replace_all, { desc = 'Replace Word - [A]ll' })
+vim.keymap.set('v', '<leader>ra', replace.v_replace_all, { desc = 'Replace Selection - [A]ll' })
+vim.keymap.set('n', '<leader>ri', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Replace [I]nline' })
+vim.keymap.set('v', '<leader>ri', [["ny:%s/\<<C-r>n\>/<C-r>n/gI<Left><Left><Left>]], { desc = 'Replace [I]nline' })
 
 -- move lines
 vim.keymap.set('i', '<A-j>', '<Esc><cmd>:m .+1<CR>==gi', { desc = 'Move line down' })
@@ -141,6 +141,7 @@ vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move lines down' })
 vim.keymap.set('n', '<leader>ns', '<cmd>:enew<cr><cmd>:setlocal buftype=nofile bufhidden=hide noswapfile<CR>', { desc = 'New [S]cratch Buffer' })
 vim.keymap.set('n', '<leader>nf', '<cmd>:enew<cr>', { desc = 'New [F]ile' })
 vim.keymap.set('n', '<leader>il', require('custom.symlink').insert_symbolic_link, { desc = 'Insert Symbolic [L]ink' })
+vim.keymap.set('n', '<leader>ic', '', { desc = 'Insert [C]omment' })
 
 -- quickfix
 local function quickfix_toggle()
