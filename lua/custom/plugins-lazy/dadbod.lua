@@ -1,6 +1,6 @@
 vim.g.db_ui_table_helpers = {
   postgresql = {
-    Columns = [[select table_name, column_name, data_type, column_default, is_nullable from information_schema.columns where table_name='chat_settings' and table_schema='public']],
+    Columns = [[select table_name, column_name, data_type, column_default, is_nullable from information_schema.columns where table_name='{table}' and table_schema='public']],
   },
 }
 
