@@ -182,7 +182,6 @@ return {
       })
 
       local servers = {
-        htmx = {},
         templ = {},
         gopls = {
           settings = {
